@@ -31,6 +31,7 @@ const config: Config = {
 				"scroll-hint": "scroll 2s ease-in-out infinite",
 				"fade-in-up": "fade-in-up 0.8s ease-out forwards",
 				"scale-in": "scale-in 0.6s ease-out forwards",
+				"slide-down": "slide-down 0.75s ease-out forwards",
 			},
 			keyframes: {
 				scroll: {
@@ -56,6 +57,10 @@ const config: Config = {
 						opacity: "1",
 						transform: "scale(1)",
 					},
+				},
+				"slide-down": {
+					"0%": { transform: "translateY(0)" },
+					"100%": { transform: "translateY(-100%)" },
 				},
 			},
 			transitionTimingFunction: {

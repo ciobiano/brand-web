@@ -286,6 +286,8 @@ html {
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
 }
 
 .canvas-hero::-webkit-scrollbar {
@@ -313,4 +315,10 @@ html {
 button:hover,
 a:hover {
   transform: translateY(-2px);
+}
+
+
+
+.no-scroll-transition {
+  overflow: hidden;
 }

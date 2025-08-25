@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "./providers/LenisProvider";
+	import { TransitionProvider } from "./soul/primitives/transition-page";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -27,13 +28,16 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-		return (
-			<html lang="de" className={`${inter.variable} ${poppins.variable}`}>
-				<body className={`${inter.className} font-sans`}>
-					<LenisProvider>
+	return (
+		<html lang="de" className={`${inter.variable} ${poppins.variable}`}>
+			<body className={`${inter.className} font-sans`}>
+				
+				<LenisProvider>
+					<TransitionProvider>
 						{children}
+					</TransitionProvider>
 					</LenisProvider>
-				</body>
-			</html>
-		);
+			</body>
+		</html>
+	);
 }

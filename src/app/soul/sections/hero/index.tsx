@@ -6,8 +6,8 @@ import EnhancedImageCard from "./enhanced-image-card";
 import { useInteractiveCanvas } from "@/app/hooks/useInteractiveCanvas";
 import Navigation from "../nav/Navigation";
 import { useGSAP } from "@gsap/react";
-import SplitType from "split-type";
 import { gsap } from "gsap";
+import { SplitText } from "gsap/all";
 
 type HeroProps = {
 	title?: string;
@@ -15,12 +15,18 @@ type HeroProps = {
 	cta_text?: string;
 	cta_link?: string;
 };
+gsap.registerPlugin(SplitText);
 
 const Hero: React.FC<HeroProps> = ({
-	title = "CLOU",
+	title = "Kainé",
 	cta_text = "Scroll",
 	cta_link = "#",
 }) => {
+
+
+
+
+
 	const titleRef = useRef<HTMLHeadingElement>(null);
 	const heroRef = useRef<HTMLDivElement>(null);
 
@@ -35,35 +41,48 @@ const Hero: React.FC<HeroProps> = ({
 	useGSAP(
 		() => {
 			if (titleRef.current) {
-				const typeSplit = new SplitType(titleRef.current, {
-					types: "chars",
+				// Create a master timeline for better control
+				const tl = gsap.timeline();
+
+				// Split the title text
+				const typeSplit = new SplitText(titleRef.current, {
+					type: "chars",
 					tagName: "span",
+					mask: "chars",
 				});
 
-				gsap.from(typeSplit.chars, {
-					autoAlpha: 0,
-					yPercent: 100,
-					duration: 0.75,
-					rotation: -30,
-					delay: 0.5,
-					ease: "power4.out",
-					stagger: { each: 0.025 },
-				});
-
-				// Clou.ch style: Immediate appearance with subtle scale animation
-				gsap.from(".canvas-card", {
-					scale: 0.95, // Very subtle scale change
-					duration: 0.8, // Faster animation
-					delay: 0, // No delay - immediate start
-					ease: "power2.out", // Smooth but quick easing
-					stagger: {
-						each: 0.03, // Much faster stagger for snappy feel
-						from: "random", // Random order like Clou.ch
+				// Add title animation to timeline
+				tl.from(
+					typeSplit.chars,
+					{
+						autoAlpha: 0,
+						yPercent: 100,
+						duration: 0.5,
+						rotation: -30,
+						ease: "power4.out",
+						stagger: { each: 0.025 },
 					},
-				});
+					0.75
+				); // Start at 0.5 seconds
+
+				// Add canvas cards animation to timeline
+				tl.from(
+					".canvas-card",
+					{
+						duration: 0.5,
+						scale: 0.5,
+						opacity: 0,
+						ease: "back.out",
+						stagger: {
+							from: "random",
+							amount: 1,
+						},
+					},
+				 0.5
+				); // Start at 1.25 seconds (after title animation completes)
 			}
 		},
-		{ scope: titleRef }
+		{ scope: heroRef } // Use heroRef instead of titleRef to include all elements
 	);
 
 	return (
@@ -79,7 +98,7 @@ const Hero: React.FC<HeroProps> = ({
 				<div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
 					<h1
 						ref={titleRef}
-						className="text-[200px] sm:text-[250px] md:text-[300px] lg:text-[350px] xl:text-[400px] 2xl:text-[450px] font-medium text-black leading-[0.9] select-none"
+						className="text-[200px] sm:text-[250px] md:text-[150px] lg:text-[200px] xl:text-[400px] 2xl:text-[25vh] font-sm text-black leading-[0.9] select-none"
 					>
 						{title.split("").map((letter, index) => (
 							<span key={index} className="inline-block">

@@ -6,7 +6,7 @@ export default function Page() {
 	return (
 		<main>
 			<Hero 
-				title="C L O U" 
+				title="Kainé" 
 				
 				cta_text="Scroll" 
 			/>
