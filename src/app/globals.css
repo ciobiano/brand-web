@@ -18,10 +18,299 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+
+}
+
+html {
+
+  box-sizing: border-box;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Clou's actual scattered layout - wide canvas with extreme positioning for proper spacing */
+/* Customize every 1st, 2nd, & 3rd collection item itself */
+.canvas-card:nth-child(15n+1) {
+  width: 20vw;
+  left: 5%;
+  top: 12%;
+}
+
+.canvas-card:nth-child(15n+2) {
+  width: 15vw;
+  left: 20%;
+  top: 25%;
+}
+
+.canvas-card:nth-child(15n+3) {
+  width: 17.5vw;
+  left: 40%;
+  top: 17.5%;
+}
+
+.canvas-card:nth-child(15n+4) {
+  width: 15vw;
+  left: 65%;
+  top: 13.5%;
+}
+
+.canvas-card:nth-child(15n+5) {
+  width: 20vw;
+  left: 85%;
+  top: 22.5%;
+}
+
+.canvas-card:nth-child(15n+6) {
+  width: 15vw;
+  left: 7.5%;
+  top: 40%;
+}
+
+.canvas-card:nth-child(15n+7) {
+  width: 17.5vw;
+  left: 25%;
+  top: 50%;
+}
+
+.canvas-card:nth-child(15n+8) {
+  width: 15vw;
+  left: 55%;
+  top: 35%;
+}
+
+.canvas-card:nth-child(15n+9) {
+  width: 20vw;
+  left: 65%;
+  top: 55.5%;
+}
+
+.canvas-card:nth-child(15n+10) {
+  width: 17.5vw;
+  left: 80%;
+  top: 40%;
+}
+
+.canvas-card:nth-child(15n+11) {
+  width: 20vw;
+  left: 6%;
+  top: 75%;
+}
+
+.canvas-card:nth-child(15n+12) {
+  width: 15vw;
+  left: 27.5%;
+  top: 85%;
+}
+
+.canvas-card:nth-child(15n+13) {
+  width: 17.5vw;
+  left: 38.5%;
+  top: 67.5%;
+}
+
+.canvas-card:nth-child(15n+14) {
+  width: 20vw;
+  left: 57.5%;
+  top: 80%;
+}
+
+.canvas-card:nth-child(15n+15) {
+  width: 20vw;
+  left: 82.5%;
+  top: 75.5%;
+}
+
+/* Mobile responsive positioning - compact layout for small screens */
+
+@media screen and (max-width: 768px) {
+  .canvas-hero {
+    width: 100vw;
+    left: 0;
+    transform: none;
+  }
+
+  .canvas-card:nth-child(15n+1) {
+    width: 37.5vw;
+    left: 5%;
+    top: 12%;
+  }
+
+  .canvas-card:nth-child(15n+2) {
+    width: 32.5vw;
+    left: 20%;
+    top: 25%;
+  }
+
+  .canvas-card:nth-child(15n+3) {
+    width: 35vw;
+    left: 40%;
+    top: 17.5%;
+  }
+
+  .canvas-card:nth-child(15n+4) {
+    width: 32.5vw;
+    left: 65%;
+    top: 13.5%;
+  }
+
+  .canvas-card:nth-child(15n+5) {
+    width: 37.5vw;
+    left: 85%;
+    top: 22.5%;
+  }
+
+  .canvas-card:nth-child(15n+6) {
+    width: 32.5vw;
+    left: 7.5%;
+    top: 40%;
+  }
+
+  .canvas-card:nth-child(15n+7) {
+    width: 35vw;
+    left: 25%;
+    top: 50%;
+  }
+
+  .canvas-card:nth-child(15n+8) {
+    width: 32.5vw;
+    left: 55%;
+    top: 35%;
+  }
+
+  .canvas-card:nth-child(15n+9) {
+    width: 40vw;
+    left: 65%;
+    top: 55.5%;
+  }
+
+  .canvas-card:nth-child(15n+10) {
+    width: 35vw;
+    left: 80%;
+    top: 40%;
+  }
+
+  .canvas-card:nth-child(15n+11) {
+    width: 37.5vw;
+    left: 6%;
+    top: 75%;
+  }
+
+  .canvas-card:nth-child(15n+12) {
+    width: 32.5vw;
+    left: 27.5%;
+    top: 85%;
+  }
+
+  .canvas-card:nth-child(15n+13) {
+    width: 35vw;
+    left: 38.5%;
+    top: 60.5%;
+  }
+
+  .canvas-card:nth-child(15n+14) {
+    width: 37.5vw;
+    left: 57.5%;
+    top: 80%;
+  }
+
+  .canvas-card:nth-child(15n+15) {
+    width: 37.5vw;
+    left: 82.5%;
+    top: 75.5%;
+  }
+}
+
+.canvas-card {
+  z-index: 1;
+  flex: none;
+  display: flex;
+  position: absolute;
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.canvas-card:hover {
+  z-index: 2;
+}
+
+/* Enhance the image card interactivity */
+.canvas-card_image {
+  aspect-ratio: 1;
+  pointer-events: none;
+  /* No transitions for instant response */
+}
+
+.canvas-card_link {
+  /* No transitions for instant response */
+  position: absolute;
+}
+
+.canvas-card_link:hover {
+  transform: scale(1.15);
+}
+
+.canvas-card_link:active {
+  transform: scale(0.95);
+}
+
+
+
+/* Enhanced hero container for interactive canvas */
+.canvas-hero {
+  position: relative;
+  width: 250vw;
+  height: 250vh;
+  display: flex;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Black dot cursor that follows mouse */
+.custom-cursor {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  background-color: black;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.canvas-hero::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-cursor.active {
+  opacity: 1;
+}
+
+/* Improved repulsion effect smoothing */
+.canvas-card.repulsing {
+  /* Additional smoothing for repulsion animation */
+  transform-origin: center center;
+}
+
+
+
+.image-card:hover {
+  transform: scale(1.05);
+}
+
+
+
+button:hover,
+a:hover {
+  transform: translateY(-2px);
 }
