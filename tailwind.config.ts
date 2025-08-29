@@ -24,8 +24,9 @@ const config: Config = {
 				],
 			},
 			colors: {
-				"clou-green": "#00AE70",
-				"clou-black": "#000000",
+				"clou-white": "#ffffff",
+				"clou-black": "#101114",
+
 			},
 			animation: {
 				"scroll-hint": "scroll 2s ease-in-out infinite",

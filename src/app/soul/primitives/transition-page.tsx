@@ -89,7 +89,15 @@ export function TransitionProvider({
 				<div className="msg">{message}</div>
 			</div>
 
-			{children}
+			{/* Hide children while transitioning */}
+			<div
+				style={{
+					opacity: isTransitioning ? 0 : 1,
+					transition: "opacity 300ms ease",
+				}}
+			>
+				{children}
+			</div>
 
 			<style jsx>{`
 				.__page-transition {
@@ -104,7 +112,7 @@ export function TransitionProvider({
 				.panel {
 					position: absolute;
 					inset: 0;
-					background: #000;
+					background: #000000;
 					transform: translateY(100%);
 					opacity: 0;
 					transition: transform 380ms cubic-bezier(0.22, 0.9, 0.28, 1),

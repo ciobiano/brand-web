@@ -109,3 +109,47 @@ function getRandomImages(count: number = 15) {
 }
 
 export const heroImages = getRandomImages(15);
+
+
+export const cardData = [
+	{
+		id: "card-1",
+		accentColor: "accent-1" as const,
+		info: "A surreal dive into neon hues and playful decay",
+		title: "Reverie",
+		description:
+			"A psychedelic skull study exploring the tension between playfulness and decay. Bold candy tones, liquid forms, and crisp vectors bring a surreal, pop-art mood meant for covers and prints.",
+		imageSrc: "/img1.jpg",
+		imageAlt: "Reverie artwork",
+	},
+	{
+		id: "card-2",
+		accentColor: "accent-2" as const,
+		info: "A retro-futurist scene where nostalgia meets glitch",
+		title: "Vaporwave",
+		description:
+			"An 80s-UI dreamscape: stacked windows, checkerboard floors, and a sunset gradient. Built to feel like a loading screen to another world—nostalgic, glossy, and a bit uncanny.",
+		imageSrc: "/img2.jpg",
+		imageAlt: "Vaporwave artwork",
+	},
+	{
+		id: "card-3",
+		accentColor: "accent-3" as const,
+		info: "A kaleidoscope of folk motifs reimagined in digital form",
+		title: "Kaleido",
+		description:
+			"Ornamental symmetry inspired by folk motifs and stained-glass glow. Designed as a seamless, tileable pattern for textiles, wallpapers, and rich UI backgrounds.",
+		imageSrc: "/img3.jpg",
+		imageAlt: "Kaleido artwork",
+	},
+	{
+		id: "card-4",
+		accentColor: "accent-4" as const,
+		info: "A portrait framed by oddball creatures and doodles",
+		title: "Menagerie",
+		description:
+			"A playful portrait surrounded by oddball companions—mascots, monsters, and midnight snacks. Loose linework meets pastel whimsy, perfect for merch, stickers, and editorial spots.",
+		imageSrc: "/img4.jpg",
+		imageAlt: "Menagerie artwork",
+	},
+];
