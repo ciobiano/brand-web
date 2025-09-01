@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Card from "./Card";
 import { cardData } from "@/app/data";
 import { useGSAP } from "@gsap/react";
-import { ScrollSmoother } from "gsap/all";
+import Button from "../../primitives/Button";
 
-gsap.registerPlugin(ScrollTrigger,ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Cases() {
 	const introRef = useRef<HTMLDivElement>(null);
@@ -26,11 +26,16 @@ export default function Cases() {
 
 			cards.forEach((cardEl, i) => {
 				const next = cards[i + 1] as HTMLElement | undefined;
-				if (!next) return;
+				const isLastCard = i === cards.length - 1;
+
+				// For the last card, use the next section as trigger
+				const trigger = isLastCard ? container.nextElementSibling : next;
+
+				if (!trigger) return;
 
 				const tl = gsap.timeline({
 					scrollTrigger: {
-						trigger: next, // next card controls the timeline
+						trigger: trigger, // next card OR next section for last card
 						start: "top 100%",
 						end: "top -80%",
 						scrub: true,
@@ -72,8 +77,6 @@ export default function Cases() {
 					trigger: intro,
 					start: "top 100%",
 					end: "+=80%",
-					pin: "into",
-					pinSpacing: false,
 					scrub: 1,
 					markers: true,
 				},
@@ -84,11 +87,10 @@ export default function Cases() {
 				{
 					paddingLeft: 0,
 					paddingRight: 0,
-
 					duration: 1,
 					ease: "none",
 				},
-				"-=50%"
+				"0"
 			);
 		},
 		{ scope: containerRef, dependencies: [cardData.length] }
@@ -96,37 +98,40 @@ export default function Cases() {
 
 	return (
 		<>
-			<section
-				ref={introRef}
-				className="relative px-16 bg-clou-white text-white"
-			>
-				<div className=" into  bg-clou-black flex flex-col px-40  gap-12 md:gap-24 pt-40 pb-80 rounded-t-2xl  ">
-					<div className="max-w-4xl">
-						<h1 className="text-4xl md:text-5xl font-normal md:leading-[130%]">
-							Hallo! Wir sind Clou, deine Agentur in Luzern mit Fokus auf
-							Branding, Purpose und Websites mit Wirkung.
-						</h1>
-					</div>
-					{/* Description and button */}
-					<div className="grid gap-4 grid-rows-[auto_auto] grid-cols-2 auto-cols-fr">
-						<div className="col-span-1" />
-						<div className="max-w-md space-y-8">
-							<p className="text-base md:text-xl text-gray-300 leading-relaxed">
-								In deinem Sinn, für dich, für deine Kund:innen und nicht zuletzt
-								für uns, tun wir alles dafür, dass unsere Arbeit Sinn macht.
-							</p>
-							<button className="px-6 md:px-8 py-3 md:py-4 bg-gray-800 hover:bg-gray-700 text-white rounded-full transition-colors duration-200 shadow-lg">
-								unser Purpose
-							</button>
+			<section ref={introRef} className="relative px-16   text-white">
+				<div
+					data-speed="clamp(0.8)"
+					className="bg-clou-black w-full flex flex-col  gap-12 md:gap-28 pt-44 pb-96 rounded-t-2xl"
+				>
+					<div className="flex flex-col w-full h-full max-w-[90rem]  mx-auto gap-32   ">
+						<div className="max-w-4xl">
+							<h1 className="text-4xl md:text-5xl font-normal md:leading-[130%]">
+								Hallo! Wir sind Clou, deine Agentur in Luzern mit Fokus auf
+								Branding, Purpose und Websites mit Wirkung.
+							</h1>
+						</div>
+						{/* Description and button */}
+						<div className="grid gap-4 grid-rows-[auto_auto] grid-cols-2 auto-cols-fr">
+							<div className="col-span-1" />
+							<div className="max-w-md space-y-8">
+								<p className="text-base md:text-xl text-gray-300 leading-relaxed">
+									In deinem Sinn, für dich, für deine Kund:innen und nicht
+									zuletzt für uns, tun wir alles dafür, dass unsere Arbeit Sinn
+									macht.
+								</p>
+								<button className="px-6 md:px-8 py-3 md:py-4 bg-gray-800 hover:bg-gray-700 text-white rounded-full transition-colors duration-200 shadow-lg">
+									unser Purpose
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 			<section className="relative bg-white text-black" ref={containerRef}>
-				<div className="z-10 absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-white  h-4" />
-				<div className="gap-12 flex justify-start items-stretch py-40 max-w-4xl px-40  w-full">
-					<div className="max-w-xl w-full  flex flex-col gap-4 items-start  ">
-						<span className="border-clou-black mb-8 border text-xs rounded-full py-[.25rem] px-[.5rem] ">
+				<div className="z-10 absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-white h-4" />
+				<div className="gap-12 flex justify-start items-stretch py-40 max-w-4xl px-40 w-full">
+					<div className="max-w-xl w-full flex flex-col gap-4 items-start">
+						<span className="border-clou-black mb-8 border text-xs rounded-full py-[.25rem] px-[.5rem]">
 							cases
 						</span>
 						<h2 className="text-3xl font-normal leading-tight">
@@ -151,10 +156,41 @@ export default function Cases() {
 				))}
 			</section>
 
-			<section className="sticky-cards"></section>
+			<section className="relative bg-clou-black text-white">
+				<div className="max-w-6xl mx-auto px-8 py-24">
+					{/* Upper Section - Dark Background with Text and Buttons */}
+					<div className="mb-16">
+						{/* "Warum Clou?" Button */}
+						<Button variant="secondary" size="sm" className="mb-8">
+							Warum Clou?
+						</Button>
 
-			<section className="outro">
-				<h1>Next Canvas Awaits</h1>
+						{/* Main Text */}
+						<div className="max-w-4xl mb-12">
+							<p className="text-2xl md:text-3xl leading-relaxed font-light">
+								Wir sind interessiert an deiner Idee, deiner Marke, deinem Ding.
+								Wir bringen dein Unternehmen mit den Menschen zusammen, die sich
+								mit den Werten und der Haltung deiner Marke identifizieren.
+							</p>
+						</div>
+
+						{/* "Team kennenlernen" Button */}
+						<Button variant="primary" size="lg">
+							Team kennenlernen
+						</Button>
+					</div>
+
+					{/* Lower Section - Photo with Rounded Corners */}
+					<div className="relative">
+						<div className="rounded-t-3xl overflow-hidden ">
+							<img
+								src="/images/www.clou.ch_.png"
+								alt="Clou team members sitting together"
+								className="w-full h-full object-contain"
+							/>
+						</div>
+					</div>
+				</div>
 			</section>
 		</>
 	);

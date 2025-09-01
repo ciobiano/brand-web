@@ -26,7 +26,7 @@ const EnhancedImageCard: React.FC<Props> = ({
 
 	return (
 		<div
-			className={`rounded-lg ${className}`}
+			className={`rounded-lg  z-20 ${className}`}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>

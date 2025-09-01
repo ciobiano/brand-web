@@ -91,7 +91,7 @@ const Hero: React.FC<HeroProps> = ({
 			<div className="custom-cursor"></div>
 
 			{/* Fixed container for everything except images */}
-			<div className="relative w-full h-screen bg-white">
+			<div className="relative w-full h-screen ">
 				<Navigation />
 
 				{/* Main title - fixed in viewport */}
@@ -109,7 +109,7 @@ const Hero: React.FC<HeroProps> = ({
 				</div>
 
 				{/* Scrollable image container - ONLY this scrolls */}
-				<div ref={heroRef} className="absolute inset-0  overflow-x-auto ">
+				<div ref={heroRef} className="absolute inset-0   ">
 					<div className="canvas-hero">
 						{heroImages.map((image, index) => (
 							<div key={index} className="canvas-card">
@@ -125,6 +125,7 @@ const Hero: React.FC<HeroProps> = ({
 						))}
 					</div>
 				</div>
+				<div className="absolute h-full left-0 top-[100vh] right-0 bg-[linear-gradient(#fff0,_#fff_25%)] " />
 
 				{/* Scroll indicator - fixed in viewport */}
 				<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex flex-col items-center">

@@ -21,17 +21,24 @@
   }
 }
 
+/* ScrollSmoother Layout Fixes */
+
+
+
+/* Parallax positioning fixes */
+[data-speed] {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
   overflow-x: hidden;
-
+  min-height: 100vh;
 }
 
 html {
-
   box-sizing: border-box;
 }
 
