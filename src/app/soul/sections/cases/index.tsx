@@ -8,6 +8,7 @@ import { cardData } from "@/app/data";
 import { useGSAP } from "@gsap/react";
 import Button from "../../primitives/Button";
 import Badge from "../../primitives/Badge";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -160,7 +161,7 @@ export default function Cases() {
 			</section>
 
 			<section className="relative bg-clou-black text-white">
-				<div className="max-w-6xl mx-auto px-8 py-24">
+				<div className="max-w-7xl mx-auto px-8 py-24">
 					{/* Upper Section - Dark Background with Text and Buttons */}
 					<div className="mb-16">
 						<Badge
@@ -172,7 +173,7 @@ export default function Cases() {
 						</Badge>
 
 						<div className="max-w-4xl mb-12">
-							<p className="text-2xl md:text-3xl leading-relaxed font-light">
+							<p className="text-2xl md:text-5xl leading-relaxed font-light">
 								Wir sind interessiert an deiner Idee, deiner Marke, deinem Ding.
 								Wir bringen dein Unternehmen mit den Menschen zusammen, die sich
 								mit den Werten und der Haltung deiner Marke identifizieren.
@@ -186,13 +187,36 @@ export default function Cases() {
 
 					{/* Lower Section - Photo with Rounded Corners */}
 					<div className="relative">
-						<div className="rounded-t-3xl overflow-hidden ">
-							<img
+						<div className="rounded-3xl overflow-hidden max-h-[750px] ">
+							<Image
+								width={500}
+								height={500}
 								src="/images/www.clou.ch_.png"
 								alt="Clou team members sitting together"
 								className="w-full h-full object-contain"
 							/>
 						</div>
+					</div>
+					<div className="my-16 ml-auto w-1/2">
+						<Badge
+							variant="outline"
+							size="sm"
+							className="mb-8 text-white border-white"
+						>
+							Why you?
+						</Badge>
+
+						<div className="max-w-md mb-12">
+							<p className="text-base md:text-xl leading-relaxed font-light">
+								You do your thing. You love it and would like to tell the whole
+								world about it. Great! Your passion is contagious. Tell us more
+								about your passion project
+							</p>
+						</div>
+
+						<Button variant="primary" size="md" href="/contact">
+						Make Contact
+						</Button>
 					</div>
 				</div>
 			</section>
