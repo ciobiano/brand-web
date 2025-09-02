@@ -7,6 +7,7 @@ import Card from "./Card";
 import { cardData } from "@/app/data";
 import { useGSAP } from "@gsap/react";
 import Button from "../../primitives/Button";
+import Badge from "../../primitives/Badge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -119,9 +120,11 @@ export default function Cases() {
 									zuletzt für uns, tun wir alles dafür, dass unsere Arbeit Sinn
 									macht.
 								</p>
-								<button className="px-6 md:px-8 py-3 md:py-4 bg-gray-800 hover:bg-gray-700 text-white rounded-full transition-colors duration-200 shadow-lg">
-									unser Purpose
-								</button>
+								<div>
+									<Button variant="primary" size="md" href="/purpose">
+										unser Purpose
+									</Button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -131,9 +134,9 @@ export default function Cases() {
 				<div className="z-10 absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-white h-4" />
 				<div className="gap-12 flex justify-start items-stretch py-40 max-w-4xl px-40 w-full">
 					<div className="max-w-xl w-full flex flex-col gap-4 items-start">
-						<span className="border-clou-black mb-8 border text-xs rounded-full py-[.25rem] px-[.5rem]">
+						<Badge variant="outline" size="sm" className="mb-8">
 							cases
-						</span>
+						</Badge>
 						<h2 className="text-3xl font-normal leading-tight">
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
 							repellat nulla facere illum esse molestiae tempore fugiat sit,
@@ -160,12 +163,14 @@ export default function Cases() {
 				<div className="max-w-6xl mx-auto px-8 py-24">
 					{/* Upper Section - Dark Background with Text and Buttons */}
 					<div className="mb-16">
-						{/* "Warum Clou?" Button */}
-						<Button variant="secondary" size="sm" className="mb-8">
-							Warum Clou?
-						</Button>
+						<Badge
+							variant="outline"
+							size="sm"
+							className="mb-8 text-white border-white"
+						>
+							Warum clou?
+						</Badge>
 
-						{/* Main Text */}
 						<div className="max-w-4xl mb-12">
 							<p className="text-2xl md:text-3xl leading-relaxed font-light">
 								Wir sind interessiert an deiner Idee, deiner Marke, deinem Ding.
@@ -174,8 +179,7 @@ export default function Cases() {
 							</p>
 						</div>
 
-						{/* "Team kennenlernen" Button */}
-						<Button variant="primary" size="lg">
+						<Button variant="primary" size="lg" href="/team">
 							Team kennenlernen
 						</Button>
 					</div>
