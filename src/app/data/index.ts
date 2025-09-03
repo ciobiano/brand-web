@@ -153,3 +153,57 @@ export const cardData = [
 		imageAlt: "Menagerie artwork",
 	},
 ];
+
+
+
+	const slides = [
+		{
+			image: "/images/placeholder1.jpg",
+			alt: "Mucho Fiesta, very little Siesta",
+			title: "Mucho Fiesta, very little Siesta",
+			description:
+				"Ein normaler Arbeitstag in der Rauszeit. But make it Spanish.",
+			badge: "Rauszeit",
+		},
+		{
+			image: "/images/www.clou.ch_.png",
+			alt: "Zeit für einen Mutausbruch",
+			title: "Zeit für einen Mutausbruch",
+			description:
+				"Laila folgt der Sonne in den Süden und findet sie zwischen Paella und Tinto Verano. Rauszeit in Valencia. Vamos!",
+			badge: "Rauszeit",
+		},
+		{
+			image: "/images/www.clou.ch_.png",
+			alt: "Ein unvergesslicher Trip nach København",
+			title: "Ein unvergesslicher Trip nach København",
+			description: "Wo man essen, shoppen und chillen sollte",
+			badge: "Rauszeit",
+		},
+		{
+			image: "/images/www.clou.ch_.png",
+			alt: "Hej fra København!",
+			title: "Hej fra København!",
+			description:
+				"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
+			badge: "Rauszeit",
+		},
+		{
+			image: "/images/www.clou.ch_.png",
+			alt: "Hej fra København!",
+			title: "Hej fra København!",
+			description:
+				"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
+			badge: "Rauszeit",
+		},
+		{
+			image: "/images/www.clou.ch_.png",
+			alt: "Hej fra København!",
+			title: "Hej fra København!",
+			description:
+				"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
+			badge: "Rauszeit",
+		},
+	];
+
+export const journalData = slides;

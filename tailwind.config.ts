@@ -26,7 +26,7 @@ const config: Config = {
 			colors: {
 				"clou-white": "#ffffff",
 				"clou-black": "#101114",
-
+				"clou-gray": "#e8ebe9",
 			},
 			animation: {
 				"scroll-hint": "scroll 2s ease-in-out infinite",

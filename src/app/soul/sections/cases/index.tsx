@@ -161,6 +161,7 @@ export default function Cases() {
 			</section>
 
 			<section className="relative bg-clou-black text-white">
+				<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-clou-black h-4" />
 				<div className="max-w-7xl mx-auto px-8 py-24">
 					{/* Upper Section - Dark Background with Text and Buttons */}
 					<div className="mb-16">

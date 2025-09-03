@@ -13,7 +13,7 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				primary: "bg-[#1f2126] text-white hover:bg-[#141618] hover:pl-9",
-				secondary: "bg-white text-black hover:bg-gray-100 hover:pl-9",
+				secondary: "bg-clou-gray text-black hover:bg-gray-100 hover:pl-9",
 				outline:
 					"border border-white text-white hover:bg-white hover:text-black hover:pl-9",
 				nav: "bg-transparent text-black hover:bg-[#f5f7f6] pl-4 pr-5 py-2 hover:pl-9",
@@ -21,7 +21,7 @@ const buttonVariants = cva(
 			size: {
 				sm: "px-4 py-2 text-sm",
 				md: "px-6 py-4 text-base",
-				lg: "px-8 py-4 text-lg",
+				lg: "px-8 py-4 text-base",
 				nav: "px-4 py-2 text-base",
 			},
 		},
@@ -79,6 +79,8 @@ export default function Button({
 							scale: 1,
 							duration: 0.4,
 							ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+							marginLeft: 4,
+							marginRight: 4,
 						});
 					}
 				};
@@ -115,7 +117,7 @@ export default function Button({
 	const bulletPoint = (
 		<div
 			ref={bulletRef}
-			className="absolute left-2 top-1/2 -translate-y-1/2  size-4  bg-purple-400 rounded-full opacity-0 scale-80"
+			className="absolute left-2 top-1/2 -translate-y-1/2   size-4  bg-purple-400 rounded-full opacity-0 scale-80"
 		/>
 	);
 
