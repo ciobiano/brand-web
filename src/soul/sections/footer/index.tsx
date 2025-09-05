@@ -2,7 +2,7 @@ import { ArrowUp } from "lucide-react"; // Using lucide-react for the arrow icon
 
 const Footer = () => {
 	return (
-		<footer className="bg-black text-white p-8 md:p-12 font-sans relative">
+		<footer className="bg-black text-white p-8 md:p-12  relative">
 			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
 				{/* Section 1: Large "CLOU" text */}
 				<div className="lg:col-span-2">
