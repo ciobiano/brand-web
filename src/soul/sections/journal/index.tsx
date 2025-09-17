@@ -12,6 +12,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { journalData } from "@/data";
 import Badge from "../../primitives/Badge";
 import Button from "../../primitives/Button";
+import AnimatedLink from "../../primitives/AnimatedLink";
 
 interface JournalCardProps {
 	image: StaticImageData | string;
@@ -19,6 +20,7 @@ interface JournalCardProps {
 	title: string;
 	description: string;
 	badge?: string;
+	link: string | "";
 }
 
 const JournalCard = ({
@@ -27,6 +29,7 @@ const JournalCard = ({
 	title,
 	description,
 	badge,
+	link,
 }: JournalCardProps) => (
 	<div className=" overflow-hidden  h-full w-full flex flex-col gap-2">
 		<div className="relative aspect-square overflow-hidden rounded-lg flex-shrink-0">
@@ -54,26 +57,26 @@ const JournalCard = ({
 					{title}
 				</h3>
 				<p className="text-gray-600 text-lg mb-4  leading-7">{description}</p>
+				<AnimatedLink
+					href={link}
+					className="text-clou-black justify-start items-start  "
+				>
+					read on
+					<span className="absolute bottom-0 left-0 w-full h-0.5 bg-black" />
+				</AnimatedLink>
 			</div>
-			<a
-				href="#"
-				className="flex flex-col text-gray-900 text-sm font-medium   items-center mt-auto "
-			>
-				<ArrowRight size={20} />
-				weiterlesen
-				<span className="w-full border-b border-clou-black block" />
-			</a>
 		</div>
 	</div>
 );
 
 const JournalSection = () => {
 	return (
-		<section className="relative overflow-hidden rounded-b-2xl bg-white py-40  rounded-lg">
+		<section className="relative bg-clou-white  ">
 			<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-clou-white h-4" />
-			<div className="flex flex-col my-20 gap-y-6 max-w-7xl md:mx-auto  px-4   ">
+
+			<div className="flex flex-col  gap-y-6 max-w-7xl md:mx-auto px-4 py-24   ">
 				{/* Journal Badge */}
-				<div className="mb-6">
+				<div className="mb-6 ">
 					<Badge variant="outline" size="sm">
 						Journal
 					</Badge>
@@ -131,7 +134,7 @@ const JournalSection = () => {
 					</Button>
 				</div>
 
-				<div className="flex flex-col  max-w-2xl  mt-40">
+				<div className="flex flex-col  max-w-2xl  py-40">
 					<h2 className="text-xl md:text-[2rem] max-w-lg  text-clou-black leading-10 mb-2 ">
 						Scrolled all the way to the bottom? Then it really starts now. What
 						do you want next?
@@ -147,13 +150,8 @@ const JournalSection = () => {
 							Get to know the agency
 						</Button>
 					</div>
-
-					<h1>
-						herllo
-					</h1>
 				</div>
 			</div>
-		
 		</section>
 	);
 };

@@ -86,7 +86,7 @@ const Hero: React.FC<HeroProps> = ({
 			<div className="custom-cursor"></div>
 
 			{/* Fixed container for everything except images */}
-			<div className="relative w-full h-screen ">
+			<div className="relative w-full h-svh ">
 				<Navigation />
 
 				{/* Main title - fixed in viewport */}

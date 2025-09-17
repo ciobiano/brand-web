@@ -12,7 +12,7 @@ interface BadgeProps {
 
 const badgeVariants = {
 	default: "bg-clou-black text-white",
-	outline: "border border-clou-black text-clou-black",
+	outline: "border border-clou-black  text-clou-black ",
 	secondary: "bg-gray-100 text-gray-800",
 };
 

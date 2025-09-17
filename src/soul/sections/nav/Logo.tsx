@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
+import React, { MouseEvent } from "react";
+import { useTransitionRouter } from "next-transition-router";
 
 type LogoProps = {
 	className?: string;
@@ -11,17 +11,35 @@ type LogoProps = {
 
 const Logo: React.FC<LogoProps> = ({
 	className = "",
-	href = "#",
+	href = "/",
 	letter = "C",
 }) => {
+	const router = useTransitionRouter();
+
+	const isModifiedEvent = (event: MouseEvent<HTMLAnchorElement>) =>
+		event.metaKey ||
+		event.ctrlKey ||
+		event.shiftKey ||
+		event.altKey ||
+		(event.button !== undefined && event.button !== 0);
+
+	const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+		if (isModifiedEvent(event)) {
+			return;
+		}
+		event.preventDefault();
+		router.push(href);
+	};
+
 	return (
 		<div className={`absolute top-0 left-0 z-50 p-6 ${className}`}>
-			<Link
+			<a
 				href={href}
+				onClick={handleClick}
 				className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center transition-transform hover:scale-105"
 			>
 				<span className="text-white font-bold text-lg">{letter}</span>
-			</Link>
+			</a>
 		</div>
 	);
 };

@@ -12,11 +12,11 @@ const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-				primary: "bg-[#1f2126] text-white hover:bg-[#141618] hover:pl-9",
-				secondary: "bg-clou-gray text-black hover:bg-gray-100 hover:pl-9",
+				primary: "bg-[#1f2126] text-white hover:bg-[#141618]",
+				secondary: "bg-clou-gray text-black hover:bg-gray-100",
 				outline:
-					"border border-white text-white hover:bg-white hover:text-black hover:pl-9",
-				nav: "bg-transparent text-black hover:bg-[#f5f7f6] pl-4 pr-5 py-2 hover:pl-9",
+					"border border-white text-white hover:bg-white hover:text-black",
+				nav: "bg-transparent text-black hover:bg-[#f5f7f6] pl-4 pr-5 py-2",
 			},
 			size: {
 				sm: "px-4 py-2 text-sm",
@@ -70,43 +70,39 @@ export default function Button({
 			);
 
 			// For nav variant, use elastic padding effect like clou.ch
-		
-				const handleMouseEnter = () => {
-					// Animate bullet point
-					if (bullet) {
-						gsap.to(bullet, {
-							opacity: 1,
-							scale: 1,
-							duration: 0.4,
-							ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-							marginLeft: 4,
-							marginRight: 4,
-						});
-					}
-				};
+			const handleMouseEnter = () => {
+				// Animate bullet point
+				if (bullet) {
+					gsap.to(bullet, {
+						opacity: 1,
+						scale: 1,
+						duration: 0.4,
+						ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+						marginLeft: 4,
+						marginRight: 4,
+					});
+				}
+			};
 
-				const handleMouseLeave = () => {
-					// Hide bullet point
-					if (bullet) {
-						gsap.to(bullet, {
-							opacity: 0,
-							scale: 0.8,
-							duration: 0.4,
-							ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-						});
-					}
-				};
+			const handleMouseLeave = () => {
+				// Hide bullet point
+				if (bullet) {
+					gsap.to(bullet, {
+						opacity: 0,
+						scale: 0.8,
+						duration: 0.4,
+						ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+					});
+				}
+			};
 
-				el.addEventListener("mouseenter", handleMouseEnter);
-				el.addEventListener("mouseleave", handleMouseLeave);
+			el.addEventListener("mouseenter", handleMouseEnter);
+			el.addEventListener("mouseleave", handleMouseLeave);
 
-				return () => {
-					el.removeEventListener("mouseenter", handleMouseEnter);
-					el.removeEventListener("mouseleave", handleMouseLeave);
-				};
-
-				
-			
+			return () => {
+				el.removeEventListener("mouseenter", handleMouseEnter);
+				el.removeEventListener("mouseleave", handleMouseLeave);
+			};
 		},
 		{ scope: ref, dependencies: [variant] }
 	);
@@ -121,12 +117,17 @@ export default function Button({
 		/>
 	);
 
-
+	const textShiftClasses = cn(
+		"relative z-10 inline-flex items-center gap-2 transition-all duration-[400ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)]",
+		variant === "nav"
+			? "pl-0 group-hover:pl-6"
+			: "pl-0 group-hover:pl-3"
+	);
 
 	const content = (
 		<>
 			{bulletPoint}
-			{children}
+			<span className={textShiftClasses}>{children}</span>
 		</>
 	);
 

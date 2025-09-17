@@ -1,22 +1,41 @@
 "use client";
 
-import Link from "next/link";
+import { MouseEvent } from "react";
+import { useTransitionRouter } from "next-transition-router";
 import Logo from "./Logo";
 import Button from "../../primitives/Button";
 
 const navItems = [
-	{ name: "Projects", href: "/projects" },
-	{ name: "About", href: "/about" },
-	{ name: "Journal", href: "/journal" },
-	{ name: "Contact", href: "/contact" },
+	{ name: "Projects", href: "/projects", message:'kaine projects' },
+	{ name: "About", href: "/about", message:'kaine projects'  },
+	{ name: "Journal", href: "/journal", message:'kaine projects' },
+	{ name: "Contact", href: "/contact", message:'kaine projects' },
 ];
 
 export default function Navigation() {
+	const router = useTransitionRouter();
+
+	const isModifiedEvent = (event: MouseEvent<HTMLAnchorElement>) =>
+		event.metaKey ||
+		event.ctrlKey ||
+		event.shiftKey ||
+		event.altKey ||
+		(event.button !== undefined && event.button !== 0);
+
+	const handleNavClick = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+		if (isModifiedEvent(event)) {
+			return;
+		}
+		event.preventDefault();
+		router.push(href);
+	};
+
 	return (
 		<nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between h-16">
 					{/* Logo */}
+					
 					<div className="flex-shrink-0">
 						<Logo />
 					</div>
@@ -63,13 +82,14 @@ export default function Navigation() {
 			<div className="md:hidden" id="mobile-menu">
 				<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
 					{navItems.map((item) => (
-						<Link
+						<a
 							key={item.name}
 							href={item.href}
+							onClick={handleNavClick(item.href)}
 							className="text-gray-900 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium"
 						>
 							{item.name}
-						</Link>
+						</a>
 					))}
 				</div>
 			</div>

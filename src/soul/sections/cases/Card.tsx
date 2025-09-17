@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
+import Image from "next/image";
 
 interface CardProps {
 	id: string;
@@ -29,7 +30,6 @@ export default function Card({
 	imageSrc,
 	imageAlt,
 	children,
-	
 }: CardProps) {
 	return (
 		<div
@@ -59,11 +59,13 @@ export default function Card({
 				</div>
 
 				{/* Card Image */}
-				<div className="w-full h-full mt-16 overflow-hidden">
-					<img
+				<div className="w-full h-full mt-16 overflow-hidden relative">
+					<Image
 						src={imageSrc}
 						alt={imageAlt}
-						className="w-full h-full object-cover"
+						fill
+						className="object-cover"
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 					/>
 				</div>
 

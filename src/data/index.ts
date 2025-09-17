@@ -74,7 +74,7 @@ const allImages = [
 		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_Clou_Canvas-TCS-Iceteam.jpg",
 		alt: "Thumbnail 05",
 		link: "/projekte/tcs-camping-bio-tea",
-	 },
+	},
 	// {
 	// 	src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/placeholder1.jpg",
 	// 	alt: "Additional Image 16",
@@ -102,14 +102,24 @@ const allImages = [
 	// },
 ];
 
-// Shuffle and export
-function getRandomImages(count: number = 15) {
-	const shuffled = [...allImages].sort(() => Math.random() - 0.5);
+// Use a deterministic shuffle to prevent hydration mismatches
+function getDeterministicImages(count: number = 15) {
+	// Use a fixed seed for consistent ordering between server and client
+	const seed = 42;
+	const shuffled = [...allImages].sort((a, b) => {
+		// Create a simple hash from the alt text for deterministic sorting
+		const hashA = a.alt
+			.split("")
+			.reduce((acc, char) => acc + char.charCodeAt(0), 0);
+		const hashB = b.alt
+			.split("")
+			.reduce((acc, char) => acc + char.charCodeAt(0), 0);
+		return (hashA + seed) % 2 === 0 ? -1 : 1;
+	});
 	return shuffled.slice(0, count);
 }
 
-export const heroImages = getRandomImages(15);
-
+export const heroImages = getDeterministicImages(15);
 
 export const cardData = [
 	{
@@ -119,7 +129,7 @@ export const cardData = [
 		title: "Reverie",
 		description:
 			"A psychedelic skull study exploring the tension between playfulness and decay. Bold candy tones, liquid forms, and crisp vectors bring a surreal, pop-art mood meant for covers and prints.",
-		imageSrc: "/img1.jpg",
+		imageSrc: "/images/placeholder1.jpg",
 		imageAlt: "Reverie artwork",
 	},
 	{
@@ -129,7 +139,7 @@ export const cardData = [
 		title: "Vaporwave",
 		description:
 			"An 80s-UI dreamscape: stacked windows, checkerboard floors, and a sunset gradient. Built to feel like a loading screen to another world—nostalgic, glossy, and a bit uncanny.",
-		imageSrc: "/img2.jpg",
+		imageSrc: "/images/placeholder2.jpg",
 		imageAlt: "Vaporwave artwork",
 	},
 	{
@@ -139,7 +149,7 @@ export const cardData = [
 		title: "Kaleido",
 		description:
 			"Ornamental symmetry inspired by folk motifs and stained-glass glow. Designed as a seamless, tileable pattern for textiles, wallpapers, and rich UI backgrounds.",
-		imageSrc: "/img3.jpg",
+		imageSrc: "/images/placeholder3.jpg",
 		imageAlt: "Kaleido artwork",
 	},
 	{
@@ -149,61 +159,65 @@ export const cardData = [
 		title: "Menagerie",
 		description:
 			"A playful portrait surrounded by oddball companions—mascots, monsters, and midnight snacks. Loose linework meets pastel whimsy, perfect for merch, stickers, and editorial spots.",
-		imageSrc: "/img4.jpg",
+		imageSrc: "/images/placeholder4.jpg",
 		imageAlt: "Menagerie artwork",
 	},
 ];
 
-
-
-	const slides = [
-		{
-			image: "/images/placeholder1.jpg",
-			alt: "Mucho Fiesta, very little Siesta",
-			title: "Mucho Fiesta, very little Siesta",
-			description:
-				"Ein normaler Arbeitstag in der Rauszeit. But make it Spanish.",
-			badge: "Rauszeit",
-		},
-		{
-			image: "/images/www.clou.ch_.png",
-			alt: "Zeit für einen Mutausbruch",
-			title: "Zeit für einen Mutausbruch",
-			description:
-				"Laila folgt der Sonne in den Süden und findet sie zwischen Paella und Tinto Verano. Rauszeit in Valencia. Vamos!",
-			badge: "Rauszeit",
-		},
-		{
-			image: "/images/www.clou.ch_.png",
-			alt: "Ein unvergesslicher Trip nach København",
-			title: "Ein unvergesslicher Trip nach København",
-			description: "Wo man essen, shoppen und chillen sollte",
-			badge: "Rauszeit",
-		},
-		{
-			image: "/images/www.clou.ch_.png",
-			alt: "Hej fra København!",
-			title: "Hej fra København!",
-			description:
-				"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
-			badge: "Rauszeit",
-		},
-		{
-			image: "/images/www.clou.ch_.png",
-			alt: "Hej fra København!",
-			title: "Hej fra København!",
-			description:
-				"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
-			badge: "Rauszeit",
-		},
-		{
-			image: "/images/www.clou.ch_.png",
-			alt: "Hej fra København!",
-			title: "Hej fra København!",
-			description:
-				"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
-			badge: "Rauszeit",
-		},
-	];
+const slides = [
+	{
+		image: "/images/placeholder1.jpg",
+		alt: "Mucho Fiesta, very little Siesta",
+		title: "Mucho Fiesta, very little Siesta",
+		description:
+			"Ein normaler Arbeitstag in der Rauszeit. But make it Spanish.",
+		badge: "Rauszeit",
+		link: "https://www.clou.ch/",
+	},
+	{
+		image: "/images/www.clou.ch_.png",
+		alt: "Zeit für einen Mutausbruch",
+		title: "Zeit für einen Mutausbruch",
+		description:
+			"Laila folgt der Sonne in den Süden und findet sie zwischen Paella und Tinto Verano. Rauszeit in Valencia. Vamos!",
+		badge: "Rauszeit",
+		link: "https://www.clou.ch/",
+	},
+	{
+		image: "/images/www.clou.ch_.png",
+		alt: "Ein unvergesslicher Trip nach København",
+		title: "Ein unvergesslicher Trip nach København",
+		description: "Wo man essen, shoppen und chillen sollte",
+		badge: "Rauszeit",
+		link: "https://www.clou.ch/",
+	},
+	{
+		image: "/images/www.clou.ch_.png",
+		alt: "Hej fra København!",
+		title: "Hej fra København!",
+		description:
+			"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
+		badge: "Rauszeit",
+		link: "https://www.clou.ch/",
+	},
+	{
+		image: "/images/www.clou.ch_.png",
+		alt: "Hej fra København!",
+		title: "Hej fra København!",
+		description:
+			"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
+		badge: "Rauszeit",
+		link: "https://www.clou.ch/",
+	},
+	{
+		image: "/images/www.clou.ch_.png",
+		alt: "Hej fra København!",
+		title: "Hej fra København!",
+		description:
+			"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
+		badge: "Rauszeit",
+		link: "https://www.clou.ch/",
+	},
+];
 
 export const journalData = slides;
