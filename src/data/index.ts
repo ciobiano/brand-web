@@ -164,58 +164,196 @@ export const cardData = [
 	},
 ];
 
+export type ProjectTag =
+	| "Purpose"
+	| "Branding"
+	| "Webflow"
+	| "Strategy"
+	| "Digital"
+	| "Graphic Design"
+	| "Content"
+	| "Packaging"
+	| "Editorial"
+	| "Illustration"
+	| "Concept"
+	| "Tourism"
+	| "Hospitality"
+	| "Education"
+	| "Health"
+	| "Comedy"
+	| "Cinema"
+	| "Interior";
+
+export interface Project {
+	id: string;
+	title: string;
+	subtitle: string;
+	description: string;
+	tags: ProjectTag[];
+	imageSrc: string;
+	imageAlt: string;
+	href: string;
+	badge?: {
+		title: string;
+		subtitle: string;
+		tone?: "coral" | "charcoal";
+	};
+}
+
+export const projectTags: ("Show all" | ProjectTag)[] = [
+	"Show all",
+	"Purpose",
+	"Branding",
+	"Webflow",
+	"Strategy",
+	"Digital",
+	"Graphic Design",
+	"Content",
+	"Packaging",
+	"Editorial",
+	"Illustration",
+	"Concept",
+	"Tourism",
+	"Hospitality",
+	"Education",
+	"Health",
+	"Comedy",
+	"Cinema",
+	"Interior",
+];
+
+export const projectsData: Project[] = [
+	{
+		id: "hotel-schweizerhof-luzern",
+		title: "Hotel Schweizerhof Lucerne",
+		subtitle: "VICO invites you",
+		description:
+			"An iconic grand hotel rediscovered through warm hospitality cues and confident storytelling.",
+		tags: ["Branding", "Hospitality", "Interior"],
+		imageSrc:
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm.jpg",
+		imageAlt: "Interior shot of Hotel Schweizerhof Lucerne",
+		href: "/projekte/hotel-schweizerhof-luzern",
+	},
+	{
+		id: "albert-koechlin-stiftung",
+		title: "Albert Koechlin Foundation",
+		subtitle: "Everything paletti?",
+		description:
+			"A digital identity that translates cultural funding diversity into modular color bands.",
+		tags: ["Webflow", "Branding", "Graphic Design"],
+		imageSrc:
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung.jpg",
+		imageAlt: "Colorful panel arrangement for Albert Koechlin Foundation",
+		href: "/projekte/albert-koechlin-stiftung",
+		badge: {
+			title: "W.",
+			subtitle: "Site of the Day",
+			tone: "coral",
+		},
+	},
+	{
+		id: "tourismus-luzern",
+		title: "Lucerne Tourism",
+		subtitle: "More attitude, fewer postcards",
+		description:
+			"Strategic brand leadership and digital storytelling that position Lucerne beyond clichés.",
+		tags: ["Strategy", "Tourism", "Digital"],
+		imageSrc:
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_Clou_Portfolio_TFL_Tiny.jpg",
+		imageAlt: "People overlooking the lake in Lucerne",
+		href: "/projekte/tourismus-luzern",
+	},
+	{
+		id: "lostly",
+		title: "Lostly",
+		subtitle: "Album launch with attitude",
+		description:
+			"Illustration, editorial design, and content packs that spotlight the artists behind Lostly.",
+		tags: ["Content", "Illustration", "Editorial"],
+		imageSrc:
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly.jpg",
+		imageAlt: "Editorial spread for Lostly album launch",
+		href: "/projekte/lostly",
+	},
+	{
+		id: "new-hope-sa",
+		title: "New Hope SA",
+		subtitle: "Care reimagined",
+		description:
+			"Purpose-led brand work that balances healthcare expertise with genuine empathy.",
+		tags: ["Purpose", "Health", "Branding"],
+		imageSrc:
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope.jpg",
+		imageAlt: "Soft gradient abstractions for New Hope SA",
+		href: "/projekte/new-hope-sa",
+	},
+	{
+		id: "tavolago",
+		title: "Tavolago",
+		subtitle: "A magazine to sink your teeth into",
+		description:
+			"Packaging and editorial design that make local gastronomy feel vivid and irresistible.",
+		tags: ["Packaging", "Hospitality", "Content"],
+		imageSrc:
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin.jpg",
+		imageAlt: "Editorial layout for Tavolago magazine",
+		href: "/projekte/tavolago",
+	},
+];
+
 const slides = [
 	{
 		image: "/images/placeholder1.jpg",
 		alt: "Mucho Fiesta, very little Siesta",
 		title: "Mucho Fiesta, very little Siesta",
 		description:
-			"Ein normaler Arbeitstag in der Rauszeit. But make it Spanish.",
-		badge: "Rauszeit",
+			"An ordinary workday on time out. But make it Spanish.",
+		badge: "Time Out",
 		link: "https://www.clou.ch/",
 	},
 	{
 		image: "/images/www.clou.ch_.png",
-		alt: "Zeit für einen Mutausbruch",
-		title: "Zeit für einen Mutausbruch",
+		alt: "Time for a leap of courage",
+		title: "Time for a leap of courage",
 		description:
-			"Laila folgt der Sonne in den Süden und findet sie zwischen Paella und Tinto Verano. Rauszeit in Valencia. Vamos!",
-		badge: "Rauszeit",
+			"Laila follows the sun south and finds it between paella and tinto verano. Time out in Valencia. Vamos!",
+		badge: "Time Out",
 		link: "https://www.clou.ch/",
 	},
 	{
 		image: "/images/www.clou.ch_.png",
-		alt: "Ein unvergesslicher Trip nach København",
-		title: "Ein unvergesslicher Trip nach København",
-		description: "Wo man essen, shoppen und chillen sollte",
-		badge: "Rauszeit",
+		alt: "An unforgettable trip to Copenhagen",
+		title: "An unforgettable trip to Copenhagen",
+		description: "Where to eat, shop, and unwind",
+		badge: "Time Out",
 		link: "https://www.clou.ch/",
 	},
 	{
 		image: "/images/www.clou.ch_.png",
-		alt: "Hej fra København!",
-		title: "Hej fra København!",
+		alt: "Hello from Copenhagen!",
+		title: "Hello from Copenhagen!",
 		description:
-			"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
-		badge: "Rauszeit",
+			"Michelle experiences her first time out in Denmark's design capital.",
+		badge: "Time Out",
 		link: "https://www.clou.ch/",
 	},
 	{
 		image: "/images/www.clou.ch_.png",
-		alt: "Hej fra København!",
-		title: "Hej fra København!",
+		alt: "Hello from Copenhagen!",
+		title: "Hello from Copenhagen!",
 		description:
-			"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
-		badge: "Rauszeit",
+			"Michelle experiences her first time out in Denmark's design capital.",
+		badge: "Time Out",
 		link: "https://www.clou.ch/",
 	},
 	{
 		image: "/images/www.clou.ch_.png",
-		alt: "Hej fra København!",
-		title: "Hej fra København!",
+		alt: "Hello from Copenhagen!",
+		title: "Hello from Copenhagen!",
 		description:
-			"Michelle erlebt ihre erste Rauszeit in der dänischen Design-Hochburg.",
-		badge: "Rauszeit",
+			"Michelle experiences her first time out in Denmark's design capital.",
+		badge: "Time Out",
 		link: "https://www.clou.ch/",
 	},
 ];
