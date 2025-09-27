@@ -27,13 +27,15 @@ const config: Config = {
 			colors: {
 				"clou-white": "#ffffff",
 				"clou-black": "#101114",
-				"clou-gray": "#e8ebe9",
+				"clou-gray": "#929296",
+				"clou-red": "rgb(var(--clou-red)",
 			},
 			animation: {
 				"scroll-hint": "scroll 2s ease-in-out infinite",
 				"fade-in-up": "fade-in-up 0.8s ease-out forwards",
 				"scale-in": "scale-in 0.6s ease-out forwards",
 				"slide-down": "slide-down 0.75s ease-out forwards",
+				"marquee-soft": "marquee-soft 40s linear infinite",
 			},
 			keyframes: {
 				scroll: {
@@ -64,6 +66,10 @@ const config: Config = {
 					"0%": { transform: "translateY(0)" },
 					"100%": { transform: "translateY(-100%)" },
 				},
+				"marquee-soft": {
+					"0%": { transform: "translateX(0)" },
+					"100%": { transform: "translateX(-50%)" },
+				},
 			},
 			transitionTimingFunction: {
 				"clou-ease": "cubic-bezier(0.25, 0.1, 0.25, 1)",
@@ -76,6 +82,13 @@ const config: Config = {
 				"clou-hero": [
 					"353.4px",
 					{ lineHeight: "318.06px", letterSpacing: "-8.835px" },
+				],
+				"3xl": [
+					"32px",
+					{
+						lineHeight: "32px",
+						letterSpacing: "-0.64px",
+					},
 				],
 			},
 			letterSpacing: {

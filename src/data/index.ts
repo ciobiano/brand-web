@@ -1,5 +1,17 @@
-// Your existing 15 images
-const allImages = [
+import {
+	CaseCard,
+	HeroImage,
+	JournalCardPreview,
+	JournalEntry,
+	JournalTagFilter,
+	Project,
+	ProjectTagFilter,
+} from "./types";
+
+const HERO_IMAGE_SEED = 42;
+const HERO_IMAGE_LIMIT = 15;
+
+const heroImagePool: readonly HeroImage[] = [
 	{
 		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/6792613a5d497ebec43738c6_RZ_Clou_Portfolio_LIV_Achte_auf_dich_Home_04_Tiny.jpg",
 		alt: "Thumbnail 11",
@@ -75,56 +87,39 @@ const allImages = [
 		alt: "Thumbnail 05",
 		link: "/projekte/tcs-camping-bio-tea",
 	},
-	// {
-	// 	src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/placeholder1.jpg",
-	// 	alt: "Additional Image 16",
-	// 	link: "/projekte/additional-1",
-	// },
-	// {
-	// 	src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/placeholder2.jpg",
-	// 	alt: "Additional Image 17",
-	// 	link: "/projekte/additional-2",
-	// },
-	// {
-	// 	src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/placeholder3.jpg",
-	// 	alt: "Additional Image 18",
-	// 	link: "/projekte/additional-3",
-	// },
-	// {
-	// 	src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/placeholder4.jpg",
-	// 	alt: "Additional Image 19",
-	// 	link: "/projekte/additional-4",
-	// },
-	// {
-	// 	src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/placeholder5.jpg",
-	// 	alt: "Additional Image 20",
-	// 	link: "/projekte/additional-5",
-	// },
 ];
 
-// Use a deterministic shuffle to prevent hydration mismatches
-function getDeterministicImages(count: number = 15) {
-	// Use a fixed seed for consistent ordering between server and client
-	const seed = 42;
-	const shuffled = [...allImages].sort((a, b) => {
-		// Create a simple hash from the alt text for deterministic sorting
-		const hashA = a.alt
-			.split("")
-			.reduce((acc, char) => acc + char.charCodeAt(0), 0);
-		const hashB = b.alt
-			.split("")
-			.reduce((acc, char) => acc + char.charCodeAt(0), 0);
-		return (hashA + seed) % 2 === 0 ? -1 : 1;
-	});
-	return shuffled.slice(0, count);
-}
+const createSeededRandom = (seed: number) => () => {
+	const x = Math.sin(seed++) * 10000;
+	return x - Math.floor(x);
+};
 
-export const heroImages = getDeterministicImages(15);
+const deterministicShuffle = <T,>(items: readonly T[], seed: number): T[] => {
+	const random = createSeededRandom(seed);
+	const copy = [...items];
 
-export const cardData = [
+	for (let i = copy.length - 1; i > 0; i -= 1) {
+		const j = Math.floor(random() * (i + 1));
+		[copy[i], copy[j]] = [copy[j], copy[i]];
+	}
+
+	return copy;
+};
+
+export const heroImages: HeroImage[] = deterministicShuffle(
+	heroImagePool,
+	HERO_IMAGE_SEED
+).slice(0, HERO_IMAGE_LIMIT);
+
+export const allHeroImages = heroImagePool;
+
+export const getHeroImages = (count: number = HERO_IMAGE_LIMIT): HeroImage[] =>
+	deterministicShuffle(heroImagePool, HERO_IMAGE_SEED).slice(0, count);
+
+export const cardData: CaseCard[] = [
 	{
 		id: "card-1",
-		accentColor: "accent-1" as const,
+		accentColor: "accent-1",
 		info: "A surreal dive into neon hues and playful decay",
 		title: "Reverie",
 		description:
@@ -134,7 +129,7 @@ export const cardData = [
 	},
 	{
 		id: "card-2",
-		accentColor: "accent-2" as const,
+		accentColor: "accent-2",
 		info: "A retro-futurist scene where nostalgia meets glitch",
 		title: "Vaporwave",
 		description:
@@ -144,7 +139,7 @@ export const cardData = [
 	},
 	{
 		id: "card-3",
-		accentColor: "accent-3" as const,
+		accentColor: "accent-3",
 		info: "A kaleidoscope of folk motifs reimagined in digital form",
 		title: "Kaleido",
 		description:
@@ -154,7 +149,7 @@ export const cardData = [
 	},
 	{
 		id: "card-4",
-		accentColor: "accent-4" as const,
+		accentColor: "accent-4",
 		info: "A portrait framed by oddball creatures and doodles",
 		title: "Menagerie",
 		description:
@@ -164,43 +159,7 @@ export const cardData = [
 	},
 ];
 
-export type ProjectTag =
-	| "Purpose"
-	| "Branding"
-	| "Webflow"
-	| "Strategy"
-	| "Digital"
-	| "Graphic Design"
-	| "Content"
-	| "Packaging"
-	| "Editorial"
-	| "Illustration"
-	| "Concept"
-	| "Tourism"
-	| "Hospitality"
-	| "Education"
-	| "Health"
-	| "Comedy"
-	| "Cinema"
-	| "Interior";
-
-export interface Project {
-	id: string;
-	title: string;
-	subtitle: string;
-	description: string;
-	tags: ProjectTag[];
-	imageSrc: string;
-	imageAlt: string;
-	href: string;
-	badge?: {
-		title: string;
-		subtitle: string;
-		tone?: "coral" | "charcoal";
-	};
-}
-
-export const projectTags: ("Show all" | ProjectTag)[] = [
+export const projectTags = [
 	"Show all",
 	"Purpose",
 	"Branding",
@@ -220,7 +179,7 @@ export const projectTags: ("Show all" | ProjectTag)[] = [
 	"Comedy",
 	"Cinema",
 	"Interior",
-];
+] satisfies ReadonlyArray<ProjectTagFilter>;
 
 export const projectsData: Project[] = [
 	{
@@ -302,60 +261,103 @@ export const projectsData: Project[] = [
 	},
 ];
 
-const slides = [
+export const journalTags = [
+	"Show all",
+	"Humans",
+	"Flash",
+	"Agency",
+	"Strategy",
+	"Digital",
+] satisfies ReadonlyArray<JournalTagFilter>;
+
+export const journalEntries: JournalEntry[] = [
 	{
-		image: "/images/placeholder1.jpg",
-		alt: "Mucho Fiesta, very little Siesta",
+		id: "valencia-field-notes",
 		title: "Mucho Fiesta, very little Siesta",
-		description:
-			"An ordinary workday on time out. But make it Spanish.",
-		badge: "Time Out",
-		link: "https://www.clou.ch/",
+		summary: "An ordinary workday on time out. But make it Spanish.",
+		tags: ["Humans", "Agency"],
+		cover: {
+			src: "/images/placeholder1.jpg",
+			alt: "Team members exploring Valencia's streets at dusk",
+		},
+		link: "/journal/valencia-field-notes",
+		
 	},
 	{
-		image: "/images/www.clou.ch_.png",
-		alt: "Time for a leap of courage",
+		id: "valencia-leap-of-courage",
 		title: "Time for a leap of courage",
-		description:
-			"Laila follows the sun south and finds it between paella and tinto verano. Time out in Valencia. Vamos!",
-		badge: "Time Out",
-		link: "https://www.clou.ch/",
+				summary:
+			"Laila follows the sun south and finds it between paella and tinto verano.",
+		tags: ["Humans", "Flash"],
+		cover: {
+			src: "/images/placeholder2.jpg",
+			alt: "Collage of travel moments from Valencia",
+		},
+		link: "/journal/time-for-a-leap-of-courage",
+		
 	},
 	{
-		image: "/images/www.clou.ch_.png",
-		alt: "An unforgettable trip to Copenhagen",
+		id: "copenhagen-city-guide",
 		title: "An unforgettable trip to Copenhagen",
-		description: "Where to eat, shop, and unwind",
-		badge: "Time Out",
-		link: "https://www.clou.ch/",
+		
+		summary: "Where to eat, shop, and unwind when design is your compass.",
+		tags: ["Strategy", "Digital"],
+		cover: {
+			src: "/images/placeholder2.jpg",
+			alt: "Illustrated map of Copenhagen with design hotspots",
+		},
+		link: "/journal/an-unforgettable-trip-to-copenhagen",
+		
 	},
 	{
-		image: "/images/www.clou.ch_.png",
-		alt: "Hello from Copenhagen!",
+		id: "copenhagen-time-out",
 		title: "Hello from Copenhagen!",
-		description:
-			"Michelle experiences her first time out in Denmark's design capital.",
-		badge: "Time Out",
-		link: "https://www.clou.ch/",
+				summary: "Michelle experiences her first time out in Denmark's design capital.",
+		tags: ["Humans", "Agency"],
+		cover: {
+			src: "/images/placeholder2.jpg",
+			alt: "Portrait of Michelle cycling through Copenhagen",
+		},
+		link: "/journal/hello-from-copenhagen",
+		
 	},
 	{
-		image: "/images/www.clou.ch_.png",
-		alt: "Hello from Copenhagen!",
-		title: "Hello from Copenhagen!",
-		description:
-			"Michelle experiences her first time out in Denmark's design capital.",
-		badge: "Time Out",
-		link: "https://www.clou.ch/",
+		id: "flash-lab-pop-up",
+		title: "Inside our Flash Lab pop-up",
+		summary:
+			"Rapid prototyping, late-night sketches, and how the team ships ideas before sunrise.",
+		tags: ["Flash", "Digital"],
+		cover: {
+			src: "/images/placeholder1.jgp",
+			alt: "Designers collaborating in a neon-lit studio",
+		},
+		link: "/journal/flash-lab-pop-up",
+		
 	},
 	{
-		image: "/images/www.clou.ch_.png",
-		alt: "Hello from Copenhagen!",
-		title: "Hello from Copenhagen!",
-		description:
-			"Michelle experiences her first time out in Denmark's design capital.",
-		badge: "Time Out",
-		link: "https://www.clou.ch/",
+		id: "strategy-summit-retrospective",
+		title: "What we learned at Strategy Summit",
+		summary:
+			"The three takeaways shaping how we lead digital-first brands in 2025.",
+		tags: ["Strategy", "Agency"],
+		cover: {
+			src: "/images/placeholder5.jpg",
+			alt: "Speakers on stage at a design strategy conference",
+		},
+		link: "/journal/strategy-summit-retrospective",
+	
 	},
 ];
 
-export const journalData = slides;
+export const journalData: JournalCardPreview[] = journalEntries.map(
+	({ cover, title, summary, tags, link }) => ({
+		image: cover.src,
+		alt: cover.alt,
+		title,
+		description: summary,
+	
+		link,
+	})
+);
+
+export * from "./types";

@@ -11,6 +11,7 @@
   --color-secondary: #ffffff;
 
   --color-primary: #101114;
+  --clou-red: 221 47 32;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,11 +44,28 @@ body {
 
 html {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .grainy-card {
+    isolation: isolate;
+  }
+
+  .grainy-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("/noise.svg");
+    background-size: 200px 200px;
+    opacity: 0.35;
+    mix-blend-mode: soft-light;
+    z-index: 0;
   }
 }
 
@@ -327,10 +345,6 @@ html {
 
 
 
-button:hover,
-a:hover {
-  transform: translateY(-2px);
-}
 
 
 

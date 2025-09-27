@@ -3,7 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import ScrollSmootherWrapper from "../soul/primitives/ScrollSmootherWrapper";
 import Footer from "@/soul/sections/footer";
-import {  Providers } from "@/soul/components/PageTransition";
+import {  Providers } from "@/soul/primitives/PageTransition";
 
 const inter = Inter({
 	subsets: ["latin"],

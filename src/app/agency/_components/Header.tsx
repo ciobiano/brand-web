@@ -8,7 +8,46 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const slides = [
+type LabelVariant = "center" | "mid-left" | "none";
+
+type VideoSlide = {
+	type: "video";
+	sources: {
+		src: string;
+		type: string;
+	}[];
+	poster: string;
+	label?: string;
+	labelVariant?: LabelVariant;
+};
+
+type ImageSlide = {
+	type: "image";
+	src: string;
+	label?: string;
+	labelVariant?: LabelVariant;
+};
+
+type Slide = VideoSlide | ImageSlide;
+
+const defaultLabelVariant: Record<Slide["type"], LabelVariant> = {
+	video: "center",
+	image: "mid-left",
+};
+
+const labelContainerClasses: Record<LabelVariant, string> = {
+	center: "inset-0 flex items-center justify-center",
+	"mid-left": "top-1/2 left-0 flex -translate-y-1/2 items-center px-4 py-5",
+	none: "",
+};
+
+const labelTextClasses: Record<LabelVariant, string> = {
+	center: "text-center",
+	"mid-left": "text-left",
+	none: "",
+};
+
+const slides: Slide[] = [
 	{
 		type: "video" as const,
 		sources: [
@@ -70,11 +109,10 @@ export default function Header() {
 					const section = rootRef.current;
 					const wrapper = cardsWrapperRef.current;
 					const cards = cardsRef.current;
-										const getScrollAmount = () =>
-																		Math.max(0, cards.scrollWidth - wrapper.clientWidth);
+					const getScrollAmount = () =>
+						Math.max(0, cards.scrollWidth - wrapper.clientWidth);
 
 					if (getScrollAmount() > 0) {
-						
 						gsap.fromTo(
 							cards,
 							{ x: 0 },
@@ -87,7 +125,6 @@ export default function Header() {
 									start: "center center",
 									end: () => `+=${getScrollAmount()}`,
 									scrub: 1,
-									markers: true,
 									invalidateOnRefresh: true,
 								},
 							}
@@ -103,12 +140,12 @@ export default function Header() {
 
 	return (
 		<section ref={rootRef} className="relative bg-white text-black">
-			<div className="flex w-full flex-col gap-6 px-6 pb-24 mt-48">
-				<div className="space-y-8 px-10 pb-10">
-					<p className="text-xs font-medium uppercase tracking-[0.45em] text-black/60">
+			<div className="flex w-full flex-col gap-6 px-10 pb-24 mt-48">
+				<div className="space-y-8 px-10 pb-20">
+					<p className=" font-medium uppercase max-w-md  text-black/60">
 						Award-winning agency with 18 years of experience worldwide.
 					</p>
-					<h1 className="max-w-3xl text-4xl font-semibold uppercase leading-tight sm:text-5xl lg:text-[4.1rem] lg:leading-[1.15]">
+					<h1 className="max-w-3xl text-4xl font-semibold  leading-tight lg:text-[4.7rem] lg:leading-[1.15]">
 						<span className="block overflow-hidden">
 							<span data-hero-line className="block">
 								Welcome!
@@ -129,60 +166,83 @@ export default function Header() {
 							className="inline-grid grid-flow-col auto-cols-[clamp(20rem,_85vw,_60rem)] gap-4 md:gap-8"
 							data-hero-cards
 						>
-							{slides.map((slide, index) => (
-								<div
-									key={index}
-									className="relative w-full overflow-hidden rounded-[32px] border border-black/5 bg-black/5"
-								>
-									<div className="relative h-[32rem] w-full sm:h-[54vh] lg:h-[65vh]">
-										{slide.type === "video" ? (
-											<video
-												className="h-full w-full object-cover"
-												autoPlay
-												loop
-												muted
-												playsInline
-												poster={slide.poster}
-											>
-												{slide.sources.map((source) => (
-													<source
-														key={source.src}
-														src={source.src}
-														type={source.type}
-													/>
-												))}
-											</video>
-										) : (
-											<Image
-												src={slide.src}
-												alt={slide.label}
-												fill
-												className="object-cover"
-												sizes="(min-width: 1280px) 32vw, (min-width: 1024px) 45vw, 100vw"
-												priority={index === 0}
-											/>
-										)}
+							{slides.map((slide, index) => {
+								const labelVariant =
+									slide.labelVariant ?? defaultLabelVariant[slide.type];
+								const RenderLabel =
+									Boolean(slide.label) && labelVariant !== "none";
+
+								return (
+									<div
+										key={index}
+										className="relative w-full overflow-hidden rounded-[32px] border border-black/5 bg-black/5"
+									>
+										<div className="relative h-[32rem] max-w-[1022px] w-[57vw] sm:h-[54vh] lg:max-h-[70vh]">
+											{slide.type === "video" ? (
+												<video
+													className="h-full w-full object-cover"
+													autoPlay
+													loop
+													muted
+													playsInline
+													poster={slide.poster}
+												>
+													{slide.sources.map((source) => (
+														<source
+															key={source.src}
+															src={source.src}
+															type={source.type}
+														/>
+													))}
+												</video>
+											) : (
+												<Image
+													src={slide.src}
+													alt={slide.label ?? "Agency case study"}
+													fill
+													className="object-cover"
+													sizes="(min-width: 1280px) 32vw, (min-width: 1024px) 45vw, 100vw"
+													priority={index === 0}
+												/>
+											)}
+											{RenderLabel && (
+												<div
+													className={`pointer-events-none absolute z-10 text-white ${labelContainerClasses[labelVariant]}`}
+												>
+													<p
+														className={`text-3xl  ${labelTextClasses[labelVariant]}`}
+													>
+														{slide.label}
+													</p>
+												</div>
+											)}
+										</div>
 									</div>
-									<div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-6">
-										<p className="text-sm uppercase tracking-[0.4em]">
-											{slide.label}
-										</p>
-									</div>
-								</div>
-							))}
+								);
+							})}
 						</div>
 					</div>
 				</div>
 
-				<div className="mx-auto w-full rounded-[32px] border border-clou-red/25 bg-clou-red px-6 py-16 text-black shadow-[0_40px_80px_-45px_rgba(0,0,0,0.55)] sm:px-16 sm:py-24 lg:px-[120px]">
-					<div className="grid min-h-[360px] grid-rows-[1fr_auto] gap-64">
-						<p className="max-w-7xl text-[clamp(2.2rem,4.8vw,3.7rem)] font-semibold leading-[1.15] ">
-							To put it simply, you can rent our talented experts or an entire team on a short-term or long-term basis to help you design, build, and launch your project.
+				<div className="mx-auto w-full rounded-[32px] border border-clou-black/25 bg-clou-black px-6 py-16 text-clou-white  overflow-hidden ">
+					<div className="grid min-h-[360px] grid-rows-[1fr_auto]  gap-64">
+						<div className="px-20 items-center ">
+
+						<p className="max-w-7xl text-[clamp(2.2rem,4.8vw,3.7rem)] font-semibold leading-[1.15]  ">
+							To put it simply, you can rent our talented experts or an entire
+							team on a short-term or long-term basis to help you design, build,
+							and launch your project.
 						</p>
-						<div className="relative mt-10 overflow-hidden" aria-label="Service capabilities">
-							<div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-clou-red via-clou-red/70 to-transparent" />
-							<div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-clou-red via-clou-red/70 to-transparent" />
-							<div className="flex w-max gap-10 text-lg font-medium tracking-[0.05em] text-black/50 sm:text-xl animate-marquee-soft motion-reduce:animate-none">
+						</div>
+						<div
+							className="relative mt-10 "
+							aria-label="Service capabiliti
+    						es"
+						>
+							<div
+								className="flex w-max gap-10 text-2xl font-medium trackin
+    							g-[0.05em] text-clou-gray sm:text-xl animate-marquee-soft "
+							>
 								{marqueeItems.map((item, index) => (
 									<span
 										key={`${item}-${index}`}
@@ -196,7 +256,7 @@ export default function Header() {
 						</div>
 					</div>
 				</div>
-				</div>
+			</div>
 		</section>
 	);
 }

@@ -7,7 +7,7 @@ import Button from "../../primitives/Button";
 
 const navItems = [
 	{ name: "Projects", href: "/projects", message:'kaine projects' },
-	{ name: "About", href: "/about", message:'kaine projects'  },
+	{ name: "Agency", href: "/agency", message:'kaine projects'  },
 	{ name: "Journal", href: "/journal", message:'kaine projects' },
 	{ name: "Contact", href: "/contact", message:'kaine projects' },
 ];

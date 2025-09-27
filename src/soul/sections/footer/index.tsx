@@ -10,9 +10,6 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
-
-
 const linksData = [
 	{
 		title: "Links",
@@ -90,9 +87,7 @@ const Footer = () => {
 					<div className="lg:col-span-2">
 						<h1 className="text-8xl md:text-9xl lg:text-[12rem] leading-none relative">
 							Kainé
-							<span className="absolute text-purple-400 text-4xl top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2">
-								.
-							</span>
+							
 						</h1>
 					</div>
 

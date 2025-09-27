@@ -53,23 +53,23 @@ export default function JournalCard({ entry }: { entry: JournalEntry }) {
 					{entry.summary}
 				</p>
 			</div>
-			<div className="relative inline-flex items-center  self-start border-b border-current text-[1rem] font-normal leading-tight">
-				<span className="pointer-events-none overflow-hidden">
+			<div
+				className={cn(
+					"relative inline-flex items-center self-start border-b border-current text-lg font-normal leading-tight transition-[padding-left] duration-300 ease-out",
+					isHovered ? "pl-8" : "pl-0"
+				)}
+			>
+				<span className="pointer-events-none absolute inset-y-0 left-0 flex items-center overflow-hidden">
 					<span
 						className={cn(
 							"inline-block -translate-x-8 text-2xl transition-transform duration-300 ease-out",
-							isHovered && "translate-x-0 "
+							isHovered && "translate-x-0"
 						)}
 					>
 						→
 					</span>
 				</span>
-				<span
-					className={cn(
-						"transition-[padding-left]  duration-300 ease-out",
-						isHovered && "pl-4"
-					)}
-				>
+				<span className="pl-0">
 					read on
 				</span>
 			</div>

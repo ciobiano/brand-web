@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import clsx from "clsx";
 
 import Navigation from "@/soul/sections/nav/Navigation";
@@ -9,19 +9,80 @@ import ProjectCard from "./_components/cards";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "@/soul/primitives/Button";
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(SplitText, ScrollTrigger);
 
 type FilterTag = (typeof projectTags)[number];
 
-const isProjectTag = (tag: FilterTag): tag is ProjectTag =>
-	tag !== "Show all";
+const isProjectTag = (tag: FilterTag): tag is ProjectTag => tag !== "Show all";
+
+const animationSelectors = {
+	heroHeading: "[data-projects-hero-heading]",
+	heroCopy: "[data-projects-hero-copy]",
+	filters: "[data-projects-filters]",
+	cards: "[data-projects-cards] > *",
+} as const;
+
+const animationDefaults = { duration: 0.6, ease: "power3.out" } as const;
+
+function useProjectsIntroAnimation(scope: RefObject<HTMLDivElement>) {
+	useGSAP(
+		() => {
+			if (!scope.current) return;
+
+			const context = gsap.context((self) => {
+				const headingEl = document.querySelector(animationSelectors.heroHeading);
+				let split: SplitText | null = null;
+
+				if (headingEl) {
+					split = new SplitText(headingEl as HTMLElement, {
+						type: "chars",
+						tagName: "span",
+					});
+					gsap.set(split.chars, { autoAlpha: 0, yPercent: 110 });
+				}
+
+				gsap.set(animationSelectors.filters, { autoAlpha: 0, y: 60 });
+				gsap.set(animationSelectors.cards, { autoAlpha: 0, y: 90 });
+				gsap.set(animationSelectors.heroCopy, { autoAlpha: 0, y: 50 });
+
+				const tl = gsap.timeline({ defaults: animationDefaults });
+
+				tl
+					.to(animationSelectors.filters, { autoAlpha: 1, y: 0 })
+					.to(
+						animationSelectors.cards,
+						{ autoAlpha: 1, y: 0, stagger: 0.1 },
+						"-=0.3"
+					)
+					.to(animationSelectors.heroCopy, { autoAlpha: 1, y: 0 }, "-=0.25");
+
+				if (split) {
+					tl.to(split.chars, {
+						autoAlpha: 1,
+						yPercent: 0,
+						stagger: 0.04,
+						duration: 0.5,
+						ease: "power4.out",
+					}, "+=0.2");
+				}
+
+				self.add(() => {
+					split?.revert();
+				});
+			}, scope);
+
+			return () => context.revert();
+		},
+		{ dependencies: [scope] }
+	);
+}
 
 export default function ProjectsPage() {
 	const [activeTag, setActiveTag] = useState<FilterTag>("Show all");
 	const pageRef = useRef<HTMLDivElement>(null);
-	const titleRef = useRef<HTMLHeadingElement>(null);
 
 	const tagsToRender = useMemo(() => {
 		const available = new Set<ProjectTag>();
@@ -39,66 +100,31 @@ export default function ProjectsPage() {
 		return projectsData.filter((project) => project.tags.includes(activeTag));
 	}, [activeTag]);
 
-	useGSAP(
-		() => {
-			let split: SplitText | undefined;
-			let heroChars: HTMLElement[] = [];
+	const hasProjects = filteredProjects.length > 0;
 
-			if (titleRef.current) {
-				split = new SplitText(titleRef.current, {
-					type: "chars",
-					tagName: "span",
-					charsClass: "projects-hero-char",
-				});
-				heroChars = split.chars as HTMLElement[];
-				gsap.set(heroChars, { opacity: 0, yPercent: 110 });
-			}
+	useProjectsIntroAnimation(pageRef);
 
-			gsap.set("[data-animate=filters]", { opacity: 0, y: 60 });
-			gsap.set("[data-animate=cards] > *", { opacity: 0, y: 90 });
-			gsap.set("[data-animate=hero-paragraph]", { opacity: 0, y: 50 });
-
-			const tl = gsap.timeline({ defaults: { duration: 0.6, ease: "power3.out" } });
-
-			tl.to("[data-animate=filters]", { y: 0, opacity: 1 });
-			tl.to(
-				"[data-animate=cards] > *",
-				{ y: 0, opacity: 1, stagger: 0.1 },
-				"-=0.3"
-			);
-			tl.to("[data-animate=hero-paragraph]", { y: 0, opacity: 1 }, "-=0.35");
-
-			if (heroChars.length) {
-				tl.to(heroChars, {
-					opacity: 1,
-					yPercent: 0,
-					duration: 0.5,
-					stagger: 0.04,
-					ease: "power4.out",
-				}, "+=0.2");
-			}
-
-			return () => {
-				split?.revert();
-			};
-		},
-		{ scope: pageRef }
-	);
+	useEffect(() => {
+		ScrollTrigger.refresh();
+	}, [filteredProjects.length]);
 
 	return (
-		<main className="max-h-svh h-full relative text-neutral-900">
+		<main className="flex min-h-screen flex-col text-neutral-900">
 			<Navigation />
-			<div ref={pageRef} className="px-4 sm:px-6 lg:px-10 pt-32 pb-32">
+			<div
+				ref={pageRef}
+				className="flex flex-1 flex-col gap-10 px-4 pt-32 mb-80 sm:px-6 "
+			>
 				<section className="grid gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
 					<h1
-						ref={titleRef}
+						data-projects-hero-heading
 						className="text-[clamp(4.5rem,16vw,13rem)] leading-[0.85] tracking-tight lg:col-span-2"
 					>
 						Projekte
 					</h1>
 					<span aria-hidden className="hidden lg:block" />
 					<p
-						data-animate="hero-paragraph"
+						data-projects-hero-copy
 						className="text-base sm:text-lg lg:text-2xl text-neutral-600 md:mt-10 lg:col-start-2 lg:max-w-2xl lg:justify-self-start"
 					>
 						Kreativität ist für uns kein Selbstzweck, sondern eine wesentliche
@@ -108,11 +134,11 @@ export default function ProjectsPage() {
 					</p>
 				</section>
 
-				<section data-animate="filters" className="mt-20 max-w-5xl">
+				<section data-projects-filters className="max-w-5xl">
 					<div className="text-2xl text-neutral-500">
 						Filter
 					</div>
-					<div className="mt-2 flex flex-wrap gap-2">
+					<div className="mt-6 flex flex-wrap gap-3">
 						{tagsToRender.map((tag) => {
 							const isActive = activeTag === tag;
 							return (
@@ -136,24 +162,36 @@ export default function ProjectsPage() {
 				</section>
 
 				<section
-					data-animate="cards"
-					className="mt-4 grid gap-y-16 sm:max-w-[90vw] lg:max-w-none lg:grid-cols-[repeat(2,_minmax(0,_60vw))] overflow-hidden min-h-screen"
+					data-projects-cards
+					className={clsx(
+						" grid gap-y-20 overflow-hidden sm:max-w-[90vw] mb-20 lg:max-w-none lg:grid-cols-[repeat(2,_minmax(0,_60vw))]",
+						hasProjects ? "" : "min-h-svh"
+					)}
 				>
-					{filteredProjects.map((project) => (
-						<ProjectCard key={project.id} project={project} />
-					))}
+					{hasProjects ? (
+						filteredProjects.map((project) => (
+							<ProjectCard key={project.id} project={project} />
+						))
+					) : (
+						<div className="flex flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-8 text-center text-neutral-600">
+							<p className="text-lg font-medium text-neutral-900">Keine Projekte gefunden</p>
+							<p className="mt-2 text-sm">Wähle einen anderen Filter oder setze die Auswahl zurück.</p>
+						</div>
+					)}
 				</section>
-				<div className="flex flex-col  max-w-2xl  mt-40 mb-64">
-					<h2 className="text-xl md:text-[2rem] max-w-lg  text-clou-black leading-10 mb-2 ">
+				<div className="flex flex-col gap-6 pt-40 max-w-2xl">
+					<h2 className="text-xl md:text-[2rem] max-w-lg text-clou-black leading-10">
 						Scrolled all the way to the bottom? Then it really starts now. What
 						do you want next?
 					</h2>
-					<div className="flex flex-col md:flex-row   gap-4 mt-4 ">
+					<div className="flex flex-col gap-4 sm:flex-row">
 						<Button variant="primary" size="md">
 							Make contact
 						</Button>
-						
-				</div>
+						<Button variant="secondary" size="md">
+							See our services
+						</Button>
+					</div>
 				</div>
 			</div>
 		</main>

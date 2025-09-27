@@ -12,7 +12,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Ready to start your next project? Let's create something amazing together.
+              Ready to start your next project? Let&apos;s create something amazing together.
             </p>
           </div>
 
