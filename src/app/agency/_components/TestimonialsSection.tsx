@@ -86,7 +86,7 @@ export default function TestimonialsSection() {
 	return (
 		<section
 			ref={sectionRef}
-			className="relative bg-clou-black py-28  text-clou-white sm:py-32"
+			className="relative bg-clou-black py-28 rounded-b-2xl  text-clou-white sm:py-32"
 		>
 			<div className="flex flex-col px-10 lg:px-12 gap-20">
 				<div className="text-9xl  font-semibold  tracking-[-0.03em]">
