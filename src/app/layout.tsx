@@ -3,7 +3,8 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import ScrollSmootherWrapper from "../soul/primitives/ScrollSmootherWrapper";
 import Footer from "@/soul/sections/footer";
-import {  Providers } from "@/soul/primitives/PageTransition";
+import { Providers } from "@/soul/primitives/page-transition";
+import Navigation from "@/soul/sections/nav/Navigation";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -26,9 +27,12 @@ export default function RootLayout({
 			<html lang="de" className={`${inter.variable} `}>
 				<body className={`${inter.className} font-sans `}>
 					<Providers>
-						<ScrollSmootherWrapper>
-							{children}
-							<Footer />
+						<Navigation />
+						<ScrollSmootherWrapper contentClassName="pt-16">
+							<>
+								{children}
+								<Footer />
+							</>
 						</ScrollSmootherWrapper>
 					</Providers>
 				</body>

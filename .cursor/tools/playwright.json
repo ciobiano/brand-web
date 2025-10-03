@@ -1,0 +1,17 @@
+{
+  "$schema": "https://playwright.dev/mcp/tool.schema.json",
+  "tools": [
+    {
+      "name": "plat4m-scroll",
+      "description": "Capture plat4m.com ScrollTrigger data (desktop + iPhone 12), save a timestamped report, and print a quick summary.",
+      "command": "node",
+      "args": [
+        "scripts/plat4mScrollTriggerInspector.mjs",
+        "--save",
+        "--summary"
+      ],
+      "env": {},
+      "cwd": "${workspaceRoot}"
+    }
+  ]
+}
