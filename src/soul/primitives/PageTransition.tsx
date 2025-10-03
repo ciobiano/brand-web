@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, startTransition } from "react";
+import { useRef, useEffect, useCallback, startTransition } from "react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/all";
 import { TransitionRouter } from "next-transition-router";
@@ -22,12 +22,56 @@ const waitForTimeline = (timeline: gsap.core.Timeline) =>
 	});
 
 export function Providers({ children }: { children: React.ReactNode }) {
+	const enterTimelineRef = useRef<gsap.core.Timeline | null>(null);
 	const firstLayer = useRef<HTMLDivElement | null>(null);
 	const leaveTextRef = useRef<HTMLSpanElement | null>(null);
 	const leaveWordRef = useRef<HTMLSpanElement | null>(null);
 	const leaveSplitRef = useRef<SplitText | null>(null);
 	const leaveCharsRef = useRef<Element[]>([]);
 	const wordIndexRef = useRef(0);
+
+	const playEnterTransition = useCallback(async () => {
+		const activeTimeline = enterTimelineRef.current;
+		if (activeTimeline?.isActive()) {
+			await waitForTimeline(activeTimeline);
+			return;
+		}
+
+		const firstLayerEl = firstLayer.current;
+		if (!firstLayerEl) return;
+
+		enterTimelineRef.current?.kill();
+		const tl = gsap.timeline();
+		enterTimelineRef.current = tl;
+		tl.set(firstLayerEl, { y: 0 });
+
+		tl.fromTo(
+			firstLayerEl,
+			{ y: 0 },
+			{
+				y: "-100%",
+				duration: 0.7,
+				ease: "circ.inOut",
+			}
+		);
+		tl.call(() => {
+			leaveSplitRef.current?.revert();
+			leaveSplitRef.current = null;
+			leaveCharsRef.current = [];
+		});
+
+		await waitForTimeline(tl);
+		enterTimelineRef.current = null;
+	}, []);
+
+	useEffect(() => {
+		void playEnterTransition();
+
+		return () => {
+			enterTimelineRef.current?.kill();
+			enterTimelineRef.current = null;
+		};
+	}, [playEnterTransition]);
 
 	return (
 		<TransitionRouter
@@ -82,49 +126,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
 						},
 						"<50%"
 					);
-				}
+			}
 
-				await waitForTimeline(tl);
-				next();
+			await waitForTimeline(tl);
+			next();
 
 				return () => {
 					tl.kill();
 				};
 			}}
 			enter={async (next) => {
-				const tl = gsap.timeline();
-				const textEl = leaveTextRef.current;
-				if (textEl) {
-					tl.to(textEl, {
-						opacity: 0,
-						duration: 0.5,
-						ease: "power2.in",
-					});
-				} else if (leaveCharsRef.current.length) {
-					tl.to(leaveCharsRef.current, {
-						opacity: 0,
-						duration: 0.5,
-						ease: "power2.in",
-						stagger: 0.1,
-					});
-				}
-
-				tl.fromTo(
-						firstLayer.current,
-						{ y: 0 },
-						{
-							y: "-100%",
-							duration: 0.7,
-							ease: "circ.inOut",
-						}
-					);
-				tl.call(() => {
-						leaveSplitRef.current?.revert();
-						leaveSplitRef.current = null;
-						leaveCharsRef.current = [];
-					});
-
-				await waitForTimeline(tl);
+				await playEnterTransition();
 
 				await new Promise<void>((resolve) => {
 					requestAnimationFrame(() => {
@@ -136,7 +148,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 				});
 
 				return () => {
-					tl.kill();
+					enterTimelineRef.current?.kill();
+					enterTimelineRef.current = null;
 					leaveSplitRef.current?.revert();
 					leaveSplitRef.current = null;
 					leaveCharsRef.current = [];
