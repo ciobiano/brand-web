@@ -10,10 +10,12 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 interface ScrollSmootherWrapperProps {
 	children: React.ReactNode;
+	contentClassName?: string;
 }
 
 export default function ScrollSmootherWrapper({
 	children,
+	contentClassName,
 }: ScrollSmootherWrapperProps) {
 	const smoother = useRef<ScrollSmoother | null>(null);
 	const pathname = usePathname();
@@ -40,7 +42,9 @@ export default function ScrollSmootherWrapper({
 
 	return (
 		<div id="smooth-wrapper">
-			<div id="smooth-content">{children}</div>
+			<div id="smooth-content" className={contentClassName}>
+				{children}
+			</div>
 		</div>
 	);
 }

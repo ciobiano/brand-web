@@ -71,7 +71,9 @@ export default function AgencyTestimonials() {
 
 	return (
 		<>
-			<section className="relative rounded-b-2xl bg-clou-black py-28 text-clou-white sm:py-20">
+			<section
+				className="relative rounded-b-2xl bg-clou-black py-28 text-clou-white sm:py-20"
+			>
 				<div className="flex flex-col gap-20 px-10 lg:px-12">
 					<div className="text-9xl font-semibold tracking-[-0.03em]">
 						Real stories,

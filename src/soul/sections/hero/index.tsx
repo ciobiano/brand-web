@@ -4,7 +4,6 @@ import React, { useRef } from "react";
 import { heroImages } from "@/data";
 import EnhancedImageCard from "./enhanced-image-card";
 import { useInteractiveCanvas } from "@/hooks/useInteractiveCanvas";
-import Navigation from "../nav/Navigation";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/all";
@@ -36,17 +35,14 @@ const Hero: React.FC<HeroProps> = ({
 	useGSAP(
 		() => {
 			if (titleRef.current) {
-				// Create a master timeline for better control
 				const tl = gsap.timeline();
 
-				// Split the title text
 				const typeSplit = new SplitText(titleRef.current, {
 					type: "chars",
 					tagName: "span",
 					mask: "chars",
 				});
 
-				// Add title animation to timeline
 				tl.from(
 					typeSplit.chars,
 					{
@@ -58,9 +54,8 @@ const Hero: React.FC<HeroProps> = ({
 						stagger: { each: 0.025 },
 					},
 					0.75
-				); // Start at 0.5 seconds
+				); 
 
-				// Add canvas cards animation to timeline
 				tl.from(
 					".canvas-card",
 					{
@@ -74,10 +69,10 @@ const Hero: React.FC<HeroProps> = ({
 						},
 					},
 					0.5
-				); // Start at 1.25 seconds (after title animation completes)
+				); 
 			}
 		},
-		{ scope: heroRef } // Use heroRef instead of titleRef to include all elements
+		{ scope: heroRef } 
 	);
 
 	return (
@@ -85,11 +80,8 @@ const Hero: React.FC<HeroProps> = ({
 			{/* Custom black dot cursor */}
 			<div className="custom-cursor"></div>
 
-			{/* Fixed container for everything except images */}
 			<div className="relative w-full h-svh ">
-				<Navigation />
 
-				{/* Main title - fixed in viewport */}
 				<div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
 					<h1
 						ref={titleRef}
@@ -103,7 +95,6 @@ const Hero: React.FC<HeroProps> = ({
 					</h1>
 				</div>
 
-				{/* Scrollable image container - ONLY this scrolls */}
 				<div ref={heroRef} className="absolute inset-0   ">
 					<div className="canvas-hero">
 						{heroImages.map((image, index) => (
@@ -122,7 +113,6 @@ const Hero: React.FC<HeroProps> = ({
 				</div>
 				<div className="absolute h-full left-0 top-[100vh] right-0 bg-[linear-gradient(#fff0,_#fff_25%)] " />
 
-				{/* Scroll indicator - fixed in viewport */}
 				<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex flex-col items-center">
 					<span className="text-black text-base font-medium mb-2">
 						{cta_text}

@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import clsx from "clsx";
 
-import Navigation from "@/soul/sections/nav/Navigation";
 import { projectTags, projectsData, ProjectTag } from "@/data";
 import ProjectCard from "./_components/cards";
 import { useGSAP } from "@gsap/react";
@@ -110,7 +109,6 @@ export default function ProjectsPage() {
 
 	return (
 		<main className="flex min-h-screen flex-col text-neutral-900">
-			<Navigation />
 			<div
 				ref={pageRef}
 				className="flex flex-1 flex-col gap-10 px-4 pt-32 mb-80 sm:px-6 "

@@ -328,7 +328,7 @@ export const journalEntries: JournalEntry[] = [
 			"Rapid prototyping, late-night sketches, and how the team ships ideas before sunrise.",
 		tags: ["Flash", "Digital"],
 		cover: {
-			src: "/images/placeholder1.jgp",
+			src: "/images/placeholder1.jpg",
 			alt: "Designers collaborating in a neon-lit studio",
 		},
 		link: "/journal/flash-lab-pop-up",

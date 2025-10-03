@@ -12,7 +12,9 @@ const startups = [
 
 export default function AgencyClientRoster() {
 	return (
-		<section className="relative bg-clou-black py-24 text-clou-gray sm:py-40">
+		<section
+			className="relative bg-clou-black py-24 text-clou-gray sm:py-40"
+		>
 			<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-clou-black h-4" />
 
 			<div className="px-6 lg:px-12">

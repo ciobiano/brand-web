@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import clsx from "clsx";
 
-import Navigation from "@/soul/sections/nav/Navigation";
 import { journalEntries, journalTags, JournalTag } from "@/data";
 import JournalEntryCard from "./_components/entry-card";
 import { useGSAP } from "@gsap/react";
@@ -115,7 +114,6 @@ export default function JournalPage() {
 
 	return (
 		<main className="flex min-h-screen flex-col text-neutral-900">
-			<Navigation />
 			<div
 				ref={pageRef}
 				className="mb-80 flex flex-1 flex-col gap-10 px-4 pt-32 sm:px-6 "

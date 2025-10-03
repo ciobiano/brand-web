@@ -1,10 +1,6 @@
-import Navigation from "@/soul/sections/nav/Navigation";
-
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-white">
-      <Navigation />
-      
       <div className="pt-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
