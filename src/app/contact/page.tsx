@@ -1,115 +1,272 @@
+"use client";
+
+import "mapbox-gl/dist/mapbox-gl.css";
+import Map, { Marker, NavigationControl } from "react-map-gl/mapbox";
+import Image from "next/image";
+import Badge from "@/soul/primitives/Badge";
+import { ScrollTrigger } from "gsap/all";
+import gsap from "gsap";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const MAP_CONFIG = {
+	longitude: -149.8936,
+	latitude: 61.2155,
+	zoom: 12,
+} as const;
+
+const LOGO_SIZES = {
+	width: 64,
+	height: 64,
+} as const;
+
+const VISUAL_BLOCK_CLASS =
+	"mt-10 w-full h-full max-w-[1220px] min-h-[709px] rounded-xl border border-zinc-800";
+
 export default function ContactPage() {
-  return (
-    <main className="min-h-screen bg-white">
-      <div className="pt-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold text-black mb-6">
-              Get in Touch
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Ready to start your next project? Let&apos;s create something amazing together.
-            </p>
-          </div>
+	const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+	const logoSrc = "/images/www.clou.ch_.png";
+	const pageRef = useRef<HTMLElement | null>(null);
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
-              <form className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="your@email.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors font-medium"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
+	useGSAP(
+		(context) => {
+			const sections = gsap.utils.toArray<HTMLElement>(
+				context.selector?.(".vertical-section") ?? ".vertical-section"
+			);
+			sections.forEach((section) => {
+				const largeChild = section.querySelector<HTMLElement>(".large-child");
+				if (!largeChild) return;
 
-            {/* Contact Information */}
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Address</h3>
-                  <p className="text-gray-600">
-                    Kainé Agency<br />
-                    123 Creative Street<br />
-                    Design District, DC 12345
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Email</h3>
-                  <p className="text-gray-600">hello@kaine.agency</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Office Hours</h3>
-                  <p className="text-gray-600">
-                    Monday - Friday: 9:00 AM - 6:00 PM<br />
-                    Saturday: 10:00 AM - 4:00 PM<br />
-                    Sunday: Closed
-                  </p>
-                </div>
-              </div>
+				// const getTravelDistance = () => {
+				// 	const distance = window.innerHeight - largeChild.clientHeight - 100;
+				// 	return Math.max(0, distance);
+				// };
 
-              <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold text-lg mb-3">Follow us</h3>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-600 hover:text-black transition-colors">Instagram</a>
-                  <a href="#" className="text-gray-600 hover:text-black transition-colors">LinkedIn</a>
-                  <a href="#" className="text-gray-600 hover:text-black transition-colors">Twitter</a>
-                </div>
-              </div>
-            </div>
-          </div>
+				gsap.to(largeChild, {
+					y: () => window.innerHeight - largeChild.clientHeight ,
+					ease: "none",
+					scrollTrigger: {
+						trigger: section,
+						pin: true,
+						start: "top 20%",
+						end: () => `+=${window.innerHeight + largeChild.clientHeight}`,
+						scrub: 1,
+						anticipatePin: 1,
+						markers: true,
+						invalidateOnRefresh: true,
+					},
+				});
+			});
+		},
+		{ scope: pageRef }
+	);
 
-          <div className="text-center mt-16">
-            <a 
-              href="/"
-              className="inline-flex items-center px-6 py-3 border border-black text-black rounded-full hover:bg-black hover:text-white transition-colors"
-            >
-              Back to Home
-            </a>
-          </div>
-        </div>
-      </div>
-    </main>
-  );
+	return (
+		<main ref={pageRef} className=" w-full z-10 bg-black -mt-16">
+			<section className=" flex flex-col text-clou-white pt-16">
+				<div className="px-4 sm:px-6 lg:px-8">
+					<h1 className="text-[223px] f mb-12">Hello!</h1>
+				</div>
+				<div className="vertical-section w-full flex ">
+					<div className="w-full max-w-md bg-sky-600 p-8  flex flex-col gap-6  ">
+						<span>
+							<Badge variant="outline" size="sm">
+								Address
+							</Badge>
+						</span>
+						<p className="text-3xl font-medium leading-10">
+							413 West Fireweed Ln, Anchorage , Alaska
+						</p>
+						<p className="text-lg text-gray-500">
+							Whoever searches will find. If you&apos;re reading this, you
+							don&apos;t need to search and you&apos;ll find us right in the
+							courtyard, to the left of the Parterre restaurant.
+						</p>
+					</div>
+					<div className=" w-full  border border-grey-200 mb-20 large-child ">
+						<div className=" w-full flex flex-col items-center ">
+							<div className="flex flex-col  gap-8 w-full max-w-md  ">
+								<span>
+									<Badge variant="outline" size="sm">
+										Address
+									</Badge>
+								</span>
+								<p className="text-3xl mb-4  leading-10">
+									Whoever searches will find. If you&apos;re reading this, you
+									don&apos;t need to search
+								</p>
+								<p className="text-3xl flex flex-col gap-4  ">
+									Hello.kaine@outlook.com
+									<span>+2349038432630</span>
+								</p>
+							</div>
+							<div className={VISUAL_BLOCK_CLASS}>
+								{mapboxToken ? (
+									<Map
+										mapboxAccessToken={mapboxToken}
+										mapStyle="mapbox://styles/mapbox/dark-v11"
+										initialViewState={{
+											longitude: MAP_CONFIG.longitude,
+											latitude: MAP_CONFIG.latitude,
+											zoom: MAP_CONFIG.zoom,
+										}}
+										style={{ width: "100%", height: "100%" }}
+										attributionControl={false}
+										onLoad={() => ScrollTrigger.refresh()}
+										dragPan={false}
+										scrollZoom={false}
+										boxZoom={false}
+										doubleClickZoom={false}
+										keyboard={false}
+										dragRotate={false}
+										touchZoomRotate={false}
+									>
+										<Marker
+											longitude={MAP_CONFIG.longitude}
+											latitude={MAP_CONFIG.latitude}
+											anchor="bottom"
+										>
+											<div
+												style={{
+													width: LOGO_SIZES.width,
+													height: LOGO_SIZES.height,
+													backgroundImage: `url(${logoSrc})`,
+													backgroundSize: "contain",
+													backgroundRepeat: "no-repeat",
+													backgroundPosition: "center",
+												}}
+											/>
+										</Marker>
+										<NavigationControl
+											position="top-right"
+											showCompass={false}
+											visualizePitch={false}
+										/>
+									</Map>
+								) : (
+									<div className="w-full h-full flex items-center justify-center bg-zinc-900 text-sm text-zinc-400">
+										Set NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN to display the map.
+									</div>
+								)}
+							</div>
+							<div className={`${VISUAL_BLOCK_CLASS} relative`}>
+								<Image
+									src="/images/placeholder1.jpg"
+									alt="Studio exterior"
+									fill
+									onLoad={() => ScrollTrigger.refresh()}
+									className="object-cover"
+									sizes="(min-width: 1280px) 1220px, 100vw"
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section
+				className=" flex flex-col text-clou-white pt-16"
+			>
+				<div className="px-4 sm:px-6 lg:px-8">
+					<h1 className="text-[223px] f mb-12">Hello!</h1>
+				</div>
+				<div className="vertical-section w-full flex ">
+					<div className="w-full max-w-md bg-sky-600 p-8  flex flex-col gap-6  ">
+						<span>
+							<Badge variant="outline" size="sm">
+								Address
+							</Badge>
+						</span>
+						<p className="text-3xl font-medium leading-10">
+							413 West Fireweed Ln, Anchorage , Alaska
+						</p>
+						<p className="text-lg text-gray-500">
+							Whoever searches will find. If you&apos;re reading this, you
+							don&apos;t need to search and you&apos;ll find us right in the
+							courtyard, to the left of the Parterre restaurant.
+						</p>
+					</div>
+					<div className=" w-full  border border-grey-200 mb-20 large-child ">
+						<div className=" w-full flex flex-col items-center ">
+							<div className="flex flex-col  gap-8 w-full max-w-md  ">
+								<span>
+									<Badge variant="outline" size="sm">
+										Address
+									</Badge>
+								</span>
+								<p className="text-3xl mb-4  leading-10">
+									Whoever searches will find. If you&apos;re reading this, you
+									don&apos;t need to search
+								</p>
+								<p className="text-3xl flex flex-col gap-4  ">
+									Hello.kaine@outlook.com
+									<span>+2349038432630</span>
+								</p>
+							</div>
+							<div className={VISUAL_BLOCK_CLASS}>
+								{mapboxToken ? (
+									<Map
+										mapboxAccessToken={mapboxToken}
+										mapStyle="mapbox://styles/mapbox/dark-v11"
+										initialViewState={{
+											longitude: MAP_CONFIG.longitude,
+											latitude: MAP_CONFIG.latitude,
+											zoom: MAP_CONFIG.zoom,
+										}}
+										style={{ width: "100%", height: "100%" }}
+										attributionControl={false}
+										onLoad={() => ScrollTrigger.refresh()}
+										dragPan={false}
+										scrollZoom={false}
+										boxZoom={false}
+										doubleClickZoom={false}
+										keyboard={false}
+										dragRotate={false}
+										touchZoomRotate={false}
+									>
+										<Marker
+											longitude={MAP_CONFIG.longitude}
+											latitude={MAP_CONFIG.latitude}
+											anchor="bottom"
+										>
+											<div
+												style={{
+													width: LOGO_SIZES.width,
+													height: LOGO_SIZES.height,
+													backgroundImage: `url(${logoSrc})`,
+													backgroundSize: "contain",
+													backgroundRepeat: "no-repeat",
+													backgroundPosition: "center",
+												}}
+											/>
+										</Marker>
+										<NavigationControl
+											position="top-right"
+											showCompass={false}
+											visualizePitch={false}
+										/>
+									</Map>
+								) : (
+									<div className="w-full h-full flex items-center justify-center bg-zinc-900 text-sm text-zinc-400">
+										Set NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN to display the map.
+									</div>
+								)}
+							</div>
+							<div className={`${VISUAL_BLOCK_CLASS} relative`}>
+								<Image
+									src="/images/placeholder1.jpg"
+									alt="Studio exterior"
+									fill
+									onLoad={() => ScrollTrigger.refresh()}
+									className="object-cover"
+									sizes="(min-width: 1280px) 1220px, 100vw"
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	);
 }
