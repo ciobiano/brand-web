@@ -2,6 +2,7 @@
 
 import { MouseEvent, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import ArrowIcon from "@/soul/primitives/icons/ArrowIcon";
 import { useTransitionRouter } from "next-transition-router";
 
 interface AnimatedLinkProps {
@@ -55,13 +56,11 @@ export default function AnimatedLink({
 			className={cn("group hover:transform-none", className)}
 		>
 			<div className="relative flex items-center overflow-hidden">
-				<span
-					aria-hidden="true"
-					className="pointer-events-none absolute left-0 -translate-x-full text-2xl transition-transform duration-300 ease-out md:group-hover:translate-x-0"
-				>
-					→
-				</span>
-				<div className="leading-tight transition-[padding-left] duration-300 ease-out md:group-hover:pl-8">
+				<ArrowIcon
+					className="pointer-events-none w-4 h-4 absolute left-0 -translate-x-full transition-transform duration-300 ease-out md:group-hover:translate-x-0"
+					direction="right"
+				/>
+				<div className="leading-tight transition-[padding-left] duration-300 ease-out md:group-hover:pl-6">
 					{children}
 				</div>
 			</div>

@@ -3,6 +3,8 @@ import Image from "next/image";
 
 import { Project } from "@/data";
 
+import ArrowIcon from "@/soul/primitives/icons/ArrowIcon";
+
 export default function ProjectCard({ project }: { project: Project }) {
 	return (
 		<Link
@@ -35,12 +37,10 @@ export default function ProjectCard({ project }: { project: Project }) {
 			</div>
 			<div className="">
 				<div className="relative flex items-center overflow-hidden ">
-					<span
-						aria-hidden="true"
-						className="pointer-events-none absolute left-0 -translate-x-full text-2xl text-neutral-900 transition-transform duration-500 ease-out md:group-hover:translate-x-0"
-					>
-						→
-					</span>
+					<ArrowIcon
+						className="pointer-events-none absolute left-0 -translate-x-full text-neutral-900 transition-transform duration-500 ease-out md:group-hover:translate-x-0 h-4 w-5"
+						direction="right"
+					/>
 					<h3 className="pl-0 text-2xl leading-tight text-neutral-900 transition-all duration-500 ease-out md:group-hover:pl-8">
 						{project.title}
 					</h3>

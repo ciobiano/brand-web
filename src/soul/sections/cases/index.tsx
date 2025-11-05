@@ -35,11 +35,11 @@ export default function Cases() {
 
 				const tl = gsap.timeline({
 					scrollTrigger: {
-						trigger: trigger, 
+						trigger: trigger,
 						start: "top 100%",
 						end: "top -80%",
 						scrub: true,
-						pin: cardEl, 
+						pin: cardEl,
 						pinSpacing: false,
 						invalidateOnRefresh: true,
 					},
@@ -78,7 +78,6 @@ export default function Cases() {
 					start: "top 100%",
 					end: "+=80%",
 					scrub: 1,
-				
 				},
 			});
 
@@ -98,9 +97,8 @@ export default function Cases() {
 
 	return (
 		<>
-			<section ref={introRef} className="relative px-16   text-white">
+			<section ref={introRef} className="relative px-16  text-white">
 				<div
-					data-speed="clamp(0.8)"
 					className="bg-clou-black w-full flex flex-col  gap-12 md:gap-28 pt-44 pb-96 rounded-t-2xl"
 				>
 					<div className="flex flex-col w-full h-full max-w-[90rem]  mx-auto gap-32   ">
@@ -129,7 +127,7 @@ export default function Cases() {
 					</div>
 				</div>
 			</section>
-			<section className="relative bg-white text-black" ref={containerRef}>
+			<section data-speed="1" className="relative bg-white text-black" ref={containerRef}>
 				<div className="z-10 absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-white h-4" />
 				<div className="gap-12 flex justify-start items-stretch py-40 max-w-4xl px-40 w-full">
 					<div className="max-w-xl w-full flex flex-col gap-4 items-start">

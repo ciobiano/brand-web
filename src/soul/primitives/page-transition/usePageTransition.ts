@@ -97,27 +97,17 @@ export function usePageTransition() {
 							},
 							"-=0.45"
 						);
-						timeline.to(
-							characters,
-							{
-								yPercent: -30,
-								opacity: 0,
-								duration: 0.35,
-								ease: "power2.in",
-								stagger: 0.08,
-							},
-							">-0.05"
-						);
+						
 					} else if (textEl) {
-						timeline.to(
-							textEl,
-							{
-								opacity: 0,
-								duration: 0.3,
-								ease: "power2.in",
-							},
-							">-0.2"
-						);
+							timeline.to(
+								textEl,
+								{
+									opacity: 0,
+									duration: 0.2,
+									ease: "sine.inOut",
+								},
+								">-0.2"
+							);
 					}
 				});
 

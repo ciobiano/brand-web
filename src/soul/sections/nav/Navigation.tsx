@@ -31,7 +31,7 @@ export default function Navigation() {
 	};
 
 	return (
-		<nav className="fixed top-4 left-0 right-0 z-50 w-full ">
+		<nav data-scroll-nav className="fixed top-4 left-0 right-0 z-50 w-full ">
 			<div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center  h-16">
 					{/* Logo */}

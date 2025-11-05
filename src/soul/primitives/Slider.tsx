@@ -10,6 +10,7 @@ import {
 } from "@/lib/gsap/horizontal-loop";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import ArrowIcon from "@/soul/primitives/icons/ArrowIcon";
 
 const sliderThemeStyles = {
 	dark: {
@@ -242,36 +243,14 @@ const Slider: React.FC<SliderProps> = ({ slides, theme = "dark" }) => {
 							dataAttribute="button-prev"
 							themeStyles={themeStyles}
 						>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="100%"
-							viewBox="0 0 17 12"
-							fill="none"
-							className="button-arrow w-6 h-4"
-						>
-							<path
-								d="M6.28871 12L7.53907 10.9111L3.48697 6.77778H16.5V5.22222H3.48697L7.53907 1.08889L6.28871 0L0.5 6L6.28871 12Z"
-								fill="currentColor"
-							/>
-						</svg>
+						<ArrowIcon direction="left" className="button-arrow w-6 h-4" />
 					</SliderButton>
 					<SliderButton
 						label="next slide"
 						dataAttribute="button-next"
 						themeStyles={themeStyles}
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="100%"
-							viewBox="0 0 17 12"
-							fill="none"
-							className="button-arrow w-6 h-4 rotate-180"
-						>
-							<path
-								d="M6.28871 12L7.53907 10.9111L3.48697 6.77778H16.5V5.22222H3.48697L7.53907 1.08889L6.28871 0L0.5 6L6.28871 12Z"
-								fill="currentColor"
-							/>
-						</svg>
+						<ArrowIcon direction="right" className="button-arrow w-6 h-4" />
 					</SliderButton>
 					</div>
 				</div>

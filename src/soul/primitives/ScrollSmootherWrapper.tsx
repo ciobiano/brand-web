@@ -22,18 +22,41 @@ export default function ScrollSmootherWrapper({
 
 	useGSAP(
 		() => {
-			// Kill any existing smoother
-			if (smoother.current) {
-				smoother.current.kill();
-			}
+			const initializeSmoother = () => {
+				// Kill any existing smoother
+				if (smoother.current) {
+					smoother.current.kill();
+				}
 
-			smoother.current = ScrollSmoother.create({
-				smooth: 2,
-				effects: true,
-				normalizeScroll: true,
-				ignoreMobileResize: true,
-				smoothTouch: 0.1,
-			});
+				smoother.current = ScrollSmoother.create({
+					wrapper: "#smooth-wrapper",
+					content: "#smooth-content",
+					smooth: 2,
+					effects: true,
+					normalizeScroll: true,
+					ignoreMobileResize: true,
+					smoothTouch: 0.1,
+				});
+
+				ScrollTrigger.refresh();
+			};
+
+			// Defer initialization until after load and two RAFs to avoid initial hitch
+			if (typeof window !== "undefined") {
+				const run = () =>
+					requestAnimationFrame(() =>
+						requestAnimationFrame(initializeSmoother)
+					);
+				if (document.readyState === "complete") {
+					run();
+				} else {
+					const onLoad = () => {
+						run();
+						window.removeEventListener("load", onLoad);
+					};
+					window.addEventListener("load", onLoad);
+				}
+			}
 		},
 		{
 			dependencies: [pathname],

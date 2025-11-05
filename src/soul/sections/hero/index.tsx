@@ -76,11 +76,11 @@ const Hero: React.FC<HeroProps> = ({
 	);
 
 	return (
-		<>
+		<main className="w-full  min-h-screen">
 			{/* Custom black dot cursor */}
 			<div className="custom-cursor"></div>
 
-			<div className="relative w-full h-svh ">
+			<div className="relative w-full h-svh  ">
 
 				<div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
 					<h1
@@ -120,7 +120,7 @@ const Hero: React.FC<HeroProps> = ({
 					<div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
 				</div>
 			</div>
-		</>
+		</main>
 	);
 };
 

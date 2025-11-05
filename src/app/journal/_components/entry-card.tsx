@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { JournalEntry } from "@/data";
 import { cn } from "@/lib/utils";
+import ArrowIcon from "@/soul/primitives/icons/ArrowIcon";
 
 export default function JournalCard({ entry }: { entry: JournalEntry }) {
 	const [isHovered, setIsHovered] = useState(false);
@@ -60,14 +61,13 @@ export default function JournalCard({ entry }: { entry: JournalEntry }) {
 				)}
 			>
 				<span className="pointer-events-none absolute inset-y-0 left-0 flex items-center overflow-hidden">
-					<span
+					<ArrowIcon
 						className={cn(
-							"inline-block -translate-x-8 text-2xl transition-transform duration-300 ease-out",
+							"inline-block h-4 w-4 -translate-x-8 transition-transform duration-300 ease-out",
 							isHovered && "translate-x-0"
 						)}
-					>
-						→
-					</span>
+						direction="right"
+					/>
 				</span>
 				<span className="pl-0">
 					read on
