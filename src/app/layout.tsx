@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import ScrollSmootherWrapper from "../soul/primitives/ScrollSmootherWrapper";
 import Footer from "@/soul/sections/footer";
@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
 		return (
 			<html lang="de" className={`${inter.variable} `}>
-				<body className={`${inter.className} font-sans `}>
+				<body className={`${inter.className} font-athletics `}>
 					<Providers>
 						<Navigation />
 						<ScrollSmootherWrapper contentClassName="pt-16">

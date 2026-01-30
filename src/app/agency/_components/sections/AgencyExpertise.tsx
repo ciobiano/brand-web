@@ -7,101 +7,168 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const benefits = [
-	{ id: "01", title: "Functional web and mobile apps" },
-	{ id: "02", title: "Mindfully structured design systems" },
-	{ id: "03", title: "Insightful product discovery" },
-	{ id: "04", title: "Motion that tells the story" },
-	{ id: "05", title: "Reliable engineering foundations" },
-	{ id: "06", title: "AI-enabled experiences" },
-	{ id: "07", title: "Rapid prototyping & validation" },
-	{ id: "08", title: "Support beyond launch" },
+const services = [
+	{ id: "01", title: "Branding & Identity", description: "Strategic brand development" },
+	{ id: "02", title: "Web Design & Development", description: "Digital experiences that convert" },
+	{ id: "03", title: "Motion Design", description: "Animation that tells your story" },
+	{ id: "04", title: "UX/UI Design", description: "User-centered design solutions" },
+	{ id: "05", title: "Product Strategy", description: "From concept to market" },
+	{ id: "06", title: "AI Integration", description: "Intelligent digital solutions" },
 ];
 
 export default function AgencyExpertise() {
-	const videoContainerRef = useRef<HTMLDivElement | null>(null);
+	const sectionRef = useRef<HTMLElement | null>(null);
 
 	useGSAP(
 		() => {
-			const container = videoContainerRef.current;
-			if (!container) {
-				return;
-			}
+			const ctx = gsap.context(() => {
+				// Title animation
+				gsap.fromTo("[data-expertise-title]", 
+					{ y: 60, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 1,
+						ease: "power3.out",
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: "top 75%",
+							toggleActions: "play none none reverse",
+						},
+					}
+				);
 
-			const timeline = gsap.timeline({
-				scrollTrigger: {
-					trigger: container,
-					start: "top bottom",
-					end: "bottom top",
-					scrub: true,
-					invalidateOnRefresh: true,
-				},
-			});
+				// Staggered service items entrance
+				gsap.fromTo("[data-service-item]", 
+					{ y: 40, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.8,
+						ease: "power3.out",
+						stagger: 0.08,
+						scrollTrigger: {
+							trigger: "[data-services-list]",
+							start: "top 80%",
+							toggleActions: "play none none reverse",
+						},
+					}
+				);
 
-			timeline.to(
-				container,
+				// Hover animations for service items
+				const items = sectionRef.current?.querySelectorAll("[data-service-item]");
+				items?.forEach((item) => {
+					const arrow = item.querySelector("[data-arrow]");
+					const bg = item.querySelector("[data-bg]");
 
-				{
-					paddingLeft: "4rem",
-					paddingRight: "4rem",
-					ease: "none",
-				}
-			);
+					item.addEventListener("mouseenter", () => {
+						gsap.to(bg, {
+							scaleX: 1,
+							duration: 0.4,
+							ease: "power2.out",
+						});
+						gsap.to(arrow, {
+							x: 8,
+							opacity: 1,
+							duration: 0.3,
+							ease: "power2.out",
+						});
+						gsap.to(item, {
+							color: "#ffffff",
+							duration: 0.3,
+						});
+					});
+
+					item.addEventListener("mouseleave", () => {
+						gsap.to(bg, {
+							scaleX: 0,
+							duration: 0.4,
+							ease: "power2.out",
+						});
+						gsap.to(arrow, {
+							x: 0,
+							opacity: 0,
+							duration: 0.3,
+							ease: "power2.out",
+						});
+						gsap.to(item, {
+							color: "#101114",
+							duration: 0.3,
+						});
+					});
+				});
+			}, sectionRef);
+
+			return () => ctx.revert();
 		},
-		{ scope: videoContainerRef }
+		{ scope: sectionRef }
 	);
 
 	return (
-		<section className="mt-10 text-clou-black sm:py-28">
-			<div className="flex w-full flex-col gap-16">
-				<div ref={videoContainerRef} className="relative w-full">
-					<div className="relative overflow-hidden rounded-[32px]">
-						<div className="pointer-events-none absolute inset-0 z-10">
-							<span className="absolute left-0 top-0 block h-16 w-16 rounded-tl-[32px] border-l border-t border-black/20" />
-							<span className="absolute right-0 top-0 block h-16 w-16 rounded-tr-[32px] border-r border-t border-black/20" />
-							<span className="absolute bottom-0 left-0 block h-16 w-16 rounded-bl-[32px] border-b border-l border-black/20" />
-							<span className="absolute bottom-0 right-0 block h-16 w-16 rounded-br-[32px] border-b border-r border-black/20" />
-						</div>
-						<video
-							className="h-full w-full object-cover will-change-transform"
-							autoPlay
-							loop
-							muted
-							playsInline
-						>
-							<source
-								src="https://cdn.dribbble.com/userupload/15520736/file/original-d2edd14c2fa17fbfce6a4e9f7550b43b.mp4"
-								type="video/mp4"
-							/>
-						</video>
-					</div>
+		<section ref={sectionRef} className="py-24 px-4 sm:px-6 lg:px-10 bg-white">
+			<div className="max-w-[95rem] mx-auto">
+				<div className="mb-16 lg:mb-20">
+					<span 
+						data-expertise-title
+						className="block text-sm uppercase tracking-[0.2em] text-neutral-400 mb-4 opacity-0"
+					>
+						Leistungen
+					</span>
+					<h2 
+						data-expertise-title
+						className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl text-clou-black max-w-4xl opacity-0"
+					>
+						With two decades of experience, companies worldwide trusted us to handle various digital aspects.
+					</h2>
 				</div>
 
-				<div className="mt-16 w-full px-10">
-					<div className="mx-auto flex max-w-[95rem] flex-col items-start gap-10 tracking-[-0.64px]">
-						<h2 className="text-6xl font-semibold leading-[5rem] sm:text-6xl md:text-6xl lg:text-[64px]">
-							With two decades of experience, companies worldwide trusted and
-							hired us to handle various digital aspects of their businesses.
-						</h2>
-						<div className="mt-20 w-full">
-							<div className="grid grid-cols-1 gap-y-0 text-4xl sm:grid-cols-2 sm:gap-16">
-								{benefits.map((benefit) => (
-									<div
-										key={benefit.id}
-										className="flex items-center gap-7 border-b border-black/10 py-12 text-center"
-									>
-										<div className="flex-shrink-0 w-12 text-right text-3xl sm:text-5xl font-medium text-[#929296] pr-4">
-											{benefit.id}
-										</div>
-										<div className="min-w-0">
-											<h3 className="text-2xl sm:text-3xl font-semibold text-clou-black leading-tight">
-												{benefit.title}.
-											</h3>
-										</div>
+				<div data-services-list className="mt-16 w-full">
+					<div className="flex flex-col">
+						{services.map((service) => (
+							<div
+								key={service.id}
+								data-service-item
+								className="relative group flex items-center justify-between border-b border-neutral-200 py-8 cursor-pointer overflow-hidden opacity-0"
+							>
+								{/* Background slide */}
+								<div 
+									data-bg
+									className="absolute inset-0 bg-clou-black origin-left scale-x-0 z-0"
+								/>
+								
+								<div className="relative z-10 flex items-center gap-8 flex-1">
+									<span className="text-lg font-medium text-neutral-400 w-12 group-hover:text-neutral-500 transition-colors">
+										{service.id}
+									</span>
+									<div className="flex flex-col gap-1">
+										<h3 className="text-2xl font-medium sm:text-3xl lg:text-4xl transition-colors">
+											{service.title}
+										</h3>
+										<p className="text-sm text-neutral-500 group-hover:text-neutral-400 transition-colors">
+											{service.description}
+										</p>
 									</div>
-								))}
+								</div>
+
+								{/* Arrow indicator */}
+								<div className="relative z-10 pr-4">
+									<svg 
+										data-arrow
+										className="w-6 h-6 opacity-0 -translate-x-2"
+										fill="none" 
+										viewBox="0 0 24 24" 
+										stroke="currentColor"
+									>
+										<path 
+											strokeLinecap="round" 
+											strokeLinejoin="round" 
+											strokeWidth={2} 
+											d="M17 8l4 4m0 0l-4 4m4-4H3" 
+										/>
+									</svg>
+								</div>
 							</div>
-						</div>
+						))}
 					</div>
 				</div>
 			</div>

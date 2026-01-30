@@ -135,7 +135,7 @@ export function usePageTransition() {
 				timeline.set(layer, { y: 0 });
 
 				if (textEl) {
-					timeline.set(textEl, { opacity: 0 });
+					timeline.to(textEl, { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 0);
 				}
 
 				timeline.to(layer, {
@@ -177,11 +177,23 @@ export function usePageTransition() {
 				return;
 			}
 
-			hasRunInitialEnterRef.current = true;
-			gsap.set(layer, { y: "100%" });
-
+			// Initial state is already covered (y: 0) from CSS.
+			// We validly want to show the loading text, then transition out.
 			if (leaveTextRef.current) {
-				gsap.set(leaveTextRef.current, { opacity: 0 });
+				gsap.set(leaveTextRef.current, { opacity: 0, y: 20 });
+				gsap.to(leaveTextRef.current, { 
+					opacity: 1, 
+					y: 0, 
+					duration: 0.6, 
+					ease: "power3.out",
+					onComplete: () => {
+						// Add a small delay before entering
+						gsap.delayedCall(0.5, () => {
+							handleEnter(() => {}).catch(() => {});
+						});
+					}
+				});
+				return;
 			}
 
 			handleEnter(() => {}).catch(() => {

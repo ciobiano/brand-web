@@ -17,7 +17,7 @@ const config: Config = {
 			fontFamily: {
 				sans: ["var(--font-inter)", "Helvetica", "Arial", "sans-serif"],
 				athletics: [
-					"var(--font-poppins)",
+					"Athletics",
 					"Inter",
 					"Helvetica",
 					"Arial",

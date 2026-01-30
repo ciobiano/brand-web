@@ -1,5 +1,6 @@
 import {
 	AgencyHero,
+	AgencyTeam,
 	AgencyExpertise,
 	AgencyCaseStudies,
 	AgencyClientRoster,
@@ -10,6 +11,7 @@ export default function AgencyPage() {
 	return (
 		<main className="min-h-screen">
 			<AgencyHero />
+			<AgencyTeam />
 			<AgencyExpertise />
 			<AgencyCaseStudies />
 			<AgencyClientRoster />

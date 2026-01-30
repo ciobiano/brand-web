@@ -9,129 +9,111 @@ import Button from "@/soul/primitives/Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type LabelVariant = "center" | "mid-left" | "none";
-
-type VideoSlide = {
-	type: "video";
-	sources: {
-		src: string;
-		type: string;
-	}[];
-	poster: string;
-	label?: string;
-	labelVariant?: LabelVariant;
-};
-
-type ImageSlide = {
-	type: "image";
-	src: string;
-	label?: string;
-	labelVariant?: LabelVariant;
-};
-
-type Slide = VideoSlide | ImageSlide;
-
-const defaultLabelVariant: Record<Slide["type"], LabelVariant> = {
-	video: "center",
-	image: "mid-left",
-};
-
-const labelContainerClasses: Record<LabelVariant, string> = {
-	center: "inset-0 flex items-center justify-center",
-	"mid-left": "top-1/2 left-0 flex -translate-y-1/2 items-center px-4 py-5",
-	none: "",
-};
-
-const labelTextClasses: Record<LabelVariant, string> = {
-	center: "text-center",
-	"mid-left": "text-left",
-	none: "",
-};
-
-const slides: Slide[] = [
-	{
-		type: "video" as const,
-		sources: [
-			{
-				src: "https://cdn.prod.website-files.com/6753439d3da31c3534ed228c%2F6823861bbf033cf0b7090529_Standard_Mode_the_man_blink_with_one_eye%20%281%29-transcode.mp4",
-				type: "video/mp4",
-			},
-			{
-				src: "https://cdn.prod.website-files.com/6753439d3da31c3534ed228c%2F6823861bbf033cf0b7090529_Standard_Mode_the_man_blink_with_one_eye%20%281%29-transcode.webm",
-				type: "video/webm",
-			},
-		],
-		poster:
-			"https://cdn.prod.website-files.com/6753439d3da31c3534ed228c/6823861bbf033cf0b7090529_Standard_Mode_the_man_blink_with_one_eye%20(1)-poster-00001.jpg",
-		label: "Made by humans.",
-	},
-	{
-		type: "image" as const,
-		src: "https://cdn.prod.website-files.com/6753439d3da31c3534ed228c/680f204dd3110a6fca214fbd_img-2-big.webp",
-		label: "Built to deliver.",
-	},
-	{
-		type: "image" as const,
-		src: "https://cdn.prod.website-files.com/6753439d3da31c3534ed228c/680f205015fb858aa5c81abc_img-1-big.webp",
-		label: "Rooted in craft.",
-	},
-];
-
-const specialties = [
-	"Development.",
-	"AI Integration.",
-	"Motion Design.",
-	"UX Design.",
-	"Visual Design.",
-	"Branding.",
-	"Prototyping.",
-	"Visual Front-End Engineering.",
-];
-
 export default function AgencyHero() {
-	const rootRef = useRef<HTMLDivElement | null>(null);
-	const cardsWrapperRef = useRef<HTMLDivElement | null>(null);
-	const cardsRef = useRef<HTMLDivElement | null>(null);
-	const marqueeItems = [...specialties, ...specialties, ...specialties];
+	const rootRef = useRef<HTMLElement | null>(null);
+	const heroTitleRef = useRef<HTMLHeadingElement | null>(null);
+	const visualRef = useRef<HTMLDivElement | null>(null);
 
 	useGSAP(
 		() => {
 			const ctx = gsap.context(() => {
-				gsap.set("[data-hero-line]", { yPercent: 110, opacity: 0 });
-				gsap.timeline({ delay: 0.4 }).to("[data-hero-line]", {
-					yPercent: 0,
-					opacity: 1,
-					duration: 1,
-					ease: "power4.out",
-					stagger: 0.12,
+				// 1. Title Animation (Split Text) - Starts hidden via opacity-0 class
+				if (heroTitleRef.current) {
+					const title = heroTitleRef.current;
+					const text = title.textContent || "";
+					title.innerHTML = "";
+					
+					// Split text into chars
+					text.split("").forEach((char) => {
+						const span = document.createElement("span");
+						span.textContent = char === " " ? "\u00A0" : char;
+						span.style.display = "inline-block";
+						span.style.willChange = "transform, opacity";
+						span.setAttribute("data-char", "");
+						title.appendChild(span);
+					});
+
+					// Animate chars in
+					gsap.fromTo("[data-char]", 
+						{ 
+							yPercent: 120, 
+							opacity: 0,
+							rotateX: -90
+						},
+						{
+							yPercent: 0,
+							opacity: 1,
+							rotateX: 0,
+							duration: 1.2,
+							ease: "power4.out",
+							stagger: 0.03,
+							delay: 0.2, // Wait for overlay to start sliding
+						}
+					);
+				}
+
+				// 2. Visual Element Entrance
+				gsap.fromTo(visualRef.current,
+					{ opacity: 0, scale: 0.8, y: 50 },
+					{
+						opacity: 1,
+						scale: 1,
+						y: 0,
+						duration: 1.4,
+						ease: "power3.out",
+						delay: 0.4
+					}
+				);
+				
+				// 3. Intro Text Reveal ("We are digital by nature...")
+				gsap.fromTo("[data-intro-text]",
+					{ opacity: 0, y: 40 },
+					{
+						opacity: 1,
+						y: 0,
+						duration: 1,
+						ease: "power3.out",
+						delay: 0.6,
+						stagger: 0.1
+					}
+				);
+
+				// 4. Team Banner Parallax & Expansion
+				// We create a timeline to handle multiple animations on the banner simultaneously
+				const bannerTimeline = gsap.timeline({
+					scrollTrigger: {
+						trigger: "[data-team-banner-wrapper]",
+						start: "top 90%", // Start expanding when the top of the wrapper hits 90% of the viewport height
+						end: "bottom bottom", // Finish when the bottom hits the bottom
+						scrub: 1, // Smooth scrubbing effect linked to scroll position
+					}
 				});
 
-				if (rootRef.current && cardsWrapperRef.current && cardsRef.current) {
-					const section = rootRef.current;
-					const wrapper = cardsWrapperRef.current;
-					const cards = cardsRef.current;
-					const getScrollAmount = () =>
-						Math.max(0, cards.scrollWidth - wrapper.clientWidth);
+				// Animation 1: Expand width (using clip-path for performance)
+				// Initial state (set in CSS or fromTo): inset(0% 5% 0% 5% round 2rem) creates the padding/rounded look
+				bannerTimeline.fromTo("[data-team-banner-wrapper]",
+					{ 
+						clipPath: "inset(0% 5% 0% 5% round 2rem)", 
+					},
+					{
+						clipPath: "inset(0% 0% 0% 0% round 0rem)",
+						ease: "power2.inOut", // Smooth easing for the expansion
+					},
+					0 // Start at time 0
+				);
 
-					if (getScrollAmount() > 0) {
-						gsap.fromTo(
-							cards,
-							{ x: 0 },
-							{
-								x: () => -getScrollAmount(),
-								ease: "none",
-								scrollTrigger: {
-									trigger: wrapper,
-									pin: section,
-									start: "center center",
-									end: () => `+=${getScrollAmount()}`,
-									scrub: 1,
-									invalidateOnRefresh: true,
-								},
-							}
-						);
-					}
-				}
+				// Animation 2: Parallax effect on the image itself
+				// Moves the image slightly slower than the scroll to create depth
+				bannerTimeline.fromTo("[data-team-banner]",
+					{ yPercent: -10, scale: 1.1 }, // Start zoomed in slightly
+					{
+						yPercent: 10,
+						scale: 1,
+						ease: "none",
+					},
+					0 // Sync with expansion
+				);
+
 			}, rootRef);
 
 			return () => ctx.revert();
@@ -140,124 +122,72 @@ export default function AgencyHero() {
 	);
 
 	return (
-		<main ref={rootRef} className="flex  flex-col text-neutral-900">
-			<div className="mb-80 flex flex-1 flex-col gap-10 px-4 pt-32 sm:px-6 ">
-				<section className="grid gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-					<h1
-						data-hero-line
-						className="text-[clamp(4.5rem,16vw,13rem)] leading-[0.85] tracking-tight lg:col-span-2"
-					>
-						Agency
-					</h1>
-					<span aria-hidden className="hidden lg:block" />
-					<div className="flex flex-col gap-10  ">
-						<p
-							data-hero-line
-							className="text-base text-neutral-600 sm:text-lg lg:col-start-2 lg:mt-10 lg:max-w-2xl lg:text-2xl lg:justify-self-start"
+		<main ref={rootRef} className="flex flex-col bg-clou-white min-h-screen pt-32 sm:pt-40 pb-20">
+			{/* Top Section: Title Left, Visual Right */}
+			<section className="px-6 lg:px-12 mb-32">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+					{/* Left: Huge Title */}
+					<div className="relative z-10">
+						<h1
+							ref={heroTitleRef}
+							className="text-[clamp(5rem,18vw,10rem)]  leading-[0.8] tracking-tight text-clou-black"
+							style={{ perspective: "1000px" }}
 						>
-							Stories and field notes from the studio. Strategy sprints,
-							time-out journals, and the experiments moving our practice
-							forward.
-						</p>
-						<div className="w-full">
-							<Button variant="secondary" size="md">
-								Newsletter sign up
-							</Button>
-						</div>
-					</div>
-				</section>
-				<section className="relative py-10 bg-white text-black">
-					<div>
-						<div ref={cardsWrapperRef} className="relative">
-							<div
-								ref={cardsRef}
-								className="inline-grid grid-flow-col auto-cols-[clamp(20rem,_85vw,_60rem)] gap-4 md:gap-8"
-								data-hero-cards
-							>
-								{slides.map((slide, index) => {
-									const labelVariant =
-										slide.labelVariant ?? defaultLabelVariant[slide.type];
-									const shouldRenderLabel =
-										Boolean(slide.label) && labelVariant !== "none";
-
-									return (
-										<div
-											key={index}
-											className="relative w-full overflow-hidden rounded-[32px] border border-black/5 bg-black/5"
-										>
-											<div className="relative h-[32rem] w-[57vw] max-w-[1022px] sm:h-[54vh] lg:max-h-[70vh]">
-												{slide.type === "video" ? (
-													<video
-														className="h-full w-full object-cover"
-														autoPlay
-														loop
-														muted
-														playsInline
-														poster={slide.poster}
-													>
-														{slide.sources.map((source) => (
-															<source
-																key={source.src}
-																src={source.src}
-																type={source.type}
-															/>
-														))}
-													</video>
-												) : (
-													<Image
-														src={slide.src}
-														alt={slide.label ?? "Agency case study"}
-														fill
-														className="object-cover"
-														sizes="(min-width: 1280px) 32vw, (min-width: 1024px) 45vw, 100vw"
-														priority={index === 0}
-													/>
-												)}
-												{shouldRenderLabel && (
-													<div
-														className={`pointer-events-none absolute z-10 text-white ${labelContainerClasses[labelVariant]}`}
-													>
-														<p
-															className={`text-3xl ${labelTextClasses[labelVariant]}`}
-														>
-															{slide.label}
-														</p>
-													</div>
-												)}
-											</div>
-										</div>
-									);
-								})}
-							</div>
-						</div>
+							Agency
+						</h1>
 					</div>
 
-					<div className="mx-auto mt-20 w-full overflow-hidden rounded-[32px] border border-clou-black/25 bg-clou-black px-6 py-16 text-clou-white">
-						<div className="grid min-h-[360px] grid-rows-[1fr_auto] gap-64">
-							<div className="px-20">
-								<p className="max-w-7xl text-[clamp(2.2rem,4.8vw,3.7rem)] font-semibold leading-[1.15]">
-									To put it simply, you can rent our talented experts or an
-									entire team on a short-term or long-term basis to help you
-									design, build, and launch your project.
-								</p>
-							</div>
-							<div className="relative mt-10" aria-label="Service capabilities">
-								<div className="flex w-max gap-10 animate-marquee-soft text-2xl font-medium tracking-[0.05em] text-clou-gray sm:text-xl">
-									{marqueeItems.map((item, index) => (
-										<span
-											key={`${item}-${index}`}
-											className="whitespace-nowrap"
-											aria-hidden={index >= specialties.length}
-										>
-											{item}
-										</span>
-									))}
-								</div>
-							</div>
+					{/* Right: Visual Element (Placeholder for Pink Rabbit) */}
+					<div 
+						ref={visualRef}
+						className="relative w-full mt-20 aspect-square  max-w-[250px] mx-auto lg:ml-auto lg:mr-30 opacity-0"
+					>
+						{/* Placeholder Visual - A styled abstract shape */}
+						<div className="w-full h-[400px] bg-gradient-to-br from-pink-400 to-rose-600 shadow-2xl flex items-center justify-center transform  hover:rotate-6 transition-transform duration-500">
+							<span className="text-white text-opacity-80 font-medium text-lg">Visual / 3D Element</span>
 						</div>
 					</div>
-				</section>
-			</div>
+				</div>
+			</section>
+
+			{/* Middle Section: Intro Text */}
+			<section className="px-4 lg:px-6 mb-32 max-w-[100rem] mx-auto">
+				<p 
+					data-intro-text
+					className="text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.2] tracking- text-clou-black text-neutral-500 font-light  text-center lg:text-left opacity-0"
+				>
+					We are digital by nature. We create real connections between brands and people. 
+					Unique and authentic connections, the kind that transcend the screen. 
+					The kind that become experiences that transform and endure.
+				</p>
+				<p 
+					data-intro-text
+					className="mt-8 text-xl sm:text-2xl text-neutral-500 max-w-4xl text-center lg:text-left opacity-0"
+				>
+					Because we know that behind every project there are stories, desires and goals that deserve to come true.
+				</p>
+			</section>
+
+			{/* Bottom Section: Team Banner */}
+			{/* We add "inset-x-0" to make sure it can be full width, but clip-path handles the visual padding */}
+			<section 
+				data-team-banner-wrapper 
+				className="relative w-full h-[60vh] sm:h-[80vh] overflow-hidden will-change-[clip-path]"
+			>
+				<div 
+					data-team-banner
+					className="relative w-full h-[120%] -mt-[10%]"
+				>
+					<Image
+						src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2940&auto=format&fit=crop"
+						alt="Agency Team"
+						fill
+						className="object-cover"
+						priority
+					/>
+					<div className="absolute inset-0 bg-black/10" />
+				</div>
+			</section>
 		</main>
 	);
 }
