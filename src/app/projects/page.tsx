@@ -178,7 +178,7 @@ export default function ProjectsPage() {
 					)}
 				</section>
 				<div className="flex flex-col gap-6 pt-40 max-w-2xl">
-					<h2 className="text-xl md:text-[2rem] max-w-lg text-clou-black leading-10">
+					<h2 className="text-xl md:text-[2rem] max-w-lg text-kainé-black leading-10">
 						Scrolled all the way to the bottom? Then it really starts now. What
 						do you want next?
 					</h2>

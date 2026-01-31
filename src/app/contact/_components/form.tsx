@@ -52,7 +52,7 @@ export function InquiryForm() {
     setSelected((prev) => (prev.includes(label) ? prev.filter((x) => x !== label) : [...prev, label]));
 
   const inputBase =
-    "w-full rounded-2xl border border-zinc-200 px-4 py-1.5 outline-none focus:ring-1 focus:ring-purple-300";
+    "w-full rounded-2xl border border-black px-4 py-1.5 outline-none focus:ring-1 focus:ring-purple-300 ";
 
   return (
     <form className="w-full space-y-16 rounded-2xl hover:shadow-2xl p-10">
@@ -70,15 +70,15 @@ export function InquiryForm() {
       <div className="space-y-3">
         <h3 className="text-xl font-medium">Tell us more about your project.</h3>
         <div className="relative">
-        
-          
+
+
           <label htmlFor="about" className="sr-only">
             Briefly describe your project
           </label>
           <textarea
             id="about"
             placeholder="Briefly describe your project."
-            className="min-h-[140px] w-full resize-y rounded-2xl border border-zinc-200 p-4 pr-12 outline-none focus:ring-2 focus:ring-black"
+            className="min-h-[140px] w-full resize-y rounded-2xl border border-black p-4 pr-12 outline-none focus:ring-2 focus:ring-black"
           />
         </div>
       </div>
@@ -86,7 +86,7 @@ export function InquiryForm() {
       {/* Website domain */}
       <div className="space-y-3">
         <h3 className="text-xl font-medium">Do you already have a website?</h3>
-        <label htmlFor="domain" className="text-sm text-zinc-500">
+        <label htmlFor="domain" className="text-sm text-black">
           Domain
         </label>
         <input id="domain" type="text" inputMode="url" placeholder="e.g. example.com" className={inputBase} />
@@ -97,13 +97,13 @@ export function InquiryForm() {
         <h3 className="text-xl font-medium">What does your timing look like?</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <label htmlFor="start" className="text-sm text-zinc-500">
+            <label htmlFor="start" className="text-sm text-black">
               Start
             </label>
             <input id="start" type="month" value={startMonth} onChange={(e) => setStartMonth(e.target.value)} className={inputBase} />
           </div>
           <div className="space-y-2">
-            <label htmlFor="end" className="text-sm text-zinc-500">
+            <label htmlFor="end" className="text-sm text-black">
               Completion
             </label>
             <input id="end" type="month" value={endMonth} onChange={(e) => setEndMonth(e.target.value)} className={inputBase} />
@@ -133,7 +133,7 @@ export function InquiryForm() {
       </div>
 
       {/* Contact details */}
-      <div className="space-y-4">
+      <div className="space-y-4 ">
         <h3 className="text-xl font-medium">Contact details</h3>
         <div className="grid grid-cols-1  gap-4 sm:grid-cols-2">
           <div className="space-y-2">
@@ -176,7 +176,7 @@ export function InquiryForm() {
         </button>
 
         {/* Mini confirmation card (static demo) */}
-        <div className="w-full bg-clou-gray/30  rounded-2xl border p-5 shadow-sm">
+        <div className="w-full bg-kainé-gray/30  rounded-2xl border p-5 shadow-sm">
           <div className="mb-2  text-zinc-500">Your inquiry inbox says:</div>
           <div className="flex items-center gap-3">
             <img src="/images/placeholder1.jpg" alt="Team" className="h-16 w-16 rounded-xl object-cover" />

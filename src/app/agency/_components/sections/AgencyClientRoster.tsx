@@ -30,7 +30,7 @@ export default function AgencyClientRoster() {
 					const statement = statementRef.current;
 					const words = statement.textContent?.split(" ") || [];
 					statement.innerHTML = "";
-					
+
 					words.forEach((word, i) => {
 						const span = document.createElement("span");
 						span.textContent = word + " ";
@@ -60,7 +60,7 @@ export default function AgencyClientRoster() {
 				}
 
 				// Client items stagger
-				gsap.fromTo("[data-client-item]", 
+				gsap.fromTo("[data-client-item]",
 					{ y: 30, opacity: 0 },
 					{
 						y: 0,
@@ -85,16 +85,16 @@ export default function AgencyClientRoster() {
 	return (
 		<section
 			ref={sectionRef}
-			className="relative bg-clou-black py-24 text-clou-gray sm:py-32"
+			className="relative bg-kainé-black py-24 text-kainé-gray sm:py-32"
 		>
-			<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-clou-black h-4" />
+			<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-kainé-black h-4" />
 
 			{/* Large statement block - "machen Sinn." style */}
 			<div className="px-6 lg:px-12 mb-24">
 				<div className="max-w-6xl">
-					<p 
+					<p
 						ref={statementRef}
-						className="text-[clamp(3rem,8vw,7rem)] font-medium leading-[1.05] text-clou-white tracking-tight"
+						className="text-[clamp(3rem,8vw,7rem)] font-medium leading-[1.05] text-kainé-white tracking-tight"
 					>
 						machen Sinn.
 					</p>
@@ -113,13 +113,13 @@ export default function AgencyClientRoster() {
 							<div
 								key={startup.name}
 								data-client-item
-								className="group flex items-center justify-between border-b border-clou-gray/30 py-8 cursor-pointer transition-colors hover:border-clou-gray/60 opacity-0"
+								className="group flex items-center justify-between border-b border-kainé-gray/30 py-8 cursor-pointer transition-colors hover:border-kainé-gray/60 opacity-0"
 							>
-								<div className="flex-shrink-0 pr-4 text-lg sm:text-xl font-medium text-clou-white group-hover:text-white transition-colors">
+								<div className="flex-shrink-0 pr-4 text-lg sm:text-xl font-medium text-kainé-white group-hover:text-white transition-colors">
 									{startup.name}
 								</div>
 								<div className="min-w-0">
-									<span className="text-sm uppercase tracking-wider text-clou-gray group-hover:text-clou-white/80 transition-colors">
+									<span className="text-sm uppercase tracking-wider text-kainé-gray group-hover:text-kainé-white/80 transition-colors">
 										{startup.location}
 									</span>
 								</div>

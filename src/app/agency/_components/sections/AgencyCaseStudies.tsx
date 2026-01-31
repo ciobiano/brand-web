@@ -51,7 +51,7 @@ export default function AgencyCaseStudies() {
 	const xTo = useRef<gsap.QuickToFunc | null>(null);
 	const yTo = useRef<gsap.QuickToFunc | null>(null);
 	const [isHovering, setIsHovering] = useState(false);
-	
+
 	// Drag Logic Ref
 	const isDragging = useRef(false);
 	const startX = useRef(0);
@@ -67,11 +67,11 @@ export default function AgencyCaseStudies() {
 
 				// We animate x from 0 to -(totalWidth / 3) and repeat
 				marqueeTween.current = gsap.to(sliderRef.current, {
-					x: -(totalWidth / 3), 
+					x: -(totalWidth / 3),
 					ease: "none",
 					duration: duration,
 					repeat: -1,
-					onUpdate: function() {
+					onUpdate: function () {
 						// Sync currentX with the tween's value so drag starts smoothly from here
 						// Note: This logic is simple; for complex interruption we might need more
 						if (!isDragging.current) {
@@ -80,7 +80,7 @@ export default function AgencyCaseStudies() {
 						}
 					}
 				});
-            }
+			}
 
 			// 2. Custom Cursor Setup
 			if (cursorRef.current) {
@@ -98,7 +98,7 @@ export default function AgencyCaseStudies() {
 			xTo.current(e.clientX - rect.left);
 			yTo.current(e.clientY - rect.top);
 		}
-		
+
 		// DRAG LOGIC: Move
 		if (isDragging.current && sliderRef.current) {
 			const delta = e.clientX - startX.current;
@@ -107,17 +107,17 @@ export default function AgencyCaseStudies() {
 			// We need to know the 'current' x value. 
 			// Getting computed style is expensive but okay for drag.
 			// Better: Let's use GSAP's set to move it relative to start.
-			
+
 			// Actually, a simple approach for "Draggable Effect" without full infinite logic:
 			// Just pause tween. If user drags, we offset.
 			// But since we want to RESUME, jumping back to tween position is jarring.
 			// We'll implementing a simple 'Pause on Hover' as requested first,
 			// and visual 'Drag' might just be the ability to click and hold (cursor change?).
 			// If actual movement is needed, we need to update the tween's progress or time.
-			
+
 			// Let's implement: Pause on Hover. And "Draggable" logic via modifying Tween timeScale?
 			// Or just modifying the 'x' directly.
-			
+
 			gsap.set(sliderRef.current, { x: startScrollLeft.current + delta });
 		}
 	};
@@ -154,7 +154,7 @@ export default function AgencyCaseStudies() {
 		// Fallback: For this iteration, I will implement **Pause on Hover** strongly,
 		// and simple drag that might just be visual or limited, 
 		// OR simpler: Just "Stop Scroll" as requested, and "Draggable Effect" (cursor change).
-		
+
 		// ACTUALLY: The user said "cursor should stop the scroll and have a draggable effect".
 		// This likely means: 1. Hover stops scroll. 2. Cursor looks like you can drag (icon).
 		// 3. User might NOT strictly need actual drag physics if it's complex, 
@@ -163,21 +163,21 @@ export default function AgencyCaseStudies() {
 		// So I will stick to: Pause on Hover, Cursor styling, 
 		// and I will try to implement basic drag that UPDATES the tween time/progress if possible, 
 		// but standard "set x" works if we just restart tween from there? No.
-		
+
 		// DECISION: Implement "Pause on Hover". Implement "Drag moves Slider".
 		// On release, if position changed, we ideally want to resume. 
 		// Simple approach: On release, create a NEW tween from current pos to relative end? 
 		// Or just Resume. If we moved X manually, resuming might jump back.
 		// Unless we use `gsap.set` on the target, and the tween uses relative values? 
 		// The current tween is absolute `to(x: -total/3)`.
-		
+
 		// To fix the jump: `marqueeTween.current.progress(...)`
 		// We calculate new progress based on x / totalWidth.
 		if (sliderRef.current) {
 			const currentXVal = new WebKitCSSMatrix(window.getComputedStyle(sliderRef.current).transform).m41;
 			const totalW = sliderRef.current.scrollWidth; // Full width (3 sets)
 			const oneSetW = totalW / 3;
-			
+
 			// We typically loop between 0 and -oneSetW.
 			// Find equivalent progress.
 			// This is getting complex for a 1-shot. 
@@ -187,47 +187,47 @@ export default function AgencyCaseStudies() {
 			// User said "Stop the scroll". Maybe they don't need it to auto-resume immediately?
 			// I will Auto-Resume but I'll use a trick: `gsap.getProperty(el, "x")` to find where we are,
 			// then create a NEW tween to continue moving left.
-			
+
 			const currentX = gsap.getProperty(sliderRef.current, "x") as number;
 			const targetX = -(totalW / 3);
 			const distanceLeft = Math.abs(targetX - currentX);
 			// If we dragged past target?
 			// Let's just create a new tween to keep moving left indefinitely
-            // Actually, simplest is: drag modifies the wrapper, while the tween moves a CHILD? 
-            // No.
-            
-            // Allow drag to simply "Stop" the auto scroll and allow manual inspection. 
-            // Resume only if drag didn't happen? 
-            // I'll implement logic: Dragging moves it. Release resumes. 
-            // To fix jump: On release, we restart the tween but `from` current X.
-             // And we need to ensure we handle the 'loop' manually if dragged too far.
-             // Given complexity, I will implement SAFE draggable: 
-             // Pause on Hover. Cursor indicates drag.
-             // If you drag, it moves. 
-             // Logic to seamlessly resume is added below.
-             
-             createMarquee(currentX); // Restart from current
+			// Actually, simplest is: drag modifies the wrapper, while the tween moves a CHILD? 
+			// No.
+
+			// Allow drag to simply "Stop" the auto scroll and allow manual inspection. 
+			// Resume only if drag didn't happen? 
+			// I'll implement logic: Dragging moves it. Release resumes. 
+			// To fix jump: On release, we restart the tween but `from` current X.
+			// And we need to ensure we handle the 'loop' manually if dragged too far.
+			// Given complexity, I will implement SAFE draggable: 
+			// Pause on Hover. Cursor indicates drag.
+			// If you drag, it moves. 
+			// Logic to seamlessly resume is added below.
+
+			createMarquee(currentX); // Restart from current
 		}
 	};
-	
+
 	const createMarquee = (startFromX: number) => {
 		if (!sliderRef.current) return;
 		marqueeTween.current?.kill();
-		
+
 		const totalWidth = sliderRef.current.scrollWidth;
 		const oneSetWidth = totalWidth / 3;
 		// Determine where we are relative to the loop (0 to -oneSetWidth)
 		// normalizedX = startFromX % oneSetWidth
-		
+
 		// Simplified: Just animate from current to -totalWidth (end of everything)
 		// But that doesn't loop.
 		// I will just use the original Tween for auto-scroll. 
 		// Dragging will just be "Stop and Hold" visual logic for now to ensure stability,
 		// unless I can nail the resume.
-		
+
 		// Let's try: Resume by calculating remaining distance to -oneSetWidth
 		// Then onComplete, reset to 0 and start full loop.
-		
+
 		const target = -oneSetWidth;
 		if (startFromX < target) {
 			// Wrapped already? Or dragged way left.
@@ -237,12 +237,12 @@ export default function AgencyCaseStudies() {
 			// Let's try to keep it simple: Pause on hover. 
 			// Drag functionality added but simple.
 		}
-		
+
 		// RE-IMPLEMENTATION of Marquee using a function
 		const duration = 40;
 		const distance = Math.abs(target - startFromX);
 		const newDur = (distance / oneSetWidth) * duration;
-		
+
 		marqueeTween.current = gsap.to(sliderRef.current, {
 			x: target,
 			ease: "none",
@@ -257,7 +257,7 @@ export default function AgencyCaseStudies() {
 	return (
 		<section
 			ref={containerRef}
-			className="relative w-full py-32 overflow-hidden bg-clou-white cursor-none"
+			className="relative w-full py-32 overflow-hidden bg-kainé-white cursor-none"
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			onMouseMove={handleMouseMove}
@@ -265,14 +265,14 @@ export default function AgencyCaseStudies() {
 			onMouseUp={onMouseUp}
 		>
 			<div className="mb-20 px-6 lg:px-10">
-				<h2 className="text-5xl font-semibold tracking-[-0.03em] sm:text-7xl lg:text-9xl text-clou-black">
+				<h2 className="text-5xl font-semibold tracking-[-0.03em] sm:text-7xl lg:text-9xl text-kainé-black">
 					Selected <br /> Works
 				</h2>
 			</div>
 
 			{/* Slider Wrapper: Added items-center for vertical centering of mixed-height items */}
 			<div className="flex w-full">
-				<div 
+				<div
 					ref={sliderRef}
 					className="flex items-center gap-8 px-6 lg:gap-12 lg:px-12 w-max"
 				>
@@ -301,15 +301,14 @@ export default function AgencyCaseStudies() {
 			{/* Custom Cursor: Removed mix-blend-difference, ensuring solid black */}
 			<div
 				ref={cursorRef}
-				className={`pointer-events-none absolute left-0 top-0 z-20 flex h-24 w-24 items-center justify-center rounded-full bg-black text-white transition-opacity duration-300 ${
-					isHovering ? "opacity-100" : "opacity-0"
-				}`}
+				className={`pointer-events-none absolute left-0 top-0 z-20 flex h-24 w-24 items-center justify-center rounded-full bg-black text-white transition-opacity duration-300 ${isHovering ? "opacity-100" : "opacity-0"
+					}`}
 			>
-                {/* Arrows */}
+				{/* Arrows */}
 				<div className="flex items-center gap-2">
-                    <ArrowLeft className="w-6 h-6" />
-                    <ArrowRight className="w-6 h-6" />
-                </div>
+					<ArrowLeft className="w-6 h-6" />
+					<ArrowRight className="w-6 h-6" />
+				</div>
 			</div>
 		</section>
 	);

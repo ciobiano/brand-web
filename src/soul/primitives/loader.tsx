@@ -78,7 +78,7 @@ export default function PageLoader({
 	return (
 		<div
 			ref={loaderRef}
-			className={`fixed inset-0 z-[9999] bg-clou-black flex items-center justify-center pointer-events-none`}
+			className={`fixed inset-0 z-[9999] bg-kainé-black flex items-center justify-center pointer-events-none`}
 		>
 			<div
 				ref={messageRef}

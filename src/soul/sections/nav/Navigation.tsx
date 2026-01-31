@@ -6,10 +6,10 @@ import Logo from "./Logo";
 import Button from "../../primitives/Button";
 
 const navItems = [
-	{ name: "Projects", href: "/projects", message:'kaine projects' },
-	{ name: "Agency", href: "/agency", message:'kaine projects'  },
-	{ name: "Journal", href: "/journal", message:'kaine projects' },
-	{ name: "Contact", href: "/contact", message:'kaine projects' },
+	{ name: "Projects", href: "/projects", message: 'kaine projects' },
+	{ name: "Agency", href: "/agency", message: 'kaine projects' },
+	{ name: "Journal", href: "/journal", message: 'kaine projects' },
+	{ name: "Contact", href: "/contact", message: 'kaine projects' },
 ];
 
 export default function Navigation() {
@@ -40,47 +40,47 @@ export default function Navigation() {
 						<Logo />
 					</div>
 
-					
+
 					<div className="flex-shrink-0">
-						<div className="hidden md:flex p-1  rounded-3xl bg-clou-white/50 backdrop-blur-xl items-center space-x-2">
-						{navItems.map((item) => (
-							<Button key={item.name} variant="nav" size="nav" href={item.href}>
-								{item.name}
-							</Button>
-						))}
-					</div>
+						<div className="hidden md:flex p-1  rounded-3xl bg-kainé-white/30 backdrop-blur-sm items-center space-x-2">
+							{navItems.map((item) => (
+								<Button key={item.name} variant="nav" size="nav" href={item.href}>
+									{item.name}
+								</Button>
+							))}
+						</div>
 					</div>
 
 					{/* Mobile menu button */}
 					<div className="flex flex-1 justify-end ">
-						    <div className="flex-shrink-0">
+						<div className="flex-shrink-0">
 
-						<button
-							type="button"
-							className="bg-clou-black inline-flex items-center justify-center p-3 rounded-full text-clou-white  hover:scale-105"
-							aria-controls="mobile-menu"
-							aria-expanded="false"
-						>
-							<span className="sr-only">Open main menu</span>
-							<svg
-								className="block h-6 w-6"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								aria-hidden="true"
+							<button
+								type="button"
+								className="bg-kainé-black inline-flex items-center justify-center p-3 rounded-full text-kainé-white  hover:scale-105"
+								aria-controls="mobile-menu"
+								aria-expanded="false"
 							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M4 6h16M4 12h16M4 18h16"
-								/>
-							</svg>
-						</button>
+								<span className="sr-only">Open main menu</span>
+								<svg
+									className="block h-6 w-6"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									aria-hidden="true"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										d="M4 6h16M4 12h16M4 18h16"
+									/>
+								</svg>
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 
 			{/* Mobile menu */}

@@ -25,10 +25,10 @@ const config: Config = {
 				],
 			},
 			colors: {
-				"clou-white": "#ffffff",
-				"clou-black": "#101114",
-				"clou-gray": "#929296",
-				"clou-red": "rgb(var(--clou-red)",
+				"kainé-white": "#ffffff",
+				"kainé-black": "#101114",
+				"kainé-gray": "#929296",
+				"kainé-red": "rgb(var(--kainé-red)",
 			},
 			animation: {
 				"scroll-hint": "scroll 2s ease-in-out infinite",
@@ -72,14 +72,14 @@ const config: Config = {
 				},
 			},
 			transitionTimingFunction: {
-				"clou-ease": "cubic-bezier(0.25, 0.1, 0.25, 1)",
-				"clou-bounce": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+				"kainé-ease": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+				"kainé-bounce": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
 			},
 			spacing: {
-				"1205": "1205px", // Clou hero height
+				"1205": "1205px", // kainé hero height
 			},
 			fontSize: {
-				"clou-hero": [
+				"kainé-hero": [
 					"353.4px",
 					{ lineHeight: "318.06px", letterSpacing: "-8.835px" },
 				],
@@ -92,7 +92,7 @@ const config: Config = {
 				],
 			},
 			letterSpacing: {
-				"clou-tight": "-0.025em",
+				"kainé-tight": "-0.025em",
 			},
 		},
 	},

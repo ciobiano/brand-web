@@ -13,9 +13,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	title: "Clou - Agentur für sinnbasierte Grafik und Kommunikation",
+	title: "kainé - Agentur für sinnbasierte Grafik und Kommunikation",
 	description:
-		"Hallo! Wir sind Clou, deine Agentur in Luzern mit Fokus auf Branding, Purpose und Websites mit Wirkung.",
+		"Hallo! Wir sind kainé, deine Agentur in Luzern mit Fokus auf Branding, Purpose und Websites mit Wirkung.",
 };
 
 export default function RootLayout({
@@ -23,19 +23,19 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-		return (
-			<html lang="de" className={`${inter.variable} `}>
-				<body className={`${inter.className} font-athletics `}>
-					<Providers>
-						<Navigation />
-						<ScrollSmootherWrapper contentClassName="pt-16">
-							<>
-								{children}
-								<Footer />
-							</>
-						</ScrollSmootherWrapper>
-					</Providers>
-				</body>
-			</html>
-		);
+	return (
+		<html lang="de" className={`${inter.variable} `}>
+			<body className={`${inter.className} font-athletics `}>
+				<Providers>
+					<Navigation />
+					<ScrollSmootherWrapper contentClassName="pt-16">
+						<>
+							{children}
+							<Footer />
+						</>
+					</ScrollSmootherWrapper>
+				</Providers>
+			</body>
+		</html>
+	);
 }

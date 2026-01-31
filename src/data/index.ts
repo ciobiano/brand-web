@@ -13,77 +13,77 @@ const HERO_IMAGE_LIMIT = 15;
 
 const heroImagePool: readonly HeroImage[] = [
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/6792613a5d497ebec43738c6_RZ_Clou_Portfolio_LIV_Achte_auf_dich_Home_04_Tiny.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/6792613a5d497ebec43738c6_RZ_kainé_Portfolio_LIV_Achte_auf_dich_Home_04_Tiny.jpg",
 		alt: "Thumbnail 11",
 		link: "/projekte/achte-auf-dich",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e882afc6a8848e76033_Clou_Canvas-Stans-Lacht.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e882afc6a8848e76033_kainé_Canvas-Stans-Lacht.jpg",
 		alt: "Thumbnail 01",
 		link: "/projekte/stans-lacht",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_kainé_Canvas-Die-Goettliche-Ordnung.jpg",
 		alt: "Thumbnail 06",
 		link: "/projekte/die-goettliche-ordnung",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e52ade312753d5f2878_Clou_Canvas-Vitality-Cards.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e52ade312753d5f2878_kainé_Canvas-Vitality-Cards.jpg",
 		alt: "Thumbnail 08",
 		link: "/projekte/vitality-cards",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e82c8259eeb5be828b6_Clou_Canvas-Spinnerei.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e82c8259eeb5be828b6_kainé_Canvas-Spinnerei.jpg",
 		alt: "Thumbnail 02",
 		link: "/projekte/spinnerei",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e0a059ea93d0fb2bc73_Clou_Canvas-Arcon.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e0a059ea93d0fb2bc73_kainé_Canvas-Arcon.jpg",
 		alt: "Thumbnail 15",
 		link: "/projekte/arcon",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e40966b042051b90fb8_Clou_Canvas-Charles-Nguela.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e40966b042051b90fb8_kainé_Canvas-Charles-Nguela.jpg",
 		alt: "Thumbnail 10",
 		link: "/projekte/charles-nguela",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_kainé_Canvas-Beialge-Magazin.jpg",
 		alt: "Thumbnail 07",
 		link: "/projekte/tavolago",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_Clou_Portfolio_TFL_Tiny.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_kainé_Portfolio_TFL_Tiny.jpg",
 		alt: "Thumbnail 14",
 		link: "/projekte/tourismus-awards",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_kainé_Canvas-New-Hope.jpg",
 		alt: "Thumbnail 13",
 		link: "/projekte/new-hope-sa",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_kainé_Canvas-Lostly.jpg",
 		alt: "Thumbnail 09",
 		link: "/projekte/lostly",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e733244c9eb3d3ffa63_Clou_Canvas-Loris-Mate.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e733244c9eb3d3ffa63_kainé_Canvas-Loris-Mate.jpg",
 		alt: "Thumbnail 04",
 		link: "/projekte/loris-mate",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_kainé_Canvas-Sachaklemm.jpg",
 		alt: "Thumbnail 03",
 		link: "/projekte/atelier-sacha-klemm",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e27f634a4a4761eb4ad_Clou_Canvas-BelArosa-Chalet.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e27f634a4a4761eb4ad_kainé_Canvas-BelArosa-Chalet.jpg",
 		alt: "Thumbnail 12",
 		link: "/projekte/belarosa-chalet",
 	},
 	{
-		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_Clou_Canvas-TCS-Iceteam.jpg",
+		src: "https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_kainé_Canvas-TCS-Iceteam.jpg",
 		alt: "Thumbnail 05",
 		link: "/projekte/tcs-camping-bio-tea",
 	},
@@ -190,7 +190,7 @@ export const projectsData: Project[] = [
 			"An iconic grand hotel rediscovered through warm hospitality cues and confident storytelling.",
 		tags: ["Branding", "Hospitality", "Interior"],
 		imageSrc:
-			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm.jpg",
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_kainé_Canvas-Sachaklemm.jpg",
 		imageAlt: "Interior shot of Hotel Schweizerhof Lucerne",
 		href: "/projekte/hotel-schweizerhof-luzern",
 	},
@@ -202,7 +202,7 @@ export const projectsData: Project[] = [
 			"A digital identity that translates cultural funding diversity into modular color bands.",
 		tags: ["Webflow", "Branding", "Graphic Design"],
 		imageSrc:
-			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung.jpg",
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_kainé_Canvas-Die-Goettliche-Ordnung.jpg",
 		imageAlt: "Colorful panel arrangement for Albert Koechlin Foundation",
 		href: "/projekte/albert-koechlin-stiftung",
 		badge: {
@@ -219,7 +219,7 @@ export const projectsData: Project[] = [
 			"Strategic brand leadership and digital storytelling that position Lucerne beyond clichés.",
 		tags: ["Strategy", "Tourism", "Digital"],
 		imageSrc:
-			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_Clou_Portfolio_TFL_Tiny.jpg",
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_kainé_Portfolio_TFL_Tiny.jpg",
 		imageAlt: "People overlooking the lake in Lucerne",
 		href: "/projekte/tourismus-luzern",
 	},
@@ -231,7 +231,7 @@ export const projectsData: Project[] = [
 			"Illustration, editorial design, and content packs that spotlight the artists behind Lostly.",
 		tags: ["Content", "Illustration", "Editorial"],
 		imageSrc:
-			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly.jpg",
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_kainé_Canvas-Lostly.jpg",
 		imageAlt: "Editorial spread for Lostly album launch",
 		href: "/projekte/lostly",
 	},
@@ -243,7 +243,7 @@ export const projectsData: Project[] = [
 			"Purpose-led brand work that balances healthcare expertise with genuine empathy.",
 		tags: ["Purpose", "Health", "Branding"],
 		imageSrc:
-			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope.jpg",
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_kainé_Canvas-New-Hope.jpg",
 		imageAlt: "Soft gradient abstractions for New Hope SA",
 		href: "/projekte/new-hope-sa",
 	},
@@ -255,7 +255,7 @@ export const projectsData: Project[] = [
 			"Packaging and editorial design that make local gastronomy feel vivid and irresistible.",
 		tags: ["Packaging", "Hospitality", "Content"],
 		imageSrc:
-			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin.jpg",
+			"https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_kainé_Canvas-Beialge-Magazin.jpg",
 		imageAlt: "Editorial layout for Tavolago magazine",
 		href: "/projekte/tavolago",
 	},

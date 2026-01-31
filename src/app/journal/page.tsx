@@ -135,12 +135,12 @@ export default function JournalPage() {
 							time-out journals, and the experiments moving our practice
 							forward.
 						</p>
-            <div className="w-full">
+						<div className="w-full">
 
-						<Button variant="secondary" size="md">
-              Newsletter  sign up
-						</Button>
-            </div>
+							<Button variant="secondary" size="md">
+								Newsletter  sign up
+							</Button>
+						</div>
 					</div>
 				</section>
 
@@ -193,7 +193,7 @@ export default function JournalPage() {
 				</section>
 
 				<div className="flex max-w-2xl flex-col gap-4 pt-40">
-					<h2 className="max-w-lg text-xl leading-10 text-clou-black md:text-[2rem]">
+					<h2 className="max-w-lg text-xl leading-10 text-kainé-black md:text-[2rem]">
 						Scrolled all the way to the bottom? Then it really starts now. What
 						do you want next?
 					</h2>

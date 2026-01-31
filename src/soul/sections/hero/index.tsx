@@ -24,7 +24,7 @@ const Hero: React.FC<HeroProps> = ({
 	const titleRef = useRef<HTMLHeadingElement>(null);
 	const heroRef = useRef<HTMLDivElement>(null);
 
-	// Initialize interactive canvas with BLAZING FAST movement matching Clou.ch 53fps speed
+	// Initialize interactive canvas with BLAZING FAST movement matching kainé.ch 53fps speed
 	useInteractiveCanvas(heroRef, {
 		intensity: 500, // EXTREME intensity for blistering speed
 		maxDistance: 800, // Full screen magnetic field
@@ -54,7 +54,7 @@ const Hero: React.FC<HeroProps> = ({
 						stagger: { each: 0.025 },
 					},
 					0.75
-				); 
+				);
 
 				tl.from(
 					".canvas-card",
@@ -69,10 +69,10 @@ const Hero: React.FC<HeroProps> = ({
 						},
 					},
 					0.5
-				); 
+				);
 			}
 		},
-		{ scope: heroRef } 
+		{ scope: heroRef }
 	);
 
 	return (
@@ -85,7 +85,7 @@ const Hero: React.FC<HeroProps> = ({
 				<div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
 					<h1
 						ref={titleRef}
-						className="text-[200px] sm:text-[250px] md:text-[150px] lg:text-[200px] xl:text-[400px] 2xl:text-[25vh] font-sm text-black leading-[0.9] select-none"
+						className="text-[200px] sm:text-[250px] md:text-[150px] lg:text-[200px] xl:text-[400px] 2xl:text-[25vh]  text-black  select-none"
 					>
 						{title.split("").map((letter, index) => (
 							<span key={index} className="inline-block">

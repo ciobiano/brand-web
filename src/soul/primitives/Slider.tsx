@@ -14,21 +14,21 @@ import ArrowIcon from "@/soul/primitives/icons/ArrowIcon";
 
 const sliderThemeStyles = {
 	dark: {
-		sectionText: "text-clou-white",
-		gradientFrom: "from-clou-black/90",
-		buttonBorder: "border-clou-white/20",
-		buttonText: "text-clou-white",
-		buttonOutline: "border-clou-white",
-		captionBadge: "bg-white text-clou-black",
-		captionDot: "bg-clou-black",
+		sectionText: "text-kainé-white",
+		gradientFrom: "from-kainé-black/90",
+		buttonBorder: "border-kainé-white/20",
+		buttonText: "text-kainé-white",
+		buttonOutline: "border-kainé-white",
+		captionBadge: "bg-white text-kainé-black",
+		captionDot: "bg-kainé-black",
 	} as const,
 	light: {
-		sectionText: "text-clou-black",
-		gradientFrom: "from-clou-white",
-		buttonBorder: "border-clou-black/20",
-		buttonText: "text-clou-black",
-		buttonOutline: "border-clou-black",
-		captionBadge: "bg-clou-black text-clou-white",
+		sectionText: "text-kainé-black",
+		gradientFrom: "from-kainé-white",
+		buttonBorder: "border-kainé-black/20",
+		buttonText: "text-kainé-black",
+		buttonOutline: "border-kainé-black",
+		captionBadge: "bg-kainé-black text-kainé-white",
 		captionDot: "bg-purple-400",
 	} as const,
 } as const;
@@ -121,7 +121,7 @@ const Slider: React.FC<SliderProps> = ({ slides, theme = "dark" }) => {
 		() => {
 			const root = sliderRef.current;
 			if (!root || slides.length === 0) {
-				return () => {};
+				return () => { };
 			}
 
 			const cleanupFns: Array<() => void> = [];
@@ -160,7 +160,7 @@ const Slider: React.FC<SliderProps> = ({ slides, theme = "dark" }) => {
 				paused: true,
 				draggable: true,
 				dragTrigger: wrapper,
-					onChange: (element) => {
+				onChange: (element) => {
 					const nextElement =
 						(element.nextElementSibling as HTMLElement | null) ??
 						slideElements[0];
@@ -243,15 +243,15 @@ const Slider: React.FC<SliderProps> = ({ slides, theme = "dark" }) => {
 							dataAttribute="button-prev"
 							themeStyles={themeStyles}
 						>
-						<ArrowIcon direction="left" className="button-arrow w-6 h-4" />
-					</SliderButton>
-					<SliderButton
-						label="next slide"
-						dataAttribute="button-next"
-						themeStyles={themeStyles}
-					>
-						<ArrowIcon direction="right" className="button-arrow w-6 h-4" />
-					</SliderButton>
+							<ArrowIcon direction="left" className="button-arrow w-6 h-4" />
+						</SliderButton>
+						<SliderButton
+							label="next slide"
+							dataAttribute="button-next"
+							themeStyles={themeStyles}
+						>
+							<ArrowIcon direction="right" className="button-arrow w-6 h-4" />
+						</SliderButton>
 					</div>
 				</div>
 			</div>

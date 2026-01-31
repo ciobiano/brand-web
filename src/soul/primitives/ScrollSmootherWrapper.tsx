@@ -33,7 +33,7 @@ export default function ScrollSmootherWrapper({
 					content: "#smooth-content",
 					smooth: 2,
 					effects: true,
-					normalizeScroll: true,
+					normalizeScroll: false,
 					ignoreMobileResize: true,
 					smoothTouch: 0.1,
 				});

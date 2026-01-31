@@ -84,7 +84,7 @@ class ComplexIntegrationManager {
 - Use provided session management
 - Follow security best practices from docs
 
-### **File/Media Services** (UploadThing, Cloudinary, AWS S3)
+### **File/Media Services** (UploadThing, kainédinary, AWS S3)
 - Use official SDKs and components
 - Follow upload patterns exactly
 - Add custom processing only after basic upload works

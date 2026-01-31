@@ -22,7 +22,7 @@ export default function AgencyHero() {
 					const title = heroTitleRef.current;
 					const text = title.textContent || "";
 					title.innerHTML = "";
-					
+
 					// Split text into chars
 					text.split("").forEach((char) => {
 						const span = document.createElement("span");
@@ -34,9 +34,9 @@ export default function AgencyHero() {
 					});
 
 					// Animate chars in
-					gsap.fromTo("[data-char]", 
-						{ 
-							yPercent: 120, 
+					gsap.fromTo("[data-char]",
+						{
+							yPercent: 120,
 							opacity: 0,
 							rotateX: -90
 						},
@@ -64,7 +64,7 @@ export default function AgencyHero() {
 						delay: 0.4
 					}
 				);
-				
+
 				// 3. Intro Text Reveal ("We are digital by nature...")
 				gsap.fromTo("[data-intro-text]",
 					{ opacity: 0, y: 40 },
@@ -92,8 +92,8 @@ export default function AgencyHero() {
 				// Animation 1: Expand width (using clip-path for performance)
 				// Initial state (set in CSS or fromTo): inset(0% 5% 0% 5% round 2rem) creates the padding/rounded look
 				bannerTimeline.fromTo("[data-team-banner-wrapper]",
-					{ 
-						clipPath: "inset(0% 5% 0% 5% round 2rem)", 
+					{
+						clipPath: "inset(0% 5% 0% 5% round 2rem)",
 					},
 					{
 						clipPath: "inset(0% 0% 0% 0% round 0rem)",
@@ -122,7 +122,7 @@ export default function AgencyHero() {
 	);
 
 	return (
-		<main ref={rootRef} className="flex flex-col bg-clou-white min-h-screen pt-32 sm:pt-40 pb-20">
+		<main ref={rootRef} className="flex flex-col bg-kainé-white min-h-screen pt-32 sm:pt-40 pb-20">
 			{/* Top Section: Title Left, Visual Right */}
 			<section className="px-6 lg:px-12 mb-32">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -130,7 +130,7 @@ export default function AgencyHero() {
 					<div className="relative z-10">
 						<h1
 							ref={heroTitleRef}
-							className="text-[clamp(5rem,18vw,10rem)]  leading-[0.8] tracking-tight text-clou-black"
+							className="text-[clamp(5rem,18vw,10rem)]  leading-[0.8] tracking-tight text-kainé-black"
 							style={{ perspective: "1000px" }}
 						>
 							Agency
@@ -138,7 +138,7 @@ export default function AgencyHero() {
 					</div>
 
 					{/* Right: Visual Element (Placeholder for Pink Rabbit) */}
-					<div 
+					<div
 						ref={visualRef}
 						className="relative w-full mt-20 aspect-square  max-w-[250px] mx-auto lg:ml-auto lg:mr-30 opacity-0"
 					>
@@ -152,15 +152,15 @@ export default function AgencyHero() {
 
 			{/* Middle Section: Intro Text */}
 			<section className="px-4 lg:px-6 mb-32 max-w-[100rem] mx-auto">
-				<p 
+				<p
 					data-intro-text
-					className="text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.2] tracking- text-clou-black text-neutral-500 font-light  text-center lg:text-left opacity-0"
+					className="text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.2] tracking- text-kainé-black text-neutral-500 font-light  text-center lg:text-left opacity-0"
 				>
-					We are digital by nature. We create real connections between brands and people. 
-					Unique and authentic connections, the kind that transcend the screen. 
+					We are digital by nature. We create real connections between brands and people.
+					Unique and authentic connections, the kind that transcend the screen.
 					The kind that become experiences that transform and endure.
 				</p>
-				<p 
+				<p
 					data-intro-text
 					className="mt-8 text-xl sm:text-2xl text-neutral-500 max-w-4xl text-center lg:text-left opacity-0"
 				>
@@ -170,11 +170,11 @@ export default function AgencyHero() {
 
 			{/* Bottom Section: Team Banner */}
 			{/* We add "inset-x-0" to make sure it can be full width, but clip-path handles the visual padding */}
-			<section 
-				data-team-banner-wrapper 
+			<section
+				data-team-banner-wrapper
 				className="relative w-full h-[60vh] sm:h-[80vh] overflow-hidden will-change-[clip-path]"
 			>
-				<div 
+				<div
 					data-team-banner
 					className="relative w-full h-[120%] -mt-[10%]"
 				>

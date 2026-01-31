@@ -77,9 +77,9 @@ const Footer = () => {
 	};
 
 	return (
-		<footer ref={footerRef} className="bg-clou-black text-white relative">
+		<footer ref={footerRef} className="bg-kainé-black text-white relative">
 			{/* Single div divider with pseudo-elements */}
-			<div className="scroll-trigger relative z-50 h-20 bg-clou-black before:absolute before:z-10 before:w-full before:h-[calc(100%+0.5rem)] before:mb-[-5px] before:-translate-y-2 before:rounded-b-xl before:bg-clou-white after:absolute after:top-[2px] after:left-0 after:right-0 after:h-8 after:bg-gradient-to-b after:from-clou-black after:to-transparent after:opacity-20"></div>
+			<div className="scroll-trigger relative z-50 h-20 bg-kainé-black before:absolute before:z-10 before:w-full before:h-[calc(100%+0.5rem)] before:mb-[-5px] before:-translate-y-2 before:rounded-b-xl before:bg-kainé-white after:absolute after:top-[2px] after:left-0 after:right-0 after:h-8 after:bg-gradient-to-b after:from-kainé-black after:to-transparent after:opacity-20"></div>
 
 			<div ref={footerContainer} className="p-4 mt-20 md:p-8">
 				<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -87,7 +87,7 @@ const Footer = () => {
 					<div className="lg:col-span-2">
 						<h1 className="text-8xl md:text-9xl lg:text-[12rem] leading-none relative">
 							Kainé
-							
+
 						</h1>
 					</div>
 
@@ -96,18 +96,18 @@ const Footer = () => {
 						<Badge
 							variant="outline"
 							size="sm"
-							className="text-clou-white border-clou-white"
+							className="text-kainé-white border-kainé-white"
 						>
 							Contact
 						</Badge>
 						<div className="text-sm md:text-2xl font-light">
-							<p>Clou advertising agency</p>
+							<p>kainé advertising agency</p>
 							<p>Mythenstrasse 7</p>
 							<p>CH-6003 Lucerne</p>
 						</div>
 						<div className="text-base md:text-2xl font-light">
 							<p>+41 41 240 56 62</p>
-							<p>hallo@clou.ch</p>
+							<p>hallo@kainé.ch</p>
 						</div>
 					</div>
 
@@ -117,16 +117,16 @@ const Footer = () => {
 
 							<div key={index}>
 								{group.title && (
-									
+
 
 									<Badge
 										variant="outline"
 										size="sm"
-										className="text-clou-white border-clou-white"
+										className="text-kainé-white border-kainé-white"
 									>
 										{group.title}
 									</Badge>
-									
+
 								)}
 								<div className="flex flex-col  mt-2 space-y-2">
 									{group.items.map((link, linkIndex) => (

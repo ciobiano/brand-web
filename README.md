@@ -1,8 +1,8 @@
-# Designer II - Clou Hero Component
+# Designer II - kainé Hero Component
 
 ## Overview
 
-This project implements a Hero component that closely matches the design and animations from [Clou.ch](https://www.clou.ch/), a Swiss advertising agency website.
+This project implements a Hero component that closely matches the design and animations from [kainé.ch](https://www.kainé.ch/), a Swiss advertising agency website.
 
 ## Features
 
@@ -41,7 +41,7 @@ This project implements a Hero component that closely matches the design and ani
 - `heroImages`: Data configuration for project thumbnails
 
 ### **Animation Features**
-- **Scroll-triggered animations** matching Clou's `scroll-scale-in` and `scroll-move-overlay` classes
+- **Scroll-triggered animations** matching kainé's `scroll-scale-in` and `scroll-move-overlay` classes
 - **Mouse parallax** with multiple depth layers for realistic 3D effect
 - **Staggered entrance animations** for smooth content reveal
 - **Continuous scroll hint animation** for better UX
@@ -74,7 +74,7 @@ export default function Page() {
     <main>
       <Hero 
         title="C L O U" 
-        subtitle="Hallo! Wir sind Clou, deine Agentur in Luzern mit Fokus auf Branding, Purpose und Websites mit Wirkung."
+        subtitle="Hallo! Wir sind kainé, deine Agentur in Luzern mit Fokus auf Branding, Purpose und Websites mit Wirkung."
         cta_text="Scroll" 
       />
     </main>
@@ -134,11 +134,11 @@ npm run build
 
 ## Credits
 
-- **Design Inspiration**: [Clou.ch](https://www.clou.ch/)
+- **Design Inspiration**: [kainé.ch](https://www.kainé.ch/)
 - **Animation Library**: [GSAP](https://greensock.com/gsap/)
 - **Framework**: [Next.js](https://nextjs.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 
 ---
 
-*This implementation closely follows the original Clou website design while using modern web technologies and best practices.*
+*This implementation closely follows the original kainé website design while using modern web technologies and best practices.*

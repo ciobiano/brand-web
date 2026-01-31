@@ -21,6 +21,9 @@ export default function Cases() {
 			const container = containerRef.current;
 			if (!container) return;
 
+			const intro = introRef.current;
+			if (!intro) return;
+
 			const cards = gsap.utils.toArray(
 				container.querySelectorAll(".card")
 			) as HTMLElement[];
@@ -69,9 +72,26 @@ export default function Cases() {
 				);
 			});
 
-			const intro = introRef.current;
-			if (!intro) return;
 
+			// Pin the intro section and add subtle movement
+			const pinTl = gsap.timeline({
+				scrollTrigger: {
+					trigger: intro,
+					start: "20% top",
+					end: () => `+=${container.offsetHeight}`,
+					pin: true,
+					pinSpacing: false,
+					scrub: true,
+				},
+			});
+
+			// Add subtle upward movement while pinned
+			pinTl.to(intro, {
+				yPercent: -15,
+				ease: "none",
+			});
+
+			// Padding animation
 			const introTl = gsap.timeline({
 				scrollTrigger: {
 					trigger: intro,
@@ -97,14 +117,15 @@ export default function Cases() {
 
 	return (
 		<>
-			<section ref={introRef} className="relative px-16  text-white">
-				<div
-					className="bg-clou-black w-full flex flex-col  gap-12 md:gap-28 pt-44 pb-96 rounded-t-2xl"
-				>
+			<section
+				ref={introRef}
+				className="relative px-16 text-white z-0"
+			>
+				<div className="bg-kainé-black w-full flex flex-col  gap-12 md:gap-28 pt-44 pb-96 rounded-t-2xl">
 					<div className="flex flex-col w-full h-full max-w-[90rem]  mx-auto gap-32   ">
 						<div className="max-w-4xl">
 							<h1 className="text-4xl md:text-5xl font-normal md:leading-[130%]">
-								Hallo! Wir sind Clou, deine Agentur in Luzern mit Fokus auf
+								Hallo! Wir sind kainé, deine Agentur in Luzern mit Fokus auf
 								Branding, Purpose und Websites mit Wirkung.
 							</h1>
 						</div>
@@ -127,7 +148,11 @@ export default function Cases() {
 					</div>
 				</div>
 			</section>
-			<section data-speed="1" className="relative bg-white text-black" ref={containerRef}>
+			<section
+				data-speed="1"
+				className="relative bg-white text-black z-10"
+				ref={containerRef}
+			>
 				<div className="z-10 absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-white h-4" />
 				<div className="gap-12 flex justify-start items-stretch py-40 max-w-4xl px-40 w-full">
 					<div className="max-w-xl w-full flex flex-col gap-4 items-start">
@@ -156,65 +181,7 @@ export default function Cases() {
 				))}
 			</section>
 
-			<section className="relative bg-clou-black text-white">
-				<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-clou-black h-4" />
-				<div className="max-w-7xl mx-auto px-8 py-24">
-					<div className="mb-16">
-						<Badge
-							variant="outline"
-							size="sm"
-							className="mb-8 text-white border-white"
-						>
-							Warum clou?
-						</Badge>
 
-						<div className="max-w-4xl mb-12">
-							<p className="text-2xl md:text-5xl leading-relaxed font-light">
-								Wir sind interessiert an deiner Idee, deiner Marke, deinem Ding.
-								Wir bringen dein Unternehmen mit den Menschen zusammen, die sich
-								mit den Werten und der Haltung deiner Marke identifizieren.
-							</p>
-						</div>
-
-						<Button variant="primary" size="lg" href="/team">
-							Team kennenlernen
-						</Button>
-					</div>
-
-					<div className="relative">
-						<div className="rounded-3xl overflow-hidden max-h-[750px] ">
-							<Image
-								width={500}
-								height={500}
-								src="/images/www.clou.ch_.png"
-								alt="Clou team members sitting together"
-								className="w-full h-full object-contain"
-							/>
-						</div>
-					</div>
-					<div className="my-16 ml-auto w-1/2">
-						<Badge
-							variant="outline"
-							size="sm"
-							className="mb-8 text-white border-white"
-						>
-							Why you?
-						</Badge>
-
-						<div className="max-w-md mb-12">
-							<p className="text-base md:text-xl leading-relaxed font-light">
-								You do your thing. You love it and would like to tell the whole
-								world about it. Great! Your passion is contagious. Tell us more
-								about your passion project
-							</p>
-						</div>
-
-						<Button variant="primary" size="md" href="/contact">
-							Make Contact
-						</Button>
-					</div>
-				</div>
-			</section>
 		</>
 	);
 }

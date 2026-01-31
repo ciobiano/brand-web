@@ -69,7 +69,7 @@ export default function Button({
 				{ opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.7)" }
 			);
 
-			// For nav variant, use elastic padding effect like clou.ch
+			// For nav variant, use elastic padding effect like kainé.ch
 			const handleMouseEnter = () => {
 				// Animate bullet point
 				if (bullet) {
@@ -109,7 +109,7 @@ export default function Button({
 
 	const classes = cn(buttonVariants({ variant, size, className }));
 
-	// Bullet point for nav variant (similar to clou.ch)
+	// Bullet point for nav variant (similar to kainé.ch)
 	const bulletPoint = (
 		<div
 			ref={bulletRef}

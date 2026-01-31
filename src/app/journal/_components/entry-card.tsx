@@ -19,7 +19,7 @@ export default function JournalCard({ entry }: { entry: JournalEntry }) {
 			onMouseLeave={() => setIsHovered(false)}
 			onFocus={() => setIsHovered(true)}
 			onBlur={() => setIsHovered(false)}
-			className="group flex w-full flex-col gap-6 text-clou-black transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-clou-black"
+			className="group flex w-full flex-col gap-6 text-kainé-black transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-kainé-black"
 		>
 			<div className="relative flex aspect-square w-full items-center justify-center">
 				<Image
@@ -38,7 +38,7 @@ export default function JournalCard({ entry }: { entry: JournalEntry }) {
 				{primaryTag && (
 					<span
 						className={cn(
-							"absolute left-5 top-5 inline-flex items-center rounded-full bg-white px-4 py-1 text-sm font-medium tracking-tight text-clou-black shadow-sm transition-all duration-200 ease-out",
+							"absolute left-5 top-5 inline-flex items-center rounded-full bg-white px-4 py-1 text-sm font-medium tracking-tight text-kainé-black shadow-sm transition-all duration-200 ease-out",
 							isHovered ? "opacity-0" : "opacity-100"
 						)}
 					>

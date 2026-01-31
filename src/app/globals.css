@@ -28,7 +28,7 @@
   --color-secondary: #ffffff;
 
   --color-primary: #101114;
-  --clou-red: 221 47 32;
+  --kainé-red: 221 47 32;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -86,7 +86,7 @@ html {
   }
 }
 
-/* Clou's actual scattered layout - wide canvas with extreme positioning for proper spacing */
+/* kainé's actual scattered layout - wide canvas with extreme positioning for proper spacing */
 /* Customize every 1st, 2nd, & 3rd collection item itself */
 .canvas-card:nth-child(15n+1) {
   width: 20vw;

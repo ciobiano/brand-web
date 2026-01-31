@@ -23,7 +23,7 @@ export default function AgencyExpertise() {
 		() => {
 			const ctx = gsap.context(() => {
 				// Title animation
-				gsap.fromTo("[data-expertise-title]", 
+				gsap.fromTo("[data-expertise-title]",
 					{ y: 60, opacity: 0 },
 					{
 						y: 0,
@@ -39,7 +39,7 @@ export default function AgencyExpertise() {
 				);
 
 				// Staggered service items entrance
-				gsap.fromTo("[data-service-item]", 
+				gsap.fromTo("[data-service-item]",
 					{ y: 40, opacity: 0 },
 					{
 						y: 0,
@@ -108,15 +108,15 @@ export default function AgencyExpertise() {
 		<section ref={sectionRef} className="py-24 px-4 sm:px-6 lg:px-10 bg-white">
 			<div className="max-w-[95rem] mx-auto">
 				<div className="mb-16 lg:mb-20">
-					<span 
+					<span
 						data-expertise-title
 						className="block text-sm uppercase tracking-[0.2em] text-neutral-400 mb-4 opacity-0"
 					>
 						Leistungen
 					</span>
-					<h2 
+					<h2
 						data-expertise-title
-						className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl text-clou-black max-w-4xl opacity-0"
+						className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl text-kainé-black max-w-4xl opacity-0"
 					>
 						With two decades of experience, companies worldwide trusted us to handle various digital aspects.
 					</h2>
@@ -131,11 +131,11 @@ export default function AgencyExpertise() {
 								className="relative group flex items-center justify-between border-b border-neutral-200 py-8 cursor-pointer overflow-hidden opacity-0"
 							>
 								{/* Background slide */}
-								<div 
+								<div
 									data-bg
-									className="absolute inset-0 bg-clou-black origin-left scale-x-0 z-0"
+									className="absolute inset-0 bg-kainé-black origin-left scale-x-0 z-0"
 								/>
-								
+
 								<div className="relative z-10 flex items-center gap-8 flex-1">
 									<span className="text-lg font-medium text-neutral-400 w-12 group-hover:text-neutral-500 transition-colors">
 										{service.id}
@@ -152,18 +152,18 @@ export default function AgencyExpertise() {
 
 								{/* Arrow indicator */}
 								<div className="relative z-10 pr-4">
-									<svg 
+									<svg
 										data-arrow
 										className="w-6 h-6 opacity-0 -translate-x-2"
-										fill="none" 
-										viewBox="0 0 24 24" 
+										fill="none"
+										viewBox="0 0 24 24"
 										stroke="currentColor"
 									>
-										<path 
-											strokeLinecap="round" 
-											strokeLinejoin="round" 
-											strokeWidth={2} 
-											d="M17 8l4 4m0 0l-4 4m4-4H3" 
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M17 8l4 4m0 0l-4 4m4-4H3"
 										/>
 									</svg>
 								</div>

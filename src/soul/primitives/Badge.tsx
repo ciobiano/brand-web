@@ -11,8 +11,8 @@ interface BadgeProps {
 }
 
 const badgeVariants = {
-	default: "bg-clou-black text-white",
-	outline: "border border-clou-black  text-clou-black ",
+	default: "bg-kainé-black text-white",
+	outline: "border border-kainé-black  text-kainé-black ",
 	secondary: "bg-gray-100 text-gray-800",
 };
 
