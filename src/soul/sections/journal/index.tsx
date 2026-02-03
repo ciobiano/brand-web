@@ -61,7 +61,7 @@ const JournalSection = () => {
 
 		<>
 
-			<section ref={introRef} className="relative bg-kainé-black text-white z-10 ">
+			<section ref={introRef} className="relative bg-kainé-black text-white z-10 " data-cursor-invert>
 				<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-kainé-black h-4" />
 				<div className="max-w-[90rem] mx-auto  py-28">
 					<div className="mb-16">
@@ -70,12 +70,12 @@ const JournalSection = () => {
 							size="sm"
 							className="mb-8 text-white border-white"
 						>
-							Warum kainé?
+							Why kainé?
 						</Badge>
 
 						<div className="max-w-5xl mb-12">
 							<p className="text-2xl md:text-6xl leading-relaxed font-light">
-								We're interested in your idea, your brand, your thing. We connect your company with the people who identify with the values and attitude of your brand.
+								We&apos;re interested in your idea, your brand, your thing. We connect your company with the people who identify with the values and attitude of your brand.
 							</p>
 						</div>
 
@@ -121,7 +121,7 @@ const JournalSection = () => {
 			<section ref={containerRef} className="relative bg-kainé-white z-20 md:mb-64">
 				<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-kainé-white h-4" />
 
-				<div className="flex flex-col gap-y-6 max-w-7xl md:mx-auto  py-24">
+				<div className="flex flex-col gap-y-6 max-w-[90rem] md:mx-auto  py-24">
 					<div className="mb-6">
 						<Badge variant="outline" size="sm">
 							Journal
@@ -188,7 +188,7 @@ const JournalSection = () => {
 								Discover projects
 							</Button>
 							<Button variant="secondary" size="md">
-								Get to know the agency
+								Let&apos;s talk
 							</Button>
 						</div>
 					</div>

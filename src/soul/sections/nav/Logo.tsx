@@ -4,7 +4,7 @@ import React, { MouseEvent } from "react";
 import { useTransitionRouter } from "next-transition-router";
 
 type LogoProps = {
-	className?: string;
+	className?: string; // Parent can pass absolute/fixed etc here if needed
 	href?: string;
 	letter?: string;
 };
@@ -32,7 +32,7 @@ const Logo: React.FC<LogoProps> = ({
 	};
 
 	return (
-		<div className={`absolute top-0 left-0 z-50 p-6 ${className}`}>
+		<div className={`p-6 ${className}`}>
 			<a
 				href={href}
 				onClick={handleClick}

@@ -24,7 +24,7 @@ export function PageTransitionProvider({ children }: PropsWithChildren) {
 
 					<span
 						ref={leaveTextRef}
-						className="text-3xl   opacity-0"
+						className="text-4xl font-normal  opacity-0"
 					>
 						kainé <span ref={leaveWordRef}>Studio</span>
 					</span>

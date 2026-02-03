@@ -102,10 +102,8 @@ const Hero: React.FC<HeroProps> = ({
 								<EnhancedImageCard
 									src={image.src}
 									alt={image.alt}
-									width={400}
-									height={300}
 									link={image.link}
-									className="w-full h-full"
+									className="w-[300px] h-[225px] sm:w-[400px] sm:h-[300px]"
 								/>
 							</div>
 						))}

@@ -13,10 +13,14 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				primary: "bg-[#1f2126] text-white hover:bg-[#141618]",
+			
 				secondary: "bg-[#e8ebe9] text-black hover:bg-gray-100",
 				outline:
 					"border border-white text-white hover:bg-white hover:text-black",
+				"outline-dark":
+					"border border-[#1f2126] text-[#1f2126] hover:bg-[#1f2126] hover:text-white",
 				nav: "bg-transparent text-black hover:bg-[#f5f7f6] pl-4 pr-5 py-2",
+				"nav-inverted": "bg-transparent text-white hover:bg-white/10 pl-4 pr-5 py-2",
 			},
 			size: {
 				sm: "px-4 py-2 text-sm",
@@ -150,6 +154,8 @@ export default function Button({
 			disabled={disabled}
 			className={classes}
 			ref={ref as React.RefObject<HTMLButtonElement>}
+			
+			
 		>
 			{content}
 		</button>

@@ -1,31 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Badge from "@/soul/primitives/Badge";
+import Button from "@/soul/primitives/Button";
 
 // Single‑file, drop‑in component that recreates the shared layout in English.
 // TailwindCSS required. No external UI libs. Accessible, responsive, and clean.
 // Place this anywhere in your Next.js app (e.g., app/contact/page.tsx) and export default.
-
-// ----------------------------
-// Helper: selectable chip
-// ----------------------------
-function Chip({ label, selected, onToggle }: { label: string; selected: boolean; onToggle: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      className={[
-        "inline-flex items-center rounded-full border px-4 py-6 text-sm transition",
-        selected
-          ? "border-black bg-black text-white"
-          : "border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-50",
-      ].join(" ")}
-      aria-pressed={selected}
-    >
-      {label}
-    </button>
-  );
-}
 
 
 
@@ -61,7 +43,18 @@ export function InquiryForm() {
         <h3 className="text-3xl font-medium">How can we help?</h3>
         <div className="flex flex-wrap gap-3">
           {options.map((opt) => (
-            <Chip key={opt} label={opt} selected={selected.includes(opt)} onToggle={() => toggle(opt)} />
+            <Badge
+              key={opt}
+              variant="filter"
+              interactive
+              active={selected.includes(opt)}
+              onClick={() => toggle(opt)}
+              className={selected.includes(opt)
+                ? "border-black bg-black text-white px-4 py-6"
+                : "border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-50 px-4 py-6"}
+            >
+              {opt}
+            </Badge>
           ))}
         </div>
       </div>
@@ -171,15 +164,22 @@ export function InquiryForm() {
 
       {/* Submit + confirmation card */}
       <div className="space-y-6">
-        <button type="button" className="rounded-full bg-black px-5 py-3 text-white hover:opacity-90">
+        <Button variant="primary" size="md" href="/contact" >
           Send inquiry
-        </button>
+        </Button>
 
         {/* Mini confirmation card (static demo) */}
         <div className="w-full bg-kainé-gray/30  rounded-2xl border p-5 shadow-sm">
           <div className="mb-2  text-zinc-500">Your inquiry inbox says:</div>
           <div className="flex items-center gap-3">
-            <img src="/images/placeholder1.jpg" alt="Team" className="h-16 w-16 rounded-xl object-cover" />
+            <div className="relative h-16 w-16 overflow-hidden rounded-xl">
+              <Image
+                src="/assets/journal/journal-07.jpg"
+                alt="Team"
+                fill
+                className="object-cover"
+              />
+            </div>
             <p className="text-2xl">We’ll be in touch shortly. See you then 👋</p>
           </div>
         </div>

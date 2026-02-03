@@ -95,7 +95,7 @@ export function AddressSection() {
   );
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} data-cursor-invert>
       <section className="flex flex-col text-kainé-white bg-kainé-black  -mt-14 pt-16">
         <div className="px-4 sm:px-6 lg:px-8">
           <h1 className="text-[223px] ">Hello!</h1>

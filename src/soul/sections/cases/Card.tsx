@@ -1,100 +1,80 @@
 "use client";
 
-import { ReactNode } from "react";
 import Image from "next/image";
+import Badge from "../../primitives/Badge";
+import { Project } from "@/data/types";
 
 interface CardProps {
-	id: string;
-	accentColor: "accent-1" | "accent-2" | "accent-3" | "accent-4";
-	title: string;
-	description: string;
-	imageSrc: string;
-	imageAlt: string;
-	features?: Array<{ icon: ReactNode; label: string }>;
-	children?: ReactNode;
+	project: Project;
 }
 
-const accentColors = {
-	"accent-1": "bg-[#b1c0ef]",
-	"accent-2": "bg-[#f2acac]",
-	"accent-3": "bg-[#fedd93]",
-	"accent-4": "bg-[#81b7bf]",
+const accentBg = {
+	"accent-1": "#D9613A",
+	"accent-2": "#f2acac",
+	"accent-3": "#fedd93",
+	"accent-4": "#81b7bf",
 };
 
-export default function Card({
-	id,
-	accentColor,
-	title,
-	description,
-	imageSrc,
-	imageAlt,
-	features,
-	children,
-}: CardProps) {
+export default function Card({ project }: CardProps) {
+	const { id, accentColor = "accent-1", info, title, description, imageSrc, imageAlt, tags } = project;
+
 	return (
-		<div
-			className="card sticky w-full h-[85svh] px-6 transform-style-preserve-3d perspective-1000"
-			id={id}
-		>
+		<div className="card sticky w-full h-[85svh] px-6" id={id}>
 			<div
-				className={`relative w-full rounded-3xl h-full overflow-hidden flex flex-col ${accentColors[accentColor]}`}
+				className="relative w-full rounded-3xl h-full overflow-hidden"
+				style={{ backgroundColor: accentBg[accentColor] }}
+				data-cursor="casestudy"
+				data-cursor-text="CASE STUDY"
 			>
-				{/* Main Image Container with Overlaid Title */}
-				<div className="relative w-full flex-1 overflow-hidden">
+				{/* ── White circle — oversized, clips the product image ── */}
+				<div
+					className="absolute rounded-full bg-white overflow-hidden w-[90%] aspect-square left-[5%] top-[5%] "
+
+				>
 					<Image
 						src={imageSrc}
 						alt={imageAlt}
 						fill
 						className="object-cover"
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						sizes="100vw"
+						quality={90}
 					/>
+				</div>
 
-					{/* Title Overlaid on Image */}
-					<div className="absolute inset-0 flex items-end justify-center pb-12 md:pb-8">
-						<h1 className="text-[8rem] font-bold text-white drop-shadow-2xl md:text-5xl">
-							{title}
-						</h1>
+				{/* ── Title + tag badges — top left, over orange ── */}
+				<div className="absolute top-5 left-5 z-10 flex flex-col gap-3">
+					<h2 className="text-[1.75rem] font-normal text-black leading-tight">
+						{title}
+					</h2>
+					<div className="flex flex-wrap gap-2">
+						{tags.map((tag, i) => (
+							<Badge key={i} variant="outline" size="sm">
+								{tag}
+							</Badge>
+						))}
 					</div>
 				</div>
 
-				{/* Bottom Content Section */}
-				<div className="bg-black/90 backdrop-blur-sm px-12 py-8 md:px-6 md:py-14">
-					{/* Description */}
-					<p className="text-white/90 text-center text-lg leading-relaxed mb-6 max-w-3xl mx-auto md:text-base md:mb-4">
-						{description}
-					</p>
+				{/* ── CTA circle — center sits on the white circle's top edge ── */}
+				{/* <div
+					className="absolute left-1/2 z-20"
+					style={{
+						top: "10%",
+						transform: "translate(-50%, -50%)",
+					}}
+				>
+					<a
+						href={project.href}
+						className="flex items-center justify-center w-[7rem] h-[7rem] bg-black rounded-full hover:bg-gray-900 transition-colors"
+					>
+						<span className="text-white text-[0.8125rem] font-medium text-center leading-snug px-3">
+							View case
+						</span>
+					</a>
+				</div> */}
 
-					{/* Features Row */}
-					{features && features.length > 0 && (
-						<div className="flex items-center justify-center gap-8 mb-6 md:gap-4 md:mb-4">
-							{features.map((feature, index) => (
-								<div key={index} className="flex flex-col items-center gap-2">
-									<div className="text-white/70 w-6 h-6 flex items-center justify-center">
-										{feature.icon}
-									</div>
-									<span className="text-white/60 text-xs font-medium">
-										{feature.label}
-									</span>
-								</div>
-							))}
-						</div>
-					)}
-
-					{/* CTA Button */}
-					<div className="flex justify-center">
-						<button className="px-6 py-2 text-white border border-white/30 rounded-full hover:bg-white/10 transition-colors text-sm font-medium">
-							Learn More
-						</button>
-					</div>
-				</div>
-
-				{/* Overlay (for GSAP animations) */}
-				<div
-					className="absolute inset-0 bg-black opacity-0 will-change-opacity pointer-events-none z-10"
-					style={{ "--after-opacity": 0 } as React.CSSProperties}
-				/>
-
-				{children}
+				{/* ── Fade overlay — driven by GSAP on scroll ── */}
+				<div className="absolute inset-0 bg-black opacity-0 will-change-opacity pointer-events-none z-30" />
 			</div>
 		</div>
 	);

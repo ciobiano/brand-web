@@ -15,6 +15,16 @@
   font-display: swap;
 }
 
+
+
+@font-face {
+  font-family: 'Athletics';
+  src: url('/fonts/Athletics-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -367,4 +377,350 @@ html {
 
 .no-scroll-transition {
   overflow: hidden;
+}
+
+
+/* ============================================
+   UNIFIED CUSTOM CURSOR SYSTEM
+   ============================================ */
+
+/* Cursor container - follows mouse instantly */
+.custom-cursor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 999999;
+  will-change: transform;
+}
+
+/* Inner cursor - morphs between states */
+.custom-cursor-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  /* Exclude transform from transitions - GSAP handles positioning at 60fps */
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, width, height, border-radius;
+}
+
+/* Cursor text label */
+.cursor-text {
+  position: absolute;
+  font-family: 'Athletics', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 1;
+  z-index: 10;
+}
+
+/* ============================================
+   CURSOR STATES
+   ============================================ */
+
+/* DEFAULT - Classic black dot */
+.custom-cursor-inner.default {
+  width: 28px;
+  height: 28px;
+  background-color: #000;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* LINK - Expands into outlined circle */
+.custom-cursor-inner.link ,
+.button {
+  width: 15px;
+  height: 15px;
+  background-color: #000;
+  border-radius: 50%;
+  transition: all 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.custom-cursor-inner.link::before,
+.button::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 50%;
+  animation: linkPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes linkPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+/* BUTTON - Kainé red filled circle with slight squish effect */
+/* .custom-cursor-inner.button {
+  width: 56px;
+  height: 56px;
+  background-color: rgb(221, 47, 32);
+  border-radius: 50%;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: buttonHover 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes buttonHover {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+} */
+
+/* .custom-cursor-inner.button::after {
+  content: '→';
+  position: absolute;
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  animation: arrowBounce 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes arrowBounce {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(3px);
+  }
+} */
+
+/* IMAGE - Cross/plus shape for exploration */
+.custom-cursor-inner.image {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.custom-cursor-inner.image::before,
+.custom-cursor-inner.image::after {
+  content: '';
+  position: absolute;
+  background-color: #000;
+}
+
+.custom-cursor-inner.image::before {
+  width: 2px;
+  height: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.custom-cursor-inner.image::after {
+  width: 40px;
+  height: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* TEXT - I-beam cursor */
+.custom-cursor-inner.text {
+  width: 2px;
+  height: 24px;
+  background-color: #000;
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+
+.custom-cursor-inner.text::before,
+.custom-cursor-inner.text::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  background-color: #000;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.custom-cursor-inner.text::before {
+  top: 0;
+}
+
+.custom-cursor-inner.text::after {
+  bottom: 0;
+}
+
+/* DRAG - Left/right arrows indicating draggable */
+.custom-cursor-inner.drag {
+  width: 56px;
+  height: 56px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 50%;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.custom-cursor-inner.drag::before {
+  content: '← →';
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes dragPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* EXPAND - View/expand indicator for galleries */
+.custom-cursor-inner.expand {
+  width: 64px;
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.custom-cursor-inner.expand .cursor-text {
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  z-index: 10;
+}
+
+/* CASESTUDY - Large circle with "CASE STUDY" text */
+.custom-cursor-inner.casestudy {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.95);
+  border-radius: 50%;
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.custom-cursor-inner.casestudy .cursor-text {
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+  line-height: 1.4;
+  z-index: 10;
+}
+
+/* HIDDEN - Completely invisible */
+.custom-cursor-inner.hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+/* ============================================
+   INVERTED CURSOR - For dark backgrounds
+   ============================================ */
+
+.custom-cursor-container.inverted .custom-cursor-inner.default {
+  background-color: #c084fc;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.link,
+.custom-cursor-container.inverted .custom-cursor-inner.button {
+  background-color: #c084fc;
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.link::before,
+.custom-cursor-container.inverted .custom-cursor-inner.button::before {
+  background-color: #c084fc;
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.image::before,
+.custom-cursor-container.inverted .custom-cursor-inner.image::after {
+  background-color: #c084fc;
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.text {
+  background-color: #c084fc;
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.text::before,
+.custom-cursor-container.inverted .custom-cursor-inner.text::after {
+  background-color: #c084fc;
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.drag {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.drag::before {
+  color: #000;
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.casestudy {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.casestudy .cursor-text {
+  color: #000;
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.expand {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.custom-cursor-container.inverted .custom-cursor-inner.expand .cursor-text {
+  color: #000;
+}
+
+
+/* ============================================
+   RESPONSIVE - Disable on touch devices
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor-container {
+    display: none;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY - Respect reduced motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor-inner,
+  .custom-cursor-inner::before,
+  .custom-cursor-inner::after,
+  .cursor-text {
+    animation: none !important;
+    transition: none !important;
+  }
 }

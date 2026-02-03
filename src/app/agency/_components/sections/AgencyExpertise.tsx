@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Badge from "@/soul/primitives/Badge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -105,18 +106,17 @@ export default function AgencyExpertise() {
 	);
 
 	return (
-		<section ref={sectionRef} className="py-24 px-4 sm:px-6 lg:px-10 bg-white">
-			<div className="max-w-[95rem] mx-auto">
+		<section ref={sectionRef} className="py-24 px-4 sm:px-6 bg-white">
+			<div className="w-full mx-auto">
 				<div className="mb-16 lg:mb-20">
-					<span
-						data-expertise-title
-						className="block text-sm uppercase tracking-[0.2em] text-neutral-400 mb-4 opacity-0"
-					>
-						Leistungen
-					</span>
+					<Badge
+						className="mb-4"
+						variant="outline"
+						size="sm"
+						>Expertise</Badge>
 					<h2
 						data-expertise-title
-						className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl text-kainé-black max-w-4xl opacity-0"
+						className="text-4xl  leading-tight sm:text-5xl lg:text-6xl text-kainé-black max-w-4xl opacity-0"
 					>
 						With two decades of experience, companies worldwide trusted us to handle various digital aspects.
 					</h2>
@@ -136,7 +136,7 @@ export default function AgencyExpertise() {
 									className="absolute inset-0 bg-kainé-black origin-left scale-x-0 z-0"
 								/>
 
-								<div className="relative z-10 flex items-center gap-8 flex-1">
+								<div className="relative z-10 flex items-center gap-8 flex-1 px-2">
 									<span className="text-lg font-medium text-neutral-400 w-12 group-hover:text-neutral-500 transition-colors">
 										{service.id}
 									</span>

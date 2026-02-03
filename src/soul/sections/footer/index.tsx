@@ -77,7 +77,7 @@ const Footer = () => {
 	};
 
 	return (
-		<footer ref={footerRef} className="bg-kainé-black text-white relative">
+		<footer ref={footerRef} className="bg-kainé-black text-white relative" data-cursor-invert>
 			{/* Single div divider with pseudo-elements */}
 			<div className="scroll-trigger relative z-50 h-20 bg-kainé-black before:absolute before:z-10 before:w-full before:h-[calc(100%+0.5rem)] before:mb-[-5px] before:-translate-y-2 before:rounded-b-xl before:bg-kainé-white after:absolute after:top-[2px] after:left-0 after:right-0 after:h-8 after:bg-gradient-to-b after:from-kainé-black after:to-transparent after:opacity-20"></div>
 

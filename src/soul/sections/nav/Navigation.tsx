@@ -1,20 +1,121 @@
 "use client";
 
-import { MouseEvent } from "react";
+import { useEffect, useRef, useState, MouseEvent } from "react";
+import { usePathname } from "next/navigation";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useTransitionRouter } from "next-transition-router";
-import Logo from "./Logo";
-import Button from "../../primitives/Button";
+import NavigationBar from "./NavigationBar";
+import DesktopNavMenu from "./DesktopNavMenu";
+import MobileNavMenu from "./MobileNavMenu";
+import NavigationFooter from "./NavigationFooter";
 
+// Extended nav items to support both original simple links and new overlay rich layout
 const navItems = [
-	{ name: "Projects", href: "/projects", message: 'kaine projects' },
-	{ name: "Agency", href: "/agency", message: 'kaine projects' },
-	{ name: "Journal", href: "/journal", message: 'kaine projects' },
-	{ name: "Contact", href: "/contact", message: 'kaine projects' },
+	{
+		name: "Projects",
+		href: "/projects",
+		message: 'kaine projects',
+		image: "/images/placeholder1.jpg",
+		className: "md:top-[20%] md:left-[55%] md:-translate-x-1/2",
+	},
+	{
+		name: "Agency",
+		href: "/agency",
+		message: 'kaine projects',
+		image: "/images/placeholder2.jpg",
+		className: "md:top-[35%] md:left-[%]",
+	},
+	{
+		name: "Journal",
+		href: "/journal",
+		message: 'kaine projects',
+		image: "/images/placeholder3.jpg",
+		className: "md:top-[50%] md:right-[25%] md",
+	},
+	{
+		name: "Contact",
+		href: "/contact",
+		message: 'kaine projects',
+		image: "/images/placeholder4.jpg",
+		className: "md:bottom-[20%] md:left-[50%] md:-translate-x-1/2",
+	},
 ];
 
 export default function Navigation() {
 	const router = useTransitionRouter();
+	const [isOpen, setIsOpen] = useState(false);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const menuRef = useRef<HTMLDivElement>(null);
+	const pathname = usePathname();
 
+	// Reset menu on route change
+	useEffect(() => {
+		setIsOpen(false);
+	}, [pathname]);
+
+	useGSAP(
+		() => {
+			if (!menuRef.current) return;
+
+			// Kill any existing animations on these elements
+			gsap.killTweensOf([menuRef.current, ".nav-item"]);
+
+			if (isOpen) {
+				// Set initial states
+				gsap.set(".nav-item", { y: 50, opacity: 0 });
+
+				// Opening animation - slide down from top
+				const openTl = gsap.timeline();
+
+				openTl.to(menuRef.current, {
+					y: "0%",
+					duration: 0.8,
+					ease: "power3.out",
+					overwrite: true,
+				});
+
+				// Stagger in items
+				openTl.to(".nav-item", {
+					y: 0,
+					opacity: 1,
+					duration: 0.6,
+					stagger: 0.08,
+					ease: "power2.out",
+					overwrite: true,
+				}, "-=0.4");
+			} else {
+				// Closing animation - slide up to top
+				const closeTl = gsap.timeline();
+
+				// Fade out items first with faster stagger
+				closeTl.to(".nav-item", {
+					y: -30,
+					opacity: 0,
+					duration: 0.2,
+					stagger: 0.02,
+					ease: "power2.in",
+					overwrite: true,
+				});
+
+				// Slide up overlay to top
+				closeTl.to(menuRef.current, {
+					y: "-100%",
+					duration: 0.4,
+					ease: "power3.in",
+					overwrite: true,
+				}, "-=0.2");
+
+				// Reset nav items position for next open
+				closeTl.set(".nav-item", { y: 50, opacity: 0, delay: 0.6 });
+			}
+		},
+		{ scope: containerRef, dependencies: [isOpen] }
+	);
+
+	const toggleMenu = () => setIsOpen(!isOpen);
+
+	// Original helper for link handling
 	const isModifiedEvent = (event: MouseEvent<HTMLAnchorElement>) =>
 		event.metaKey ||
 		event.ctrlKey ||
@@ -31,72 +132,17 @@ export default function Navigation() {
 	};
 
 	return (
-		<nav data-scroll-nav className="fixed top-4 left-0 right-0 z-50 w-full ">
-			<div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="flex items-center  h-16">
-					{/* Logo */}
+		<nav ref={containerRef} data-scroll-nav className="fixed top-4 left-0 right-0 z-50 w-full">
+			<NavigationBar isOpen={isOpen} toggleMenu={toggleMenu} navItems={navItems} />
 
-					<div className="flex flex-1 items-center ">
-						<Logo />
-					</div>
-
-
-					<div className="flex-shrink-0">
-						<div className="hidden md:flex p-1  rounded-3xl bg-kainé-white/30 backdrop-blur-sm items-center space-x-2">
-							{navItems.map((item) => (
-								<Button key={item.name} variant="nav" size="nav" href={item.href}>
-									{item.name}
-								</Button>
-							))}
-						</div>
-					</div>
-
-					{/* Mobile menu button */}
-					<div className="flex flex-1 justify-end ">
-						<div className="flex-shrink-0">
-
-							<button
-								type="button"
-								className="bg-kainé-black inline-flex items-center justify-center p-3 rounded-full text-kainé-white  hover:scale-105"
-								aria-controls="mobile-menu"
-								aria-expanded="false"
-							>
-								<span className="sr-only">Open main menu</span>
-								<svg
-									className="block h-6 w-6"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									aria-hidden="true"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth="2"
-										d="M4 6h16M4 12h16M4 18h16"
-									/>
-								</svg>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			{/* Mobile menu */}
-			<div className="md:hidden" id="mobile-menu">
-				<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-					{navItems.map((item) => (
-						<a
-							key={item.name}
-							href={item.href}
-							onClick={handleNavClick(item.href)}
-							className="text-gray-900 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium"
-						>
-							{item.name}
-						</a>
-					))}
-				</div>
+			{/* Fullscreen Overlay */}
+			<div
+				ref={menuRef}
+				className="fixed inset-0 bg-[#0a0a0a] z-40 flex flex-col justify-center items-center -translate-y-full will-change-transform"
+			>
+				<DesktopNavMenu navItems={navItems} handleNavClick={handleNavClick} />
+				<MobileNavMenu navItems={navItems} handleNavClick={handleNavClick} />
+				<NavigationFooter />
 			</div>
 		</nav>
 	);

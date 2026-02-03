@@ -85,18 +85,19 @@ export default function AgencyClientRoster() {
 	return (
 		<section
 			ref={sectionRef}
-			className="relative bg-kainé-black py-24 text-kainé-gray sm:py-32"
+			className="relative bg-kainé-black py-24 text-kainé-gray sm:py-32 z-10"
+			data-cursor-invert
 		>
-			<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-kainé-black h-4" />
+			<div className="absolute inset-0 rounded-t-2xl translate-y-[-97.5%] bg-kainé-black h-4 z-10" />
 
 			{/* Large statement block - "machen Sinn." style */}
 			<div className="px-6 lg:px-12 mb-24">
 				<div className="max-w-6xl">
 					<p
 						ref={statementRef}
-						className="text-[clamp(3rem,8vw,7rem)] font-medium leading-[1.05] text-kainé-white tracking-tight"
+						className="text-[clamp(4rem,8vw,7rem)] font-medium leading-[1.05] text-kainé-white"
 					>
-						machen Sinn.
+						make sense.
 					</p>
 				</div>
 			</div>

@@ -24,12 +24,26 @@ export type ProjectTag =
 	| "Health"
 	| "Comedy"
 	| "Cinema"
-	| "Interior";
+	| "Interior"
+	| "Luxury"
+	| "Hotel"
+	| "Culture"
+	| "Nonprofit"
+	| "Campaign"
+	| "Destination"
+	| "Music"
+	| "Album"
+	| "Care"
+	| "Wellness"
+	| "Food"
+	| "Gastronomy"
+	| "Design"
+	| "Management";
 
 export interface Project {
 	id: string;
 	title: string;
-	subtitle: string;
+	subtitle?: string;
 	description: string;
 	tags: ProjectTag[];
 	imageSrc: string;
@@ -40,7 +54,7 @@ export interface Project {
 
 export type ProjectTagFilter = "Show all" | ProjectTag;
 
-export type JournalTag = "Humans" | "Flash" | "Agency" | "Strategy" | "Digital";
+export type JournalTag = string;
 
 export interface JournalBadge {
 	label: string;
@@ -48,16 +62,13 @@ export interface JournalBadge {
 }
 
 export interface JournalEntry {
-	id: string;
+	id?: string;
 	title: string;
-	summary: string;
+	summary?: string;
 	tags: JournalTag[];
-	cover: {
-		src: string;
-		alt: string;
-	};
-	link: string;
-	
+	imageSrc: string;
+	imageAlt: string;
+	href: string;
 }
 
 export type JournalTagFilter = "Show all" | JournalTag;
@@ -66,21 +77,25 @@ export interface JournalCardPreview {
 	image: string;
 	alt: string;
 	title: string;
-	description: string;
+	description?: string;
 	badge?: string;
-	link: string;
+	href: string;
 }
 
 export type CaseCardAccent = "accent-1" | "accent-2" | "accent-3" | "accent-4";
 
-export interface CaseCard {
+export interface Project {
 	id: string;
-	accentColor: CaseCardAccent;
-	info: string;
+	accentColor?: CaseCardAccent;
+	info?: string;
 	title: string;
+	subtitle?: string;
 	description: string;
+	tags: ProjectTag[];
 	imageSrc: string;
 	imageAlt: string;
+	href: string;
+	badge?: ProjectBadge;
 }
 
 export interface HeroImage {

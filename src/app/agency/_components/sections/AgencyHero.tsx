@@ -5,7 +5,6 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import Button from "@/soul/primitives/Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,7 +121,7 @@ export default function AgencyHero() {
 	);
 
 	return (
-		<main ref={rootRef} className="flex flex-col bg-kainé-white min-h-screen pt-32 sm:pt-40 pb-20">
+		<main ref={rootRef} className="flex flex-col bg-kainé-white min-h-screen pt-24 sm:pt-24 pb-20">
 			{/* Top Section: Title Left, Visual Right */}
 			<section className="px-6 lg:px-12 mb-32">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -130,7 +129,7 @@ export default function AgencyHero() {
 					<div className="relative z-10">
 						<h1
 							ref={heroTitleRef}
-							className="text-[clamp(5rem,18vw,10rem)]  leading-[0.8] tracking-tight text-kainé-black"
+							className="text-[clamp(5rem,18vw,14rem)]  font-medium leading-[0.8] tracking-tight text-kainé-black"
 							style={{ perspective: "1000px" }}
 						>
 							Agency
@@ -143,8 +142,14 @@ export default function AgencyHero() {
 						className="relative w-full mt-20 aspect-square  max-w-[250px] mx-auto lg:ml-auto lg:mr-30 opacity-0"
 					>
 						{/* Placeholder Visual - A styled abstract shape */}
-						<div className="w-full h-[400px] bg-gradient-to-br from-pink-400 to-rose-600 shadow-2xl flex items-center justify-center transform  hover:rotate-6 transition-transform duration-500">
-							<span className="text-white text-opacity-80 font-medium text-lg">Visual / 3D Element</span>
+						<div className="w-full h-[400px] shadow-2xl flex items-center justify-center transform  hover:rotate-6 transition-transform duration-500">
+							<Image
+								src="/assets/agency-art.JPG"
+								alt="Agency Art"
+								fill
+								className="object-cover w-full h-[400px]"
+								priority
+							/>
 						</div>
 					</div>
 				</div>
@@ -154,7 +159,7 @@ export default function AgencyHero() {
 			<section className="px-4 lg:px-6 mb-32 max-w-[100rem] mx-auto">
 				<p
 					data-intro-text
-					className="text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.2] tracking- text-kainé-black text-neutral-500 font-light  text-center lg:text-left opacity-0"
+					className="text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.2]  text-neutral-500 font-light  text-center lg:text-left opacity-0"
 				>
 					We are digital by nature. We create real connections between brands and people.
 					Unique and authentic connections, the kind that transcend the screen.
@@ -168,8 +173,7 @@ export default function AgencyHero() {
 				</p>
 			</section>
 
-			{/* Bottom Section: Team Banner */}
-			{/* We add "inset-x-0" to make sure it can be full width, but clip-path handles the visual padding */}
+		
 			<section
 				data-team-banner-wrapper
 				className="relative w-full h-[60vh] sm:h-[80vh] overflow-hidden will-change-[clip-path]"

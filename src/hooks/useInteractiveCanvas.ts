@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { gsap } from "gsap";
 
 interface MousePosition {
@@ -100,24 +100,16 @@ export const useInteractiveCanvas = (
 		const container = containerRef.current;
 		if (!container) return;
 
-		const cursor = document.querySelector(".custom-cursor") as HTMLElement;
-
 		const handleMouseMove = (e: MouseEvent) => {
 			const containerRect = container.getBoundingClientRect();
 			const x = e.clientX - containerRect.left;
 			const y = e.clientY - containerRect.top;
 
 			setMousePosition({ x, y });
-
-			if (cursor) {
-				cursor.style.left = `${e.clientX}px`;
-				cursor.style.top = `${e.clientY}px`;
-			}
 		};
 
 		const handleMouseEnter = () => {
 			setIsActive(true);
-			cursor?.classList.add("active");
 		};
 
 		container.addEventListener("mousemove", handleMouseMove);

@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Card from "./Card";
-import { cardData } from "@/data";
+import { projectsData } from "@/data";
 import { useGSAP } from "@gsap/react";
 import Button from "../../primitives/Button";
 import Badge from "../../primitives/Badge";
@@ -112,7 +112,7 @@ export default function Cases() {
 				"0"
 			);
 		},
-		{ scope: containerRef, dependencies: [cardData.length] }
+		{ scope: containerRef, dependencies: [projectsData.length] }
 	);
 
 	return (
@@ -121,12 +121,11 @@ export default function Cases() {
 				ref={introRef}
 				className="relative px-16 text-white z-0"
 			>
-				<div className="bg-kainé-black w-full flex flex-col  gap-12 md:gap-28 pt-44 pb-96 rounded-t-2xl">
+				<div className="bg-kainé-black w-full flex flex-col  gap-12 md:gap-28 pt-44 pb-96 rounded-t-2xl" data-cursor-invert>
 					<div className="flex flex-col w-full h-full max-w-[90rem]  mx-auto gap-32   ">
 						<div className="max-w-4xl">
 							<h1 className="text-4xl md:text-5xl font-normal md:leading-[130%]">
-								Hallo! Wir sind kainé, deine Agentur in Luzern mit Fokus auf
-								Branding, Purpose und Websites mit Wirkung.
+								Hello! We are kainé, your agency in Lucerne focused on branding, purpose, and websites with impact.
 							</h1>
 						</div>
 						{/* Description and button */}
@@ -134,13 +133,11 @@ export default function Cases() {
 							<div className="col-span-1" />
 							<div className="max-w-md space-y-8">
 								<p className="text-base md:text-xl text-gray-300 leading-relaxed">
-									In deinem Sinn, für dich, für deine Kund:innen und nicht
-									zuletzt für uns, tun wir alles dafür, dass unsere Arbeit Sinn
-									macht.
+									In your best interest, for you, for your customers, and last but not least for us, we do everything to ensure our work makes sense.
 								</p>
 								<div>
 									<Button variant="primary" size="md" href="/purpose">
-										unser Purpose
+										our purpose
 									</Button>
 								</div>
 							</div>
@@ -160,23 +157,15 @@ export default function Cases() {
 							cases
 						</Badge>
 						<h2 className="text-3xl font-normal leading-tight">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-							repellat nulla facere illum esse molestiae tempore fugiat sit,
-							doloribus maiores.
+							Extensive projects we are particularly proud of – meaning-based design and communication:
 						</h2>
 					</div>
 				</div>
 
-				{cardData.map((card) => (
+				{projectsData.map((project) => (
 					<Card
-						key={card.id}
-						id={card.id}
-						accentColor={card.accentColor}
-						info={card.info}
-						title={card.title}
-						description={card.description}
-						imageSrc={card.imageSrc}
-						imageAlt={card.imageAlt}
+						key={project.id}
+						project={project}
 					/>
 				))}
 			</section>

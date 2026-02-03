@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Project } from "@/data";
 
 import ArrowIcon from "@/soul/primitives/icons/ArrowIcon";
+import Badge from "@/soul/primitives/Badge";
 
 export default function ProjectCard({ project }: { project: Project }) {
 	return (
@@ -19,6 +20,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 						fill
 						className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
 						sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+						quality={90}
 					/>
 					<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
 						<div className="relative w-[58%] max-w-xs translate-y-[7%] scale-[0.82] opacity-0 transition-all duration-500 ease-out group-hover:translate-y-[1%] group-hover:scale-100 group-hover:opacity-100">
@@ -29,6 +31,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 									fill
 									className="object-cover brightness-110"
 									sizes="(max-width: 768px) 55vw, 320px"
+									quality={90}
 								/>
 							</div>
 						</div>
@@ -49,12 +52,14 @@ export default function ProjectCard({ project }: { project: Project }) {
 			</div>
 			<div className=" flex flex-wrap gap-2">
 				{project.tags.map((tag) => (
-					<span
+					<Badge
 						key={`${project.id}-${tag}`}
-						className="rounded-full border border-neutral-500/80 bg-white px-2 py-1 text-xs tracking-[0.12em] text-neutral-500 transition-colors duration-300"
+						variant="outline"
+						size="sm"
+						className="border-neutral-500/80 text-neutral-500 tracking-[0.12em]"
 					>
 						{tag}
-					</span>
+					</Badge>
 				))}
 			</div>
 		</Link>

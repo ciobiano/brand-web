@@ -10,6 +10,7 @@ import { gsap } from "gsap";
 import { SplitText } from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "@/soul/primitives/Button";
+import Badge from "@/soul/primitives/Badge";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
@@ -111,24 +112,21 @@ export default function ProjectsPage() {
 		<main className="flex min-h-screen flex-col text-neutral-900">
 			<div
 				ref={pageRef}
-				className="flex flex-1 flex-col gap-10 px-4 pt-32 mb-80 sm:px-6 "
+				className="flex flex-1 flex-col gap-10 px-4 pt-24 mb-80 sm:px-6 "
 			>
 				<section className="grid gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
 					<h1
 						data-projects-hero-heading
-						className="text-[clamp(4.5rem,16vw,13rem)] leading-[0.85] tracking-tight lg:col-span-2"
+						className="text-[clamp(4.5rem,16vw,14rem)] font-medium  leading-[0.85] tracking-tight lg:col-span-2"
 					>
-						Projekte
+						Projects
 					</h1>
 					<span aria-hidden className="hidden lg:block" />
 					<p
 						data-projects-hero-copy
 						className="text-base sm:text-lg lg:text-2xl text-neutral-600 md:mt-10 lg:col-start-2 lg:max-w-2xl lg:justify-self-start"
 					>
-						Kreativität ist für uns kein Selbstzweck, sondern eine wesentliche
-						Voraussetzung für unsere Arbeit. Wir lieben, was wir tun und so
-						werden auch Projekte mit unseren Kund:innen zu
-						Herzensangelegenheiten.
+						Creativity is not an end in itself for us, but an essential prerequisite for our work. We love what we do, and so projects with our clients become matters of the heart.
 					</p>
 				</section>
 
@@ -137,25 +135,18 @@ export default function ProjectsPage() {
 						Filter
 					</div>
 					<div className="mt-6 flex flex-wrap gap-3">
-						{tagsToRender.map((tag) => {
-							const isActive = activeTag === tag;
-							return (
-								<button
-									key={tag}
-									type="button"
-									onClick={() => setActiveTag(tag)}
-									className={clsx(
-										"relative overflow-hidden rounded-full border px-2 py-1 text-xs transition-all",
-										"focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black",
-										isActive
-											? "border-transparent bg-neutral-900 text-white shadow-[0_8px_24px_-12px_rgba(15,15,15,0.35)]"
-											: "border-neutral-500/80 bg-white text-neutral-700 hover:border-neutral-600 hover:text-neutral-900"
-									)}
-								>
-									{tag}
-								</button>
-							);
-						})}
+						{tagsToRender.map((tag) => (
+							<Badge
+								key={tag}
+								variant="filter"
+								size="sm"
+								interactive
+								active={activeTag === tag}
+								onClick={() => setActiveTag(tag)}
+							>
+								{tag}
+							</Badge>
+						))}
 					</div>
 				</section>
 
@@ -172,8 +163,8 @@ export default function ProjectsPage() {
 						))
 					) : (
 						<div className="flex flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-8 text-center text-neutral-600">
-							<p className="text-lg font-medium text-neutral-900">Keine Projekte gefunden</p>
-							<p className="mt-2 text-sm">Wähle einen anderen Filter oder setze die Auswahl zurück.</p>
+							<p className="text-lg font-medium text-neutral-900">No projects found</p>
+							<p className="mt-2 text-sm">Select another filter or reset the selection.</p>
 						</div>
 					)}
 				</section>
