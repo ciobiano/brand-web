@@ -3,34 +3,13 @@
 import Badge from "@/soul/primitives/Badge";
 import AnimatedLink from "@/soul/primitives/AnimatedLink";
 import { ArrowUp } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { companyInfo, footerLinks } from "@/data";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const linksData = [
-	{
-		title: "Links",
-		items: [
-			{ href: "https://instagram.com", text: "Instagram" },
-			{ href: "https://linkedin.com", text: "LinkedIn" },
-			{ href: "/newsletter", text: "Newsletter" },
-		],
-	},
-	{
-		items: [{ href: "https://webflow.com", text: "Webflow" }],
-	},
-	{
-		items: [
-			{ href: "/imprint", text: "Imprint" },
-			{ href: "/privacy", text: "Privacy Policy" },
-			{ href: "/terms", text: "Terms and Conditions" },
-		],
-		className: "text-gray-400 hover:text-purple-400",
-	},
-];
 
 const Footer = () => {
 	const footerRef = useRef<HTMLElement>(null);
@@ -65,7 +44,6 @@ const Footer = () => {
 			},
 		});
 
-		// Refresh ScrollTrigger to work with ScrollSmoother
 		ScrollTrigger.refresh();
 	}, []);
 
@@ -77,21 +55,25 @@ const Footer = () => {
 	};
 
 	return (
-		<footer ref={footerRef} className="bg-kainé-black text-white relative" data-cursor-invert>
-			{/* Single div divider with pseudo-elements */}
-			<div className="scroll-trigger relative z-50 h-20 bg-kainé-black before:absolute before:z-10 before:w-full before:h-[calc(100%+0.5rem)] before:mb-[-5px] before:-translate-y-2 before:rounded-b-xl before:bg-kainé-white after:absolute after:top-[2px] after:left-0 after:right-0 after:h-8 after:bg-gradient-to-b after:from-kainé-black after:to-transparent after:opacity-20"></div>
+		<footer
+			ref={footerRef}
+			className="bg-kainé-black text-white relative min-h-[60svh] flex flex-col"
+			data-cursor-invert
+		>
+			<div className="scroll-trigger relative z-50 h-20 bg-kainé-black before:absolute before:z-10 before:w-full before:h-[calc(100%+0.5rem)] before:mb-[-5px] before:-translate-y-2 before:rounded-b-xl before:bg-kainé-white after:absolute after:top-[2px] after:left-0 after:right-0 after:h-8 after:bg-gradient-to-b after:from-kainé-black after:to-transparent after:opacity-20"/>
 
-			<div ref={footerContainer} className="p-4 mt-20 md:p-8">
+			<div
+				ref={footerContainer}
+				className="flex flex-col mt-10 flex-1 px-4 pt-20 pb-8 md:px-8"
+			>
 				<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-					{/* Section 1: Large "Kainé" text */}
 					<div className="lg:col-span-2">
 						<h1 className="text-8xl md:text-9xl lg:text-[12rem] leading-none relative">
-							Kainé
+							{companyInfo.name}
 
 						</h1>
 					</div>
 
-					{/* Section 2: Contact Info */}
 					<div className="space-y-4">
 						<Badge
 							variant="outline"
@@ -101,19 +83,18 @@ const Footer = () => {
 							Contact
 						</Badge>
 						<div className="text-sm md:text-2xl font-light">
-							<p>kainé advertising agency</p>
-							<p>Mythenstrasse 7</p>
-							<p>CH-6003 Lucerne</p>
+							<p>{companyInfo.legalName}</p>
+							<p>{companyInfo.address.street}</p>
+							<p>{companyInfo.address.city}</p>
 						</div>
 						<div className="text-base md:text-2xl font-light">
-							<p>+41 41 240 56 62</p>
-							<p>hallo@kainé.ch</p>
+							<p>{companyInfo.contact.phone}</p>
+							<p>{companyInfo.contact.email}</p>
 						</div>
 					</div>
 
-					{/* Section 3: Links */}
 					<div className="space-y-4 ">
-						{linksData.map((group, index) => (
+						{footerLinks.map((group, index) => (
 
 							<div key={index}>
 								{group.title && (
@@ -144,14 +125,11 @@ const Footer = () => {
 					</div>
 				</div>
 
-				{/* Bottom Row */}
-				<div className="mt-8 md:mt-20  flex -mb-4 justify-between items-end">
-					{/* Agency Description */}
+				<div className="mt-auto flex -mb-10  justify-between items-end">
 					<div className="text-base md:text-2xl font-light">
-						<p>Agency for Sense-Based</p>
-						<p>Graphics and Communication</p>
+						<p>{companyInfo.tagline.split(' and ')[0]} and</p>
+						<p>{companyInfo.tagline.split(' and ')[1]}</p>
 					</div>
-					{/* Professional Partner */}
 					<div className="hidden md:flex items-center space-x-2 border border-gray-700 px-3 py-1 rounded-md text-sm text-gray-400">
 						<svg
 							width="16"
@@ -164,7 +142,6 @@ const Footer = () => {
 						</svg>
 						<span>Professional partner</span>
 					</div>
-					{/* Scroll to Top Badge */}
 					<button
 						onClick={scrollToTop}
 						className=" border border-gray-500 rounded-full p-2 hover:bg-white hover:text-black transition-colors"

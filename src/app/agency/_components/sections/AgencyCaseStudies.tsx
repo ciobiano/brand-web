@@ -6,57 +6,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { createHorizontalLoop, type HorizontalLoopInstance } from "@/lib/gsap/horizontal-loop";
+import { caseStudies } from "@/data";
 
-// Real stories with client testimonials
-const caseStudies = [
-	{
-		id: 1,
-		image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
-		title: "Mäsi celebrates 10 years!",
-		testimonial: "Kainé captured our heritage while pushing us into the future. Their strategic approach increased our customer engagement by 240%.",
-		client: "Sarah Mueller",
-		role: "CEO, Mäsi",
-		className: "w-[70vw] sm:w-[420px] aspect-square",
-	},
-	{
-		id: 2,
-		image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop",
-		title: "Digital Transformation for Helvetia",
-		testimonial: "The team's attention to detail and user-centric approach transformed our digital presence completely.",
-		client: "Marcus Weber",
-		role: "Digital Director, Helvetia",
-		className: "w-[45vw] sm:w-[280px] aspect-[4/5]",
-	},
-	{
-		id: 3,
-		image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2670&auto=format&fit=crop",
-		title: "Lucerne Arts Festival",
-		testimonial: "Working with Kainé felt less like hiring an agency and more like gaining creative partners who truly understood our vision.",
-		client: "Elena Fischer",
-		role: "Festival Director",
-		className: "w-[70vw] sm:w-[420px] aspect-square",
-	},
-	{
-		id: 4,
-		image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2670&auto=format&fit=crop",
-		title: "Alpine Wellness Co.",
-		testimonial: "They didn't just design a brand; they helped us discover who we are. The results speak for themselves—we sold out our first season.",
-		client: "Thomas Baumann",
-		role: "Founder, Alpine Wellness",
-		className: "w-[45vw] sm:w-[280px] aspect-[4/5]",
-	},
-	{
-		id: 5,
-		image: "https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=2670&auto=format&fit=crop",
-		title: "Sustainable Swiss",
-		testimonial: "Kainé's strategic thinking helped us articulate our environmental mission in a way that resonates. Our membership grew 180% in six months.",
-		client: "Anna Keller",
-		role: "Executive Director",
-		className: "w-[70vw] sm:w-[420px] aspect-square",
-	},
-];
-
-// Duplicate for infinite marquee
 const allSlides = [...caseStudies, ...caseStudies, ...caseStudies];
 
 gsap.registerPlugin(ScrollTrigger);
@@ -127,7 +78,6 @@ export default function AgencyCaseStudies() {
 				</h2>
 			</div>
 
-			{/* Slider Wrapper */}
 			<div className="flex w-full h-full items-center justify-center ">
 				<div
 					ref={wrapperRef}
@@ -165,11 +115,10 @@ export default function AgencyCaseStudies() {
 								</div>
 							</div>
 
-							{/* Testimonial quote appears below image on hover */}
 							<div className="mt-4 h-full opacity-0 overflow-hidden group-hover:opacity-100 transition-all duration-500 ease-out">
 								<div className={`${slide.className} mx-auto`}>
 									<p className="text-kainé-black text-sm leading-relaxed text-center px-4">
-										"{slide.testimonial}"
+										`{slide.testimonial}`
 									</p>
 								</div>
 							</div>

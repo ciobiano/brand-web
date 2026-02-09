@@ -1,4 +1,3 @@
-// /app/page.tsx
 import React from "react";
 import Hero from "@/soul/sections/hero";
 import Cases from "@/soul/sections/cases";

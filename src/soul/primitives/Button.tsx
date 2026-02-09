@@ -43,7 +43,6 @@ interface ButtonProps extends VariantProps<typeof buttonVariants> {
 	type?: "button" | "submit" | "reset";
 	disabled?: boolean;
 	href?: string;
-	showArrow?: boolean;
 }
 
 export default function Button({
@@ -55,7 +54,6 @@ export default function Button({
 	type = "button",
 	disabled = false,
 	href,
-	showArrow = false,
 }: ButtonProps) {
 	const ref = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
 	const bulletRef = useRef<HTMLDivElement>(null);
@@ -66,16 +64,7 @@ export default function Button({
 			const bullet = bulletRef.current;
 			if (!el) return;
 
-			// Initial animation
-			gsap.fromTo(
-				el,
-				{ opacity: 0, y: 20 },
-				{ opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.7)" }
-			);
-
-			// For nav variant, use elastic padding effect like kainé.ch
 			const handleMouseEnter = () => {
-				// Animate bullet point
 				if (bullet) {
 					gsap.to(bullet, {
 						opacity: 1,
@@ -89,7 +78,6 @@ export default function Button({
 			};
 
 			const handleMouseLeave = () => {
-				// Hide bullet point
 				if (bullet) {
 					gsap.to(bullet, {
 						opacity: 0,
@@ -113,7 +101,6 @@ export default function Button({
 
 	const classes = cn(buttonVariants({ variant, size, className }));
 
-	// Bullet point for nav variant (similar to kainé.ch)
 	const bulletPoint = (
 		<div
 			ref={bulletRef}

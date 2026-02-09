@@ -4,31 +4,19 @@ import { useState } from "react";
 import Image from "next/image";
 import Badge from "@/soul/primitives/Badge";
 import Button from "@/soul/primitives/Button";
+import { contactFormOptions } from "@/data";
 
-// Single‑file, drop‑in component that recreates the shared layout in English.
-// TailwindCSS required. No external UI libs. Accessible, responsive, and clean.
-// Place this anywhere in your Next.js app (e.g., app/contact/page.tsx) and export default.
-
-
+const DEFAULT_BUDGET = 15000;
+const MIN_BUDGET = 0;
+const MAX_BUDGET = 100000;
+const BUDGET_STEP = 500;
 
 export function InquiryForm() {
-  const options = [
-    "Web Design",
-    "Logo / Branding",
-    "Define Purpose",
-    "Strategy",
-    "Content",
-    "UX Design",
-    "Packaging",
-    "Editorial",
-    "Illustrations",
-    "Other",
-  ];
 
   const [selected, setSelected] = useState<string[]>([]);
   const [startMonth, setStartMonth] = useState("");
   const [endMonth, setEndMonth] = useState("");
-  const [budget, setBudget] = useState(15000);
+  const [budget, setBudget] = useState(DEFAULT_BUDGET);
 
   const toggle = (label: string) =>
     setSelected((prev) => (prev.includes(label) ? prev.filter((x) => x !== label) : [...prev, label]));
@@ -38,11 +26,10 @@ export function InquiryForm() {
 
   return (
     <form className="w-full space-y-16 rounded-2xl hover:shadow-2xl p-10">
-      {/* How can we help? */}
       <div className="space-y-10">
         <h3 className="text-3xl font-medium">How can we help?</h3>
         <div className="flex flex-wrap gap-3">
-          {options.map((opt) => (
+          {contactFormOptions.map((opt) => (
             <Badge
               key={opt}
               variant="filter"
@@ -59,7 +46,6 @@ export function InquiryForm() {
         </div>
       </div>
 
-      {/* Tell us more */}
       <div className="space-y-3">
         <h3 className="text-xl font-medium">Tell us more about your project.</h3>
         <div className="relative">
@@ -76,7 +62,6 @@ export function InquiryForm() {
         </div>
       </div>
 
-      {/* Website domain */}
       <div className="space-y-3">
         <h3 className="text-xl font-medium">Do you already have a website?</h3>
         <label htmlFor="domain" className="text-sm text-black">
@@ -85,7 +70,6 @@ export function InquiryForm() {
         <input id="domain" type="text" inputMode="url" placeholder="e.g. example.com" className={inputBase} />
       </div>
 
-      {/* Timing (Start / Completion) */}
       <div className="space-y-4">
         <h3 className="text-xl font-medium">What does your timing look like?</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -104,16 +88,15 @@ export function InquiryForm() {
         </div>
       </div>
 
-      {/* Budget / Investment */}
       <div className="space-y-4">
         <h3 className="text-xl font-medium">What do you plan to invest?</h3>
         <div className="flex items-center gap-4">
           <input
             aria-label="Budget"
             type="range"
-            min={0}
-            max={100000}
-            step={500}
+            min={MIN_BUDGET}
+            max={MAX_BUDGET}
+            step={BUDGET_STEP}
             value={budget}
             onChange={(e) => setBudget(Number(e.target.value))}
             className="w-full accent-black"
@@ -125,7 +108,6 @@ export function InquiryForm() {
         <p className="text-sm text-zinc-500">A ballpark figure is fine.</p>
       </div>
 
-      {/* Contact details */}
       <div className="space-y-4 ">
         <h3 className="text-xl font-medium">Contact details</h3>
         <div className="grid grid-cols-1  gap-4 sm:grid-cols-2">
@@ -156,19 +138,16 @@ export function InquiryForm() {
         </div>
       </div>
 
-      {/* Notes */}
       <div className="space-y-3">
         <h3 className="text-xl font-medium">Comments</h3>
         <textarea className="min-h-[140px] w-full resize-y rounded-2xl border border-zinc-200 p-4 outline-none focus:ring-2 focus:ring-black" />
       </div>
 
-      {/* Submit + confirmation card */}
       <div className="space-y-6">
         <Button variant="primary" size="md" href="/contact" >
           Send inquiry
         </Button>
 
-        {/* Mini confirmation card (static demo) */}
         <div className="w-full bg-kainé-gray/30  rounded-2xl border p-5 shadow-sm">
           <div className="mb-2  text-zinc-500">Your inquiry inbox says:</div>
           <div className="flex items-center gap-3">

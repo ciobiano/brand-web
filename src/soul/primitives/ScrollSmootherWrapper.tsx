@@ -23,7 +23,6 @@ export default function ScrollSmootherWrapper({
 	useGSAP(
 		() => {
 			const initializeSmoother = () => {
-				// Kill any existing smoother
 				if (smoother.current) {
 					smoother.current.kill();
 				}

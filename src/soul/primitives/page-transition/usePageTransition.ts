@@ -1,23 +1,43 @@
 "use client";
 
-import { useCallback, useEffect, useRef, startTransition } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { usePageAnimationContext } from "./PageAnimationContext";
+import { transitionWords } from "@/data";
+import {
+	TRANSITION_DURATION,
+	TRANSITION_EASE,
+	TRANSITION_STAGGER,
+	TRANSITION_TIMING,
+} from "./constants";
 
 export type TransitionCallback = (
 	next: () => void,
 	from?: string,
 	to?: string
-) => Promise<(() => void) | void>;
+) => Promise<void>;
 
-const transitionWords = ["Studio", "Collective", "Atelier", "Works", "Lab"];
+const MAX_INIT_ATTEMPTS = 60; // 1 second at 60fps
 
 export function usePageTransition() {
 	const firstLayerRef = useRef<HTMLDivElement | null>(null);
 	const leaveTextRef = useRef<HTMLSpanElement | null>(null);
-	const leaveWordRef = useRef<HTMLSpanElement | null>(null);
 	const wordIndexRef = useRef(0);
 	const hasRunInitialEnterRef = useRef(false);
 	const timelineRef = useRef<gsap.core.Timeline | null>(null);
+
+	const [wordCharacters, setWordCharacters] = useState<string[]>(
+		transitionWords[0].split("")
+	);
+
+	const { signalReady, reset } = usePageAnimationContext();
+
+	const cycleWord = useCallback(() => {
+		const nextIndex = (wordIndexRef.current + 1) % transitionWords.length;
+		wordIndexRef.current = nextIndex;
+		const nextWord = transitionWords[nextIndex];
+		setWordCharacters(nextWord.split(""));
+	}, []);
 
 	const runTimeline = useCallback(
 		(setup: (timeline: gsap.core.Timeline) => void) => {
@@ -48,6 +68,8 @@ export function usePageTransition() {
 
 	const handleLeave: TransitionCallback = useCallback(
 		async (next) => {
+			reset();
+
 			const layer = firstLayerRef.current;
 			if (!layer) {
 				next();
@@ -55,22 +77,8 @@ export function usePageTransition() {
 			}
 
 			const textEl = leaveTextRef.current;
-			const wordEl = leaveWordRef.current;
-			const characters: HTMLElement[] = [];
 
-			if (wordEl) {
-				const nextWord = transitionWords[wordIndexRef.current];
-				wordIndexRef.current = (wordIndexRef.current + 1) % transitionWords.length;
-
-				wordEl.textContent = "";
-				nextWord.split("").forEach((char) => {
-					const span = document.createElement("span");
-					span.textContent = char;
-					span.style.display = "inline-block";
-					wordEl.appendChild(span);
-					characters.push(span);
-				});
-			}
+			cycleWord();
 
 			if (textEl) {
 				gsap.set(textEl, { opacity: 1 });
@@ -80,45 +88,40 @@ export function usePageTransition() {
 				timeline.set(layer, { y: "100%" });
 				timeline.to(layer, {
 					y: 0,
-					duration: 0.7,
-					ease: "circ.inOut",
+					duration: TRANSITION_DURATION.OVERLAY,
+					ease: TRANSITION_EASE.OVERLAY,
 				});
 
-					if (characters.length) {
-						timeline.fromTo(
-							characters,
-							{ yPercent: 60, opacity: 0 },
-							{
-								yPercent: 0,
-								opacity: 1,
-								duration: 0.3,
-								ease: "power3.out",
-								stagger: 0.08,
-							},
-							"-=0.45"
-						);
-						
-					} else if (textEl) {
-							timeline.to(
-								textEl,
-								{
-									opacity: 0,
-									duration: 0.2,
-									ease: "sine.inOut",
-								},
-								">-0.2"
-							);
-					}
-				});
+				const charElements = layer.querySelectorAll("[data-word-char]");
+				if (charElements.length) {
+					timeline.fromTo(
+						charElements,
+						{ yPercent: 60, opacity: 0 },
+						{
+							yPercent: 0,
+							opacity: 1,
+							duration: TRANSITION_DURATION.CHAR_ANIMATION,
+							ease: TRANSITION_EASE.CHARS,
+							stagger: TRANSITION_STAGGER.CHARS,
+						},
+						TRANSITION_TIMING.CHAR_OVERLAP
+					);
+				} else if (textEl) {
+					timeline.to(
+						textEl,
+						{
+							opacity: 0,
+							duration: 0.2,
+							ease: "sine.inOut",
+						},
+						TRANSITION_TIMING.TEXT_FADE_OVERLAP
+					);
+				}
+			});
 
 			next();
-
-			return () => {
-				timelineRef.current?.kill();
-				timelineRef.current = null;
-			};
 		},
-		[runTimeline]
+		[runTimeline, reset, cycleWord]
 	);
 
 	const handleEnter: TransitionCallback = useCallback(
@@ -135,32 +138,30 @@ export function usePageTransition() {
 				timeline.set(layer, { y: 0 });
 
 				if (textEl) {
-					timeline.to(textEl, { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 0);
+					timeline.to(
+						textEl,
+						{
+							opacity: 0,
+							duration: TRANSITION_DURATION.TEXT_FADE,
+							ease: TRANSITION_EASE.TEXT,
+						},
+						0
+					);
 				}
 
 				timeline.to(layer, {
 					y: "-100%",
-					duration: 0.7,
-					ease: "circ.inOut",
+					duration: TRANSITION_DURATION.OVERLAY,
+					ease: TRANSITION_EASE.OVERLAY,
 				});
 				timeline.set(layer, { y: "100%" });
 			});
 
-			await new Promise<void>((resolve) => {
-				requestAnimationFrame(() => {
-					startTransition(() => {
-						next();
-						resolve();
-					});
-				});
-			});
+			next();
 
-			return () => {
-				timelineRef.current?.kill();
-				timelineRef.current = null;
-			};
+			signalReady();
 		},
-		[runTimeline]
+		[runTimeline, signalReady]
 	);
 
 	useEffect(() => {
@@ -169,35 +170,51 @@ export function usePageTransition() {
 		}
 
 		let rafId = 0;
+		let attempts = 0;
 
 		const initialise = () => {
+			// Safety: Bail out after max attempts
+			if (attempts++ > MAX_INIT_ATTEMPTS) {
+				console.warn(
+					"Page transition overlay not found after 1s, skipping initial animation"
+				);
+				signalReady(); // Gracefully continue
+				return;
+			}
+
 			const layer = firstLayerRef.current;
 			if (!layer) {
 				rafId = requestAnimationFrame(initialise);
 				return;
 			}
 
-			// Initial state is already covered (y: 0) from CSS.
-			// We validly want to show the loading text, then transition out.
+			hasRunInitialEnterRef.current = true;
+
 			if (leaveTextRef.current) {
-				gsap.set(leaveTextRef.current, { opacity: 0, y: 20 });
-				gsap.to(leaveTextRef.current, { 
-					opacity: 1, 
-					y: 0, 
-					duration: 0.6, 
-					ease: "power3.out",
-					onComplete: () => {
-						// Add a small delay before entering
-						gsap.delayedCall(0.5, () => {
-							handleEnter(() => {}).catch(() => {});
-						});
+				const tl = gsap.timeline();
+
+				tl.fromTo(
+					leaveTextRef.current,
+					{ opacity: 0, y: 20 },
+					{
+						opacity: 1,
+						y: 0,
+						duration: TRANSITION_DURATION.INITIAL_LOAD,
+						ease: TRANSITION_EASE.CHARS,
 					}
-				});
+				);
+
+				tl.add(() => {
+					handleEnter(() => {}).catch((err) => {
+						console.error("Initial enter animation failed:", err);
+					});
+				}, `+=${TRANSITION_DURATION.INITIAL_DELAY}`);
+
 				return;
 			}
 
-			handleEnter(() => {}).catch(() => {
-				// Ignore; router will retry on navigation.
+			handleEnter(() => {}).catch((err) => {
+				console.error("Initial enter animation failed:", err);
 			});
 		};
 
@@ -206,12 +223,12 @@ export function usePageTransition() {
 		return () => {
 			cancelAnimationFrame(rafId);
 		};
-	}, [handleEnter]);
+	}, [handleEnter, signalReady]);
 
 	return {
 		firstLayerRef,
 		leaveTextRef,
-		leaveWordRef,
+		wordCharacters, // Expose for declarative rendering
 		transitionRouterProps: {
 			auto: true,
 			leave: handleLeave,

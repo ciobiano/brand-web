@@ -36,9 +36,6 @@ const sliderThemeStyles = {
 export type SliderTheme = keyof typeof sliderThemeStyles;
 type SliderThemeStyles = (typeof sliderThemeStyles)[SliderTheme];
 
-// --- Reusable Button Component ---
-// This component encapsulates the repeating button structure and styles.
-
 interface SliderButtonProps {
 	label: string;
 	dataAttribute: string;
@@ -100,7 +97,6 @@ const SliderButton: React.FC<SliderButtonProps> = ({
 	</button>
 );
 
-// --- Main Slider Component ---
 export type SlideData = {
 	imageUrl: string;
 	caption: string;

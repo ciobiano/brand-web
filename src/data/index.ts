@@ -1,10 +1,19 @@
 import {
+	CaseStudy,
+	Client,
+	CompanyInfo,
+	FooterLinkGroup,
 	HeroImage,
 	JournalCardPreview,
 	JournalEntry,
 	JournalTagFilter,
+	LogoSize,
+	MapConfig,
+	NavigationItem,
 	Project,
 	ProjectTagFilter,
+	Service,
+	TeamMember,
 } from "./types";
 
 const HERO_IMAGE_SEED = 42;
@@ -66,11 +75,7 @@ const heroImagePool: readonly HeroImage[] = [
 		alt: "Showcase of a minimalist app user interface",
 		link: "/projects/app-showcase",
 	},
-	{
-		src: "/assets/manchester-united-social-post.png",
-		alt: "Social media post design for Manchester United",
-		link: "/projects/sports-social-media",
-	},
+	
 	{
 		src: "/assets/aesthetic-collage-moodboard.jpg",
 		alt: "Curated aesthetic moodboard with various textures",
@@ -311,6 +316,7 @@ export const journalTags = [
 
 export const journalEntries: JournalEntry[] = [
 	{
+		id: "strategic-pivot",
 		title: "The Strategic Pivot: Defining Vision in a Chaos Era",
 		summary: "How modern agencies are redefining their core purpose amidst market volatility.",
 		tags: ["Strategy", "Management", "Culture"],
@@ -319,6 +325,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/strategic-pivot",
 	},
 	{
+		id: "creative-process",
 		title: "Deconstructing the Creative Process: From Chaos to Clarity",
 		summary: "A look behind the curtain at how we turn messy ideas into polished products.",
 		tags: ["Design", "Process", "Education"],
@@ -327,6 +334,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/creative-process",
 	},
 	{
+		id: "digital-frontiers",
 		title: "Digital Frontiers: Why Web3 Still Matters for Brands",
 		summary: "Navigating the hype cycle to find real value in decentralized technologies.",
 		tags: ["Digital", "Technology", "Strategy"],
@@ -335,6 +343,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/digital-frontiers",
 	},
 	{
+		id: "client-workshops",
 		title: "The Art of the Client Workshop: Building Trust Face-to-Face",
 		summary: "Why human connection is still the most powerful tool in our arsenal.",
 		tags: ["Management", "Culture", "Process"],
@@ -343,6 +352,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/client-workshops",
 	},
 	{
+		id: "color-theory-2026",
 		title: "Color Theory in 2026: Beyond the Pantone Forecast",
 		summary: "Predicting the next wave of visual trends in a post-digital world.",
 		tags: ["Design", "Branding", "Art"],
@@ -351,6 +361,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/color-theory-2026",
 	},
 	{
+		id: "data-driven-creativity",
 		title: "Data-Driven Creativity: When Analytics Meet Aesthetics",
 		summary: "Using hard data to inform and inspire softer design decisions.",
 		tags: ["Digital", "Strategy", "Technology"],
@@ -359,6 +370,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/data-driven-creativity",
 	},
 	{
+		id: "agency-culture",
 		title: "Cultivating Agency Culture: More Than Just Ping Pong",
 		summary: "Building a team environment that fosters genuine innovation and wellbeing.",
 		tags: ["Culture", "Management", "Team"],
@@ -367,6 +379,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/agency-culture",
 	},
 	{
+		id: "rebranding-legacy",
 		title: "Case Study: Rebranding a 100-Year-Old Legacy",
 		summary: "The challenges and triumphs of modernizing a heritage brand.",
 		tags: ["Branding", "Case Study", "Strategy"],
@@ -375,6 +388,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/rebranding-legacy",
 	},
 	{
+		id: "leadership-in-design",
 		title: "Leadership in Design: Guiding Teams Without Stifling Creativity",
 		summary: "Strategies for creative directors to empower rather than micromanage.",
 		tags: ["Management", "Leadership", "Culture"],
@@ -383,6 +397,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/leadership-in-design",
 	},
 	{
+		id: "future-of-ui",
 		title: "The Future of UI: Interaction Design Erasure",
 		summary: "Why the best interface is no interface at all.",
 		tags: ["Design", "Digital", "UI/UX"],
@@ -391,6 +406,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/future-of-ui",
 	},
 	{
+		id: "sustainable-design",
 		title: "Sustainable Design: Reducing Digital Carbon Footprints",
 		summary: "Practical steps to make your digital products more eco-friendly.",
 		tags: ["Sustainability", "Design", "Technology"],
@@ -399,6 +415,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/sustainable-design",
 	},
 	{
+		id: "remote-vs-studio",
 		title: "Remote vs. Studio: Finding the Hybrid Sweet Spot",
 		summary: "Balancing the flexibility of remote work with the energy of the studio.",
 		tags: ["Culture", "Management", "Remote Work"],
@@ -407,6 +424,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/remote-vs-studio",
 	},
 	{
+		id: "typography-as-voice",
 		title: "Typography as Voice: Choosing the Right Typeface",
 		summary: "How type selection influences brand perception and readability.",
 		tags: ["Design", "Typography", "Branding"],
@@ -415,6 +433,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/typography-as-voice",
 	},
 	{
+		id: "client-success-stories",
 		title: "Client Success Stories: Measuring Impact Beyond Likes",
 		summary: "Moving beyond vanity metrics to prove real business value.",
 		tags: ["Strategy", "Analytics", "Management"],
@@ -423,6 +442,7 @@ export const journalEntries: JournalEntry[] = [
 		href: "/journal/client-success-stories",
 	},
 	{
+		id: "perfect-pitch",
 		title: "The Perfect Pitch: Storytelling for New Business",
 		summary: "Crafting narratives that win hearts, minds, and contracts.",
 		tags: ["Management", "Strategy", "Process"],
@@ -442,5 +462,471 @@ export const journalData: JournalCardPreview[] = journalEntries.map(
 		href,
 	})
 );
+
+export const navigationItems: NavigationItem[] = [
+	{
+		name: "Projects",
+		href: "/projects",
+		message: "kaine projects",
+		image: "/images/placeholder1.jpg",
+		className: "md:top-[20%] md:left-[55%] md:-translate-x-1/2",
+	},
+	{
+		name: "Agency",
+		href: "/agency",
+		message: "kaine projects",
+		image: "/images/placeholder2.jpg",
+		className: "md:top-[35%] md:left-[%]",
+	},
+	{
+		name: "Journal",
+		href: "/journal",
+		message: "kaine projects",
+		image: "/images/placeholder3.jpg",
+		className: "md:top-[50%] md:right-[25%] md",
+	},
+	{
+		name: "Contact",
+		href: "/contact",
+		message: "kaine projects",
+		image: "/images/placeholder4.jpg",
+		className: "md:bottom-[20%] md:left-[50%] md:-translate-x-1/2",
+	},
+];
+
+export const companyInfo: CompanyInfo = {
+	name: "kainé",
+	legalName: "kainé advertising agency",
+	address: {
+		street: "Mythenstrasse 7",
+		city: "CH-6003 Lucerne",
+		country: "Switzerland",
+		full: "Mythenstrasse 7, CH-6003 Lucerne",
+	},
+	contact: {
+		email: "hallo@kainé.ch",
+		phone: "+41 41 240 56 62",
+	},
+	social: {
+		instagram: "https://instagram.com",
+		linkedin: "https://linkedin.com",
+	},
+	tagline: "Agency for Sense-Based Graphics and Communication",
+};
+
+export const footerLinks: FooterLinkGroup[] = [
+	{
+		title: "Links",
+		items: [
+			{ href: companyInfo.social.instagram, text: "Instagram" },
+			{ href: companyInfo.social.linkedin, text: "LinkedIn" },
+			{ href: "/newsletter", text: "Newsletter" },
+		],
+	},
+	{
+		items: [{ href: "https://webflow.com", text: "Webflow" }],
+	},
+	{
+		items: [
+			{ href: "/imprint", text: "Imprint" },
+			{ href: "/privacy", text: "Privacy Policy" },
+			{ href: "/terms", text: "Terms and Conditions" },
+		],
+		className: "text-gray-400 hover:text-purple-400",
+	},
+];
+
+export const teamMembers: TeamMember[] = [
+	{
+		name: "Albi Christen",
+		role: "Owner & Creative Director",
+		skills: ["Concept", "Strategy", "Consulting"],
+		bio: "I love my work and I love racking my brain for others – be it as creative director, designer, consultant, or sparring partner.",
+		image:
+			"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=face",
+		email: "christen@kaine.in",
+	},
+	{
+		name: "Sarah Mitchell",
+		role: "Senior Brand Strategist",
+		skills: ["Brand Strategy", "Market Research", "Workshop Facilitation"],
+		bio: "Bridging the gap between business objectives and creative expression through data-informed storytelling.",
+		image:
+			"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop&crop=face",
+		email: "sarah@kaine.in",
+	},
+	{
+		name: "Marcus Chen",
+		role: "Lead Digital Designer",
+		skills: ["UI/UX", "Webflow", "Prototyping"],
+		bio: "Crafting digital experiences that are both beautiful and functional, with a focus on accessibility and performance.",
+		image:
+			"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop&crop=face",
+		email: "marcus@kaine.in",
+	},
+	{
+		name: "Elena Rodriguez",
+		role: "Art Director",
+		skills: ["Visual Identity", "Print Design", "Typography"],
+		bio: "Obsessed with the intersection of type, color, and space. Every project is an opportunity to push visual boundaries.",
+		image:
+			"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&h=800&fit=crop&crop=face",
+		email: "elena@kaine.in",
+	},
+	{
+		name: "Thomas Weber",
+		role: "Senior Developer",
+		skills: ["React", "Next.js", "GSAP"],
+		bio: "Turning design visions into performant, scalable code. I thrive on complex animations and seamless interactions.",
+		image:
+			"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop&crop=face",
+		email: "thomas@kaine.in",
+	},
+	{
+		name: "Nia Okafor",
+		role: "Content Strategist",
+		skills: ["Copywriting", "Content Planning", "SEO"],
+		bio: "Words matter. I help brands find their voice and communicate with clarity, empathy, and impact.",
+		image:
+			"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&h=800&fit=crop&crop=face",
+		email: "nia@kaine.in",
+	},
+	{
+		name: "Lars Andersson",
+		role: "Motion Designer",
+		skills: ["Animation", "Video Editing", "After Effects"],
+		bio: "Bringing static visuals to life through motion. Animation is storytelling in its purest form.",
+		image:
+			"https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop&crop=face",
+		email: "lars@kaine.in",
+	},
+	{
+		name: "Priya Sharma",
+		role: "Project Manager",
+		skills: ["Project Planning", "Client Relations", "Team Coordination"],
+		bio: "Keeping the chaos organized and the team energized. Every project is a puzzle I love solving.",
+		image:
+			"https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&h=800&fit=crop&crop=face",
+		email: "priya@kaine.in",
+	},
+];
+
+export const services: Service[] = [
+	{
+		id: "strategy",
+		title: "strategy",
+		description:
+			"Where do we stand, where do we want to go, and how do we get there? This is where we start.",
+		services: [
+			"Location determination",
+			"Brand workshop",
+			"Insights",
+			"Brand positioning",
+			"Visual language",
+			"Communication measures",
+			"Consulting",
+			"Concept",
+		],
+		image: "/images/placeholder1.jpg",
+	},
+	{
+		id: "branding",
+		title: "branding",
+		description:
+			"Your brand is more than a logo – it's the entire experience. We design identities that resonate.",
+		services: [
+			"Naming",
+			"Logo design",
+			"Corporate identity",
+			"Brand guidelines",
+			"Visual systems",
+			"Rebranding",
+		],
+		image: "/images/placeholder2.jpg",
+	},
+	{
+		id: "digital",
+		title: "digital",
+		description:
+			"Digital-first thinking with a human touch. We build platforms that perform and engage.",
+		services: [
+			"UX/UI Design",
+			"Responsive design",
+			"Digital strategy",
+			"App design",
+			"Prototyping",
+			"User testing",
+		],
+		image: "/images/placeholder3.jpg",
+	},
+	{
+		id: "webflow",
+		title: "webflow",
+		description:
+			"We're Webflow experts. Fast, flexible, and fully custom websites without the development overhead.",
+		services: [
+			"Website design & development",
+			"CMS setup",
+			"E-commerce",
+			"Animations & interactions",
+			"SEO optimization",
+			"Maintenance & support",
+		],
+		image: "/images/placeholder4.jpg",
+	},
+	{
+		id: "graphic-design",
+		title: "graphic design",
+		description:
+			"From print to packaging, we design with intention. Every detail matters.",
+		services: [
+			"Print collateral",
+			"Packaging design",
+			"Editorial design",
+			"Illustration",
+			"Signage & wayfinding",
+			"Art direction",
+		],
+		image: "/images/placeholder1.jpg",
+	},
+	{
+		id: "content",
+		title: "content",
+		description:
+			"Content that connects. We craft narratives that engage, inspire, and convert.",
+		services: [
+			"Copywriting",
+			"Content strategy",
+			"Photography",
+			"Video production",
+			"Social media content",
+			"Brand storytelling",
+		],
+		image: "/images/placeholder2.jpg",
+	},
+];
+
+export const caseStudies: CaseStudy[] = [
+	{
+		id: 1,
+		image:
+			"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
+		title: "Mäsi celebrates 10 years!",
+		testimonial:
+			"Kainé captured our heritage while pushing us into the future. Their team's ability to balance tradition with innovation is unmatched.",
+		client: "Sarah Mueller",
+		role: "CEO, Mäsi",
+		className: "w-[70vw] sm:w-[420px] aspect-square",
+	},
+	{
+		id: 2,
+		image:
+			"https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?q=80&w=2574&auto=format&fit=crop",
+		title: "Redefining energy monitoring with Ekhi",
+		testimonial:
+			"Working with Kainé transformed how we present complex data. They made our product intuitive and beautiful.",
+		client: "Carlos Ruiz",
+		role: "Product Lead, Ekhi Solar",
+		className: "w-[70vw] sm:w-[420px] aspect-square",
+	},
+	{
+		id: 3,
+		image:
+			"https://images.unsplash.com/photo-1618005198906-07f79ecc11e0?q=80&w=2574&auto=format&fit=crop",
+		title: "Building a movement with Mighty Killers",
+		testimonial:
+			"They didn't just design for us – they became part of the crew. Real collaboration, real impact.",
+		client: "Jay Thompson",
+		role: "Founder, Mighty Killers Collective",
+		className: "w-[70vw] sm:w-[420px] aspect-square",
+	},
+	{
+		id: 4,
+		image:
+			"https://images.unsplash.com/photo-1618004912476-29818d81ae2e?q=80&w=2574&auto=format&fit=crop",
+		title: "Heritage Archive: Preserving culture digitally",
+		testimonial:
+			"Kainé helped us build a system that honors the past while embracing the future. Their attention to detail is remarkable.",
+		client: "Dr. Amina Youssef",
+		role: "Director, Heritage Archive Foundation",
+		className: "w-[70vw] sm:w-[420px] aspect-square",
+	},
+	{
+		id: 5,
+		image:
+			"https://images.unsplash.com/photo-1618005198920-f0cb6201c115?q=80&w=2574&auto=format&fit=crop",
+		title: "Lagos Living: Capturing the heartbeat of a city",
+		testimonial:
+			"They saw our city through fresh eyes and helped us tell stories we didn't know how to tell ourselves.",
+		client: "Chidi Okonkwo",
+		role: "Creative Director, Lagos Tourism Board",
+		className: "w-[70vw] sm:w-[420px] aspect-square",
+	},
+];
+
+export const clients: Client[] = [
+	{ name: "ARCON", image: "https://picsum.photos/seed/arcon/400/400" },
+	{
+		name: "Albert Koechlin Stiftung",
+		image: "https://picsum.photos/seed/albert/400/400",
+	},
+	{ name: "andermatt", image: "https://picsum.photos/seed/andermatt/400/400" },
+	{
+		name: "Bellevue Group",
+		image: "https://picsum.photos/seed/bellevue/400/400",
+	},
+	{
+		name: "Brütsch Elektronik",
+		image: "https://picsum.photos/seed/brutsch/400/400",
+	},
+	{ name: "bs style", image: "https://picsum.photos/seed/bsstyle/400/400" },
+	{
+		name: "Corine Schupfer",
+		image: "https://picsum.photos/seed/corine/400/400",
+	},
+	{ name: "Dosenbach", image: "https://picsum.photos/seed/dosenbach/400/400" },
+	{ name: "e.a.s.y.", image: "https://picsum.photos/seed/easy/400/400" },
+	{
+		name: "Eichenberger Metallbau",
+		image: "https://picsum.photos/seed/eichenberger/400/400",
+	},
+	{ name: "Elite", image: "https://picsum.photos/seed/elite/400/400" },
+	{ name: "ELSA", image: "https://picsum.photos/seed/elsa/400/400" },
+	{ name: "Engelberg", image: "https://picsum.photos/seed/engelberg/400/400" },
+	{ name: "family", image: "https://picsum.photos/seed/family/400/400" },
+	{
+		name: "Feller Immobilien",
+		image: "https://picsum.photos/seed/feller/400/400",
+	},
+	{ name: "Flyer", image: "https://picsum.photos/seed/flyer/400/400" },
+	{
+		name: "Galerie Valentien",
+		image: "https://picsum.photos/seed/valentien/400/400",
+	},
+	{
+		name: "Gerber Communications",
+		image: "https://picsum.photos/seed/gerber/400/400",
+	},
+	{ name: "Gonski", image: "https://picsum.photos/seed/gonski/400/400" },
+	{ name: "Himmel", image: "https://picsum.photos/seed/himmel/400/400" },
+	{
+		name: "Hotelleriesuisse",
+		image: "https://picsum.photos/seed/hotellerie/400/400",
+	},
+	{ name: "keller", image: "https://picsum.photos/seed/keller/400/400" },
+	{ name: "kickstart", image: "https://picsum.photos/seed/kickstart/400/400" },
+	{
+		name: "Klinik Adelheid",
+		image: "https://picsum.photos/seed/adelheid/400/400",
+	},
+	{
+		name: "Luzern Tourismus",
+		image: "https://picsum.photos/seed/luzern/400/400",
+	},
+	{ name: "mäsi", image: "https://picsum.photos/seed/masi/400/400" },
+	{ name: "mesonic", image: "https://picsum.photos/seed/mesonic/400/400" },
+	{
+		name: "Messmer Foundation",
+		image: "https://picsum.photos/seed/messmer/400/400",
+	},
+	{ name: "Miele", image: "https://picsum.photos/seed/miele/400/400" },
+	{ name: "my Coach", image: "https://picsum.photos/seed/mycoach/400/400" },
+	{
+		name: "naBe Tagesklinik",
+		image: "https://picsum.photos/seed/nabe/400/400",
+	},
+	{ name: "OceanCare", image: "https://picsum.photos/seed/oceancare/400/400" },
+	{
+		name: "Pro Juventute",
+		image: "https://picsum.photos/seed/juventute/400/400",
+	},
+	{
+		name: "Pro Senectute",
+		image: "https://picsum.photos/seed/senectute/400/400",
+	},
+	{
+		name: "Puls Berufsbildung",
+		image: "https://picsum.photos/seed/puls/400/400",
+	},
+	{ name: "RATAG", image: "https://picsum.photos/seed/ratag/400/400" },
+	{ name: "Renggli", image: "https://picsum.photos/seed/renggli/400/400" },
+	{
+		name: "Schindler Hotel",
+		image: "https://picsum.photos/seed/schindler/400/400",
+	},
+	{
+		name: "Schoren Clinic",
+		image: "https://picsum.photos/seed/schoren/400/400",
+	},
+	{ name: "schweiz.fm", image: "https://picsum.photos/seed/schweizfm/400/400" },
+	{
+		name: "Schwyz Tourismus",
+		image: "https://picsum.photos/seed/schwyz/400/400",
+	},
+	{ name: "Seetal", image: "https://picsum.photos/seed/seetal/400/400" },
+	{
+		name: "Stadtcasino Basel",
+		image: "https://picsum.photos/seed/stadtcasino/400/400",
+	},
+	{ name: "Stocker", image: "https://picsum.photos/seed/stocker/400/400" },
+	{
+		name: "Swiss Olympic",
+		image: "https://picsum.photos/seed/swissolympic/400/400",
+	},
+	{ name: "Swiss Ski", image: "https://picsum.photos/seed/swisski/400/400" },
+	{ name: "Tellco", image: "https://picsum.photos/seed/tellco/400/400" },
+	{ name: "Toni", image: "https://picsum.photos/seed/toni/400/400" },
+	{ name: "Vitromed", image: "https://picsum.photos/seed/vitromed/400/400" },
+	{
+		name: "Wellness Clinic",
+		image: "https://picsum.photos/seed/wellness/400/400",
+	},
+	{
+		name: "Wildenstein Media",
+		image: "https://picsum.photos/seed/wildenstein/400/400",
+	},
+	{
+		name: "Wirtschaft Luzern",
+		image: "https://picsum.photos/seed/wirtschaft/400/400",
+	},
+	{ name: "WIRZ", image: "https://picsum.photos/seed/wirz/400/400" },
+	{
+		name: "World Wilderness Congress",
+		image: "https://picsum.photos/seed/wwc/400/400",
+	},
+	{ name: "Zürcher Kantonalbank", image: "https://picsum.photos/seed/zkb/400/400" },
+];
+
+export const contactFormOptions: string[] = [
+	"Web Design",
+	"Logo / Branding",
+	"Define Purpose",
+	"Strategy",
+	"Content",
+	"UX Design",
+	"Packaging",
+	"Editorial",
+	"Illustrations",
+	"Other",
+];
+
+export const mapConfig: MapConfig = {
+	longitude: -149.8936,
+	latitude: 61.2155,
+	zoom: 12,
+};
+
+export const logoSize: LogoSize = {
+	width: 64,
+	height: 64,
+};
+
+export const transitionWords: string[] = [
+	"Studio",
+	"Collective",
+	"Atelier",
+	"Works",
+	"Lab",
+];
 
 export * from "./types";

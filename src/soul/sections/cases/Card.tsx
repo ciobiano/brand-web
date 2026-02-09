@@ -26,7 +26,6 @@ export default function Card({ project }: CardProps) {
 				data-cursor="casestudy"
 				data-cursor-text="CASE STUDY"
 			>
-				{/* ── White circle — oversized, clips the product image ── */}
 				<div
 					className="absolute rounded-full bg-white overflow-hidden w-[90%] aspect-square left-[5%] top-[5%] "
 
@@ -41,7 +40,6 @@ export default function Card({ project }: CardProps) {
 					/>
 				</div>
 
-				{/* ── Title + tag badges — top left, over orange ── */}
 				<div className="absolute top-5 left-5 z-10 flex flex-col gap-3">
 					<h2 className="text-[1.75rem] font-normal text-black leading-tight">
 						{title}
@@ -55,8 +53,6 @@ export default function Card({ project }: CardProps) {
 					</div>
 				</div>
 
-				{/* ── CTA circle — center sits on the white circle's top edge ── */}
-				{/* <div
 					className="absolute left-1/2 z-20"
 					style={{
 						top: "10%",
@@ -73,7 +69,6 @@ export default function Card({ project }: CardProps) {
 					</a>
 				</div> */}
 
-				{/* ── Fade overlay — driven by GSAP on scroll ── */}
 				<div className="absolute inset-0 bg-black opacity-0 will-change-opacity pointer-events-none z-30" />
 			</div>
 		</div>

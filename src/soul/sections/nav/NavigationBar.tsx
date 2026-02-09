@@ -16,12 +16,10 @@ export default function NavigationBar({ isOpen, toggleMenu, navItems }: Navigati
 	return (
 		<div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-50">
 			<div className="flex items-center h-16 pointer-events-none">
-				{/* Logo - Left */}
 				<div className="flex flex-1 items-center pointer-events-auto">
 					<Logo />
 				</div>
 
-				{/* Center Links */}
 				<div className={`flex-shrink-0 transition-opacity duration-300 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
 					<div className="hidden md:flex p-1 rounded-3xl bg-kainé-white/30 backdrop-blur-sm items-center space-x-2 pointer-events-auto">
 						{navItems.map((item) => (
@@ -32,7 +30,6 @@ export default function NavigationBar({ isOpen, toggleMenu, navItems }: Navigati
 					</div>
 				</div>
 
-				{/* Menu Button - Right */}
 				<div className="flex flex-1 justify-end pointer-events-auto">
 					<div className="flex-shrink-0">
 						<button

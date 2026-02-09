@@ -5,12 +5,34 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
+import { useTextReveal } from "@/hooks/useTextReveal";
 import { InquiryForm } from "./form";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function OutroSection() {
   const outroRef = useRef<HTMLElement>(null);
+  const formIntroRef = useRef<HTMLParagraphElement>(null);
+  const emailBriefingRef = useRef<HTMLParagraphElement>(null);
+  const closingRef = useRef<HTMLParagraphElement>(null);
+
+  useTextReveal(formIntroRef, {
+    isReady: true,
+    animateOnScroll: true,
+    start: "top 80%",
+  });
+
+  useTextReveal(emailBriefingRef, {
+    isReady: true,
+    animateOnScroll: true,
+    start: "top 80%",
+  });
+
+  useTextReveal(closingRef, {
+    isReady: true,
+    animateOnScroll: true,
+    start: "top 80%",
+  });
 
   useGSAP(
     () => {
@@ -85,17 +107,17 @@ export function OutroSection() {
               </Badge>
               <h1 className="text-[56px] font-medium pb-4">Hello!</h1>
 
-              <p className="max-w-prose text-zinc-700">
+              <p ref={formIntroRef} data-body-text className="max-w-prose text-zinc-700">
                 Contact form? Yes—this makes it easier for all of us. It makes
                 your inquiry more concrete and gives us the first important
                 reference points for your project.
               </p>
-              <p className="max-w-prose text-zinc-700">
+              <p ref={emailBriefingRef} data-body-text className="max-w-prose text-zinc-700">
                 For more extensive inquiries you can also send us an{" "}
                 <a href="#" className="underline">
                   email
                 </a>
-                . We’ll also gladly provide our{" "}
+                . We'll also gladly provide our{" "}
                 <a href="#" className="underline">
                   agency briefing checklist
                 </a>
@@ -103,8 +125,8 @@ export function OutroSection() {
                 a thoughtful brief, because good briefs are the foundation for
                 good results.
               </p>
-              <p className="max-w-prose text-zinc-700">
-                Either way, we’re excited about your project and look forward to
+              <p ref={closingRef} data-body-text className="max-w-prose text-zinc-700">
+                Either way, we're excited about your project and look forward to
                 hearing more.
               </p>
             </div>

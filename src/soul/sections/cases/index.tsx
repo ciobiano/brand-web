@@ -6,6 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Card from "./Card";
 import { projectsData } from "@/data";
 import { useGSAP } from "@gsap/react";
+import { usePinDrift } from "@/hooks/usePinDrift";
+import { useTextReveal } from "@/hooks/useTextReveal";
 import Button from "../../primitives/Button";
 import Badge from "../../primitives/Badge";
 import Image from "next/image";
@@ -15,6 +17,19 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Cases() {
 	const introRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const introParaRef = useRef<HTMLParagraphElement>(null);
+
+	usePinDrift(introRef, {
+		yPercent: -15,
+		start: "20% top",
+		containerRef,
+	});
+
+	useTextReveal(introParaRef, {
+		isReady: true,
+		animateOnScroll: true,
+		start: "top 80%",
+	});
 
 	useGSAP(
 		() => {
@@ -51,10 +66,7 @@ export default function Cases() {
 				tl.to(
 					cardEl,
 					{
-						paddingTop: "30rem",
-						paddingBottom: "30rem",
-						paddingLeft: "30rem",
-						paddingRight: "30rem",
+						scale: 0.7,
 						duration: 1,
 						ease: "none",
 					},
@@ -72,26 +84,6 @@ export default function Cases() {
 				);
 			});
 
-
-			// Pin the intro section and add subtle movement
-			const pinTl = gsap.timeline({
-				scrollTrigger: {
-					trigger: intro,
-					start: "20% top",
-					end: () => `+=${container.offsetHeight}`,
-					pin: true,
-					pinSpacing: false,
-					scrub: true,
-				},
-			});
-
-			// Add subtle upward movement while pinned
-			pinTl.to(intro, {
-				yPercent: -15,
-				ease: "none",
-			});
-
-			// Padding animation
 			const introTl = gsap.timeline({
 				scrollTrigger: {
 					trigger: intro,
@@ -128,11 +120,10 @@ export default function Cases() {
 								Hello! We are kainé, your agency in Lucerne focused on branding, purpose, and websites with impact.
 							</h1>
 						</div>
-						{/* Description and button */}
 						<div className="grid gap-4 grid-rows-[auto_auto] grid-cols-2 auto-cols-fr">
 							<div className="col-span-1" />
 							<div className="max-w-md space-y-8">
-								<p className="text-base md:text-xl text-gray-300 leading-relaxed">
+								<p ref={introParaRef} data-body-text className="text-base md:text-xl text-gray-300 leading-relaxed">
 									In your best interest, for you, for your customers, and last but not least for us, we do everything to ensure our work makes sense.
 								</p>
 								<div>
@@ -162,7 +153,7 @@ export default function Cases() {
 					</div>
 				</div>
 
-				{projectsData.map((project) => (
+				{projectsData.slice(1, 5).map((project) => (
 					<Card
 						key={project.id}
 						project={project}

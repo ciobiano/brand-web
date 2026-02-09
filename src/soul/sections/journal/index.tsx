@@ -17,6 +17,8 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePinDrift } from "@/hooks/usePinDrift";
+import { useTextReveal } from "@/hooks/useTextReveal";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,38 +27,27 @@ const JournalSection = () => {
 
 	const introRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const whyKaineParaRef = useRef<HTMLParagraphElement>(null);
+	const whyYouParaRef = useRef<HTMLParagraphElement>(null);
 
+	usePinDrift(introRef, {
+		yPercent: -15,
+		start: "50% top",
+		containerRef,
+	});
 
+	useTextReveal(whyKaineParaRef, {
+		isReady: true,
+		animateOnScroll: true,
+		start: "top 75%",
+		stagger: 0.18,
+	});
 
-	useGSAP(
-		() => {
-			const intro = introRef.current;
-			if (!intro) return;
-
-			const container = containerRef.current;
-			if (!container) return;
-
-
-			const pinTl = gsap.timeline({
-				scrollTrigger: {
-					trigger: intro,
-					start: "50% top",
-					end: () => `+=${container.offsetHeight}`,
-					pin: true,
-					pinSpacing: false,
-					scrub: true,
-				},
-			});
-
-			// Add subtle upward movement while pinned
-			pinTl.to(intro, {
-				yPercent: -15,
-				ease: "none",
-			});
-
-		},
-		{ scope: containerRef, dependencies: [journalEntries.length] }
-	);
+	useTextReveal(whyYouParaRef, {
+		isReady: true,
+		animateOnScroll: true,
+		start: "top 80%",
+	});
 	return (
 
 		<>
@@ -74,7 +65,7 @@ const JournalSection = () => {
 						</Badge>
 
 						<div className="max-w-5xl mb-12">
-							<p className="text-2xl md:text-6xl leading-relaxed font-light">
+							<p ref={whyKaineParaRef} data-body-text className="text-2xl md:text-6xl leading-relaxed font-light">
 								We&apos;re interested in your idea, your brand, your thing. We connect your company with the people who identify with the values and attitude of your brand.
 							</p>
 						</div>
@@ -105,7 +96,7 @@ const JournalSection = () => {
 						</Badge>
 
 						<div className="max-w-md mb-12">
-							<p className="text-base md:text-xl leading-relaxed font-light">
+							<p ref={whyYouParaRef} data-body-text className="text-base md:text-xl leading-relaxed font-light">
 								You do your thing. You love it and would like to tell the whole
 								world about it. Great! Your passion is contagious. Tell us more
 								about your passion project

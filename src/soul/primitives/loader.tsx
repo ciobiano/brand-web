@@ -1,4 +1,3 @@
-// components/PageLoader.tsx
 "use client";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -26,33 +25,27 @@ export default function PageLoader({
 				},
 			});
 
-			// Initial state
 			gsap.set(loaderRef.current, { yPercent: 0 });
 			gsap.set(messageRef.current, { opacity: 0 });
 
-			// Animate in message
 			tl.to(messageRef.current, {
 				opacity: 1,
 				duration: 0.3,
 				ease: "power2.out",
 			});
 
-			// Expose animateOut function
 			(window as any).animatePageOut = (msg?: string) => {
 				tl.clear();
 
-				// Update message if provided
 				if (messageRef.current && msg) {
 					messageRef.current.textContent = msg;
 				}
 
-				// Animate out message
 				tl.to(messageRef.current, {
 					opacity: 0,
 					duration: 0.2,
 					ease: "power2.in",
 				})
-					// Animate curtain out
 					.to(
 						loaderRef.current,
 						{

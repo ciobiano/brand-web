@@ -1,88 +1,29 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 
 import { projectTags, projectsData, ProjectTag } from "@/data";
 import ProjectCard from "./_components/cards";
-import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { SplitText } from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePageAnimationReady } from "@/soul/primitives/page-transition";
+import { useHeadingCharAnimation } from "@/hooks/useHeadingCharAnimation";
+import { usePageIntroAnimation } from "@/hooks/usePageIntroAnimation";
 import Button from "@/soul/primitives/Button";
 import Badge from "@/soul/primitives/Badge";
 
-gsap.registerPlugin(SplitText, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 type FilterTag = (typeof projectTags)[number];
 
 const isProjectTag = (tag: FilterTag): tag is ProjectTag => tag !== "Show all";
 
-const animationSelectors = {
-	heroHeading: "[data-projects-hero-heading]",
-	heroCopy: "[data-projects-hero-copy]",
-	filters: "[data-projects-filters]",
-	cards: "[data-projects-cards] > *",
-} as const;
-
-const animationDefaults = { duration: 0.6, ease: "power3.out" } as const;
-
-function useProjectsIntroAnimation(scope: RefObject<HTMLDivElement>) {
-	useGSAP(
-		() => {
-			if (!scope.current) return;
-
-			const context = gsap.context((self) => {
-				const headingEl = document.querySelector(animationSelectors.heroHeading);
-				let split: SplitText | null = null;
-
-				if (headingEl) {
-					split = new SplitText(headingEl as HTMLElement, {
-						type: "chars",
-						tagName: "span",
-					});
-					gsap.set(split.chars, { autoAlpha: 0, yPercent: 110 });
-				}
-
-				gsap.set(animationSelectors.filters, { autoAlpha: 0, y: 60 });
-				gsap.set(animationSelectors.cards, { autoAlpha: 0, y: 90 });
-				gsap.set(animationSelectors.heroCopy, { autoAlpha: 0, y: 50 });
-
-				const tl = gsap.timeline({ defaults: animationDefaults });
-
-				tl
-					.to(animationSelectors.filters, { autoAlpha: 1, y: 0 })
-					.to(
-						animationSelectors.cards,
-						{ autoAlpha: 1, y: 0, stagger: 0.1 },
-						"-=0.3"
-					)
-					.to(animationSelectors.heroCopy, { autoAlpha: 1, y: 0 }, "-=0.25");
-
-				if (split) {
-					tl.to(split.chars, {
-						autoAlpha: 1,
-						yPercent: 0,
-						stagger: 0.04,
-						duration: 0.5,
-						ease: "power4.out",
-					}, "+=0.2");
-				}
-
-				self.add(() => {
-					split?.revert();
-				});
-			}, scope);
-
-			return () => context.revert();
-		},
-		{ dependencies: [scope] }
-	);
-}
-
 export default function ProjectsPage() {
 	const [activeTag, setActiveTag] = useState<FilterTag>("Show all");
 	const pageRef = useRef<HTMLDivElement>(null);
+	const headingRef = useRef<HTMLHeadingElement>(null);
+	const isPageReady = usePageAnimationReady();
 
 	const tagsToRender = useMemo(() => {
 		const available = new Set<ProjectTag>();
@@ -102,7 +43,12 @@ export default function ProjectsPage() {
 
 	const hasProjects = filteredProjects.length > 0;
 
-	useProjectsIntroAnimation(pageRef);
+	usePageIntroAnimation(pageRef, isPageReady, {
+		bodyText: "[data-body-text]",
+		filters: "[data-projects-filters]",
+		cards: "[data-projects-cards] > *",
+	});
+	useHeadingCharAnimation(headingRef, isPageReady, { delay: 0.1 });
 
 	useEffect(() => {
 		ScrollTrigger.refresh();
@@ -116,14 +62,16 @@ export default function ProjectsPage() {
 			>
 				<section className="grid gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
 					<h1
+						ref={headingRef}
 						data-projects-hero-heading
 						className="text-[clamp(4.5rem,16vw,14rem)] font-medium  leading-[0.85] tracking-tight lg:col-span-2"
+						style={{ perspective: "1000px" }}
 					>
 						Projects
 					</h1>
 					<span aria-hidden className="hidden lg:block" />
 					<p
-						data-projects-hero-copy
+						data-body-text
 						className="text-base sm:text-lg lg:text-2xl text-neutral-600 md:mt-10 lg:col-start-2 lg:max-w-2xl lg:justify-self-start"
 					>
 						Creativity is not an end in itself for us, but an essential prerequisite for our work. We love what we do, and so projects with our clients become matters of the heart.

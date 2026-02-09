@@ -5,6 +5,10 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { usePageAnimationReady } from "@/soul/primitives/page-transition";
+import { useHeadingCharAnimation } from "@/hooks/useHeadingCharAnimation";
+import { useTextReveal } from "@/hooks/useTextReveal";
+import Button from "@/soul/primitives/Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,120 +16,91 @@ export default function AgencyHero() {
 	const rootRef = useRef<HTMLElement | null>(null);
 	const heroTitleRef = useRef<HTMLHeadingElement | null>(null);
 	const visualRef = useRef<HTMLDivElement | null>(null);
+	const introPara1Ref = useRef<HTMLParagraphElement | null>(null);
+	const introPara2Ref = useRef<HTMLParagraphElement | null>(null);
+	const bannerParaRef = useRef<HTMLParagraphElement | null>(null);
+
+	const isPageReady = usePageAnimationReady();
+
+	useHeadingCharAnimation(heroTitleRef, isPageReady, { delay: 0.1 });
+
+	useTextReveal(introPara1Ref, {
+		isReady: isPageReady,
+		delay: 0.3,
+		stagger: 0.12,
+	});
+
+	useTextReveal(introPara2Ref, {
+		isReady: isPageReady,
+		delay: 0.5,
+		stagger: 0.12,
+	});
+
+	useTextReveal(bannerParaRef, {
+		isReady: isPageReady,
+		animateOnScroll: true,
+		start: "top 75%",
+	});
 
 	useGSAP(
 		() => {
+			if (!isPageReady) return;
+
 			const ctx = gsap.context(() => {
-				// 1. Title Animation (Split Text) - Starts hidden via opacity-0 class
-				if (heroTitleRef.current) {
-					const title = heroTitleRef.current;
-					const text = title.textContent || "";
-					title.innerHTML = "";
+				const tl = gsap.timeline();
 
-					// Split text into chars
-					text.split("").forEach((char) => {
-						const span = document.createElement("span");
-						span.textContent = char === " " ? "\u00A0" : char;
-						span.style.display = "inline-block";
-						span.style.willChange = "transform, opacity";
-						span.setAttribute("data-char", "");
-						title.appendChild(span);
-					});
-
-					// Animate chars in
-					gsap.fromTo("[data-char]",
-						{
-							yPercent: 120,
-							opacity: 0,
-							rotateX: -90
-						},
-						{
-							yPercent: 0,
-							opacity: 1,
-							rotateX: 0,
-							duration: 1.2,
-							ease: "power4.out",
-							stagger: 0.03,
-							delay: 0.2, // Wait for overlay to start sliding
-						}
-					);
-				}
-
-				// 2. Visual Element Entrance
-				gsap.fromTo(visualRef.current,
+				tl.fromTo(visualRef.current,
 					{ opacity: 0, scale: 0.8, y: 50 },
 					{
 						opacity: 1,
 						scale: 1,
 						y: 0,
-						duration: 1.4,
-						ease: "power3.out",
-						delay: 0.4
-					}
-				);
-
-				// 3. Intro Text Reveal ("We are digital by nature...")
-				gsap.fromTo("[data-intro-text]",
-					{ opacity: 0, y: 40 },
-					{
-						opacity: 1,
-						y: 0,
 						duration: 1,
 						ease: "power3.out",
-						delay: 0.6,
-						stagger: 0.1
+					},
+					0
+				);
+
+				gsap.fromTo("[data-team-banner-wrapper]",
+					{ clipPath: "inset(0% 5% 0% 5% round 2rem 2rem 0 0)" },
+					{
+						clipPath: "inset(0% 0% 0% 0% round 2rem 2rem 0 0)",
+						ease: "power2.inOut",
+						scrollTrigger: {
+							trigger: "[data-team-banner-wrapper]",
+							start: "top 90%",
+							end: "top 50%",
+							scrub: 1,
+						}
 					}
 				);
 
-				// 4. Team Banner Parallax & Expansion
-				// We create a timeline to handle multiple animations on the banner simultaneously
-				const bannerTimeline = gsap.timeline({
-					scrollTrigger: {
-						trigger: "[data-team-banner-wrapper]",
-						start: "top 90%", // Start expanding when the top of the wrapper hits 90% of the viewport height
-						end: "bottom bottom", // Finish when the bottom hits the bottom
-						scrub: 1, // Smooth scrubbing effect linked to scroll position
-					}
+				ScrollTrigger.create({
+					trigger: "[data-team-banner-wrapper]",
+					start: "center 20%",
+					end: "+=100%",
+					pin: true,
+					pinSpacing: false,
 				});
 
-				// Animation 1: Expand width (using clip-path for performance)
-				// Initial state (set in CSS or fromTo): inset(0% 5% 0% 5% round 2rem) creates the padding/rounded look
-				bannerTimeline.fromTo("[data-team-banner-wrapper]",
-					{
-						clipPath: "inset(0% 5% 0% 5% round 2rem)",
-					},
-					{
-						clipPath: "inset(0% 0% 0% 0% round 0rem)",
-						ease: "power2.inOut", // Smooth easing for the expansion
-					},
-					0 // Start at time 0
-				);
-
-				// Animation 2: Parallax effect on the image itself
-				// Moves the image slightly slower than the scroll to create depth
-				bannerTimeline.fromTo("[data-team-banner]",
-					{ yPercent: -10, scale: 1.1 }, // Start zoomed in slightly
-					{
-						yPercent: 10,
-						scale: 1,
-						ease: "none",
-					},
-					0 // Sync with expansion
-				);
+				gsap.to("[data-marquee-track]", {
+					xPercent: -50,
+					duration: 15,
+					ease: "none",
+					repeat: -1,
+				});
 
 			}, rootRef);
 
 			return () => ctx.revert();
 		},
-		{ scope: rootRef }
+		{ scope: rootRef, dependencies: [isPageReady] }
 	);
 
 	return (
-		<main ref={rootRef} className="flex flex-col bg-kainé-white min-h-screen pt-24 sm:pt-24 pb-20">
-			{/* Top Section: Title Left, Visual Right */}
+		<main ref={rootRef} className="flex flex-col gap-20 bg-kainé-white pt-24 sm:pt-24 pb-20">
 			<section className="px-6 lg:px-12 mb-32">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-					{/* Left: Huge Title */}
 					<div className="relative z-10">
 						<h1
 							ref={heroTitleRef}
@@ -136,12 +111,10 @@ export default function AgencyHero() {
 						</h1>
 					</div>
 
-					{/* Right: Visual Element (Placeholder for Pink Rabbit) */}
 					<div
 						ref={visualRef}
 						className="relative w-full mt-20 aspect-square  max-w-[250px] mx-auto lg:ml-auto lg:mr-30 opacity-0"
 					>
-						{/* Placeholder Visual - A styled abstract shape */}
 						<div className="w-full h-[400px] shadow-2xl flex items-center justify-center transform  hover:rotate-6 transition-transform duration-500">
 							<Image
 								src="/assets/agency-art.JPG"
@@ -155,40 +128,57 @@ export default function AgencyHero() {
 				</div>
 			</section>
 
-			{/* Middle Section: Intro Text */}
-			<section className="px-4 lg:px-6 mb-32 max-w-[100rem] mx-auto">
+			<section className="px-6 lg:px-12 mb-40 gap-20 flex flex-col  ">
 				<p
-					data-intro-text
-					className="text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.2]  text-neutral-500 font-light  text-center lg:text-left opacity-0"
+					ref={introPara1Ref}
+					data-body-text
+					className="text-[clamp(1.8rem,3.5vw,1.5rem)] leading-[1.2] max-w-4xl  text-kainé-black font-light  text-center lg:text-left"
 				>
 					We are digital by nature. We create real connections between brands and people.
 					Unique and authentic connections, the kind that transcend the screen.
 					The kind that become experiences that transform and endure.
 				</p>
 				<p
-					data-intro-text
-					className="mt-8 text-xl sm:text-2xl text-neutral-500 max-w-4xl text-center lg:text-left opacity-0"
+					ref={introPara2Ref}
+					data-body-text
+					className="mt-8 text-xl sm:text-2xl text-kainé-black max-w-2xl md:ml-auto text-center lg:text-left"
 				>
 					Because we know that behind every project there are stories, desires and goals that deserve to come true.
 				</p>
 			</section>
 
-		
+
 			<section
 				data-team-banner-wrapper
-				className="relative w-full h-[60vh] sm:h-[80vh] overflow-hidden will-change-[clip-path]"
+				className="relative w-full h-[60vh] sm:h-[80vh] overflow-hidden will-change-[clip-path] bg-kainé-black"
 			>
-				<div
-					data-team-banner
-					className="relative w-full h-[120%] -mt-[10%]"
-				>
-					<Image
-						src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2940&auto=format&fit=crop"
-						alt="Agency Team"
-						fill
-						className="object-cover"
-						priority
-					/>
+				<div className="relative w-full h-full mt-28">
+					<div className="flex flex-col w-full h-full mt-20 gap-24">
+						<div className="w-full overflow-hidden whitespace-nowrap">
+							<div data-marquee-track className="inline-flex gap-8 will-change-transform text-kainé-white">
+								<span className="text-4xl md:text-[clamp(15rem,10vw,10rem)] font-medium md:leading-[130%]">
+									Create. Build. Launch.
+								</span>
+								<span className="text-4xl md:text-[clamp(15rem,10vw,10rem)] font-medium md:leading-[130%]">
+									Create. Build. Launch.
+								</span>
+							</div>
+						</div>
+						<div className="grid gap-4 grid-rows-[auto_auto] grid-cols-2 auto-cols-fr">
+							<div className="col-span-1" />
+							<div className="max-w-md space-y-8">
+								<p ref={bannerParaRef} data-body-text className=" md:text-2xl text-gray-300 leading-relaxed ">
+									In your best interest, for you, for your customers, and last but not least for us, we do everything to ensure our work makes sense.
+								</p>
+								<div>
+									<Button variant="secondary" size="lg" href="/purpose">
+										our purpose
+									</Button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div className="absolute inset-0 bg-black/10" />
 				</div>
 			</section>

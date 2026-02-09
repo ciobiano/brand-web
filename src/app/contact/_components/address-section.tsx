@@ -8,19 +8,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
+import { usePageAnimationReady } from "@/soul/primitives/page-transition";
+import { useHeadingCharAnimation } from "@/hooks/useHeadingCharAnimation";
+import { useTextReveal } from "@/hooks/useTextReveal";
+import { mapConfig, logoSize } from "@/data";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const MAP_CONFIG = {
-  longitude: -149.8936,
-  latitude: 61.2155,
-  zoom: 12,
-} as const;
-
-const LOGO_SIZES = {
-  width: 64,
-  height: 64,
-} as const;
 
 const VISUAL_BLOCK_CLASS =
   "mt-10 w-full h-full max-w-[1220px] min-h-[709px] rounded-xl border border-zinc-800";
@@ -29,6 +22,38 @@ export function AddressSection() {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const logoSrc = "/images/www.kainé.ch_.png";
   const containerRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const addressRef = useRef<HTMLParagraphElement>(null);
+  const addressDescRef = useRef<HTMLParagraphElement>(null);
+  const contactIntroRef = useRef<HTMLParagraphElement>(null);
+  const contactDetailsRef = useRef<HTMLParagraphElement>(null);
+  const isPageReady = usePageAnimationReady();
+
+  useHeadingCharAnimation(headingRef, isPageReady, { stagger: 0.05 });
+
+  useTextReveal(addressRef, {
+    isReady: isPageReady,
+    animateOnScroll: true,
+    start: "top 70%",
+  });
+
+  useTextReveal(addressDescRef, {
+    isReady: isPageReady,
+    animateOnScroll: true,
+    start: "top 75%",
+  });
+
+  useTextReveal(contactIntroRef, {
+    isReady: isPageReady,
+    animateOnScroll: true,
+    start: "top 75%",
+  });
+
+  useTextReveal(contactDetailsRef, {
+    isReady: isPageReady,
+    animateOnScroll: true,
+    start: "top 75%",
+  });
 
   useGSAP(
     () => {
@@ -52,7 +77,6 @@ export function AddressSection() {
         pinSpacing: false,
         start: "top 25%",
         end: "bottom 50%",
-
       });
 
       gsap.to(largeChild, {
@@ -64,10 +88,8 @@ export function AddressSection() {
           start: "top 30%",
           end: "bottom 50%",
           scrub: 1,
-
         },
       });
-
 
       ScrollTrigger.create({
         trigger: container,
@@ -75,9 +97,7 @@ export function AddressSection() {
         pinSpacing: false,
         start: "bottom 40%",
         end: "+=100%",
-
       });
-
 
       gsap.to(section, {
         y: -100,
@@ -87,7 +107,6 @@ export function AddressSection() {
           start: "top bottom",
           end: "bottom top",
           scrub: 1,
-
         },
       });
     },
@@ -98,7 +117,7 @@ export function AddressSection() {
     <div ref={containerRef} data-cursor-invert>
       <section className="flex flex-col text-kainé-white bg-kainé-black  -mt-14 pt-16">
         <div className="px-4 sm:px-6 lg:px-8">
-          <h1 className="text-[223px] ">Hello!</h1>
+          <h1 ref={headingRef} className="text-[223px]" style={{ perspective: "1000px" }}>Hello!</h1>
         </div>
 
         <div className="vertical-section w-full flex px-4 ">
@@ -112,10 +131,10 @@ export function AddressSection() {
                 Address
               </Badge>
             </span>
-            <p className="text-3xl font-medium leading-10">
+            <p ref={addressRef} data-body-text className="text-3xl font-medium leading-10">
               413 West Fireweed Ln, Anchorage, Alaska
             </p>
-            <p className="text-lg text-gray-500">
+            <p ref={addressDescRef} data-body-text className="text-lg text-gray-500">
               Whoever searches will find. If you&apos;re reading this, you
               don&apos;t need to search and you&apos;ll find us right in the
               courtyard, to the left of the Parterre restaurant.
@@ -125,7 +144,6 @@ export function AddressSection() {
           <div className="py-10"></div>
           <div className="w-full flex flex-col large-child">
             <div className="w-full flex flex-col items-center p-8 gap-10">
-              {/* Contact info */}
               <div className="flex flex-col gap-8 w-full max-w-md">
                 <span>
                   <Badge
@@ -136,26 +154,25 @@ export function AddressSection() {
                     Contact
                   </Badge>
                 </span>
-                <p className="text-3xl mb-4 leading-10">
+                <p ref={contactIntroRef} data-body-text className="text-3xl mb-4 leading-10">
                   Whoever searches will find. If you&apos;re reading this, you
                   don&apos;t need to search
                 </p>
-                <p className="text-3xl flex flex-col gap-4">
+                <p ref={contactDetailsRef} data-body-text className="text-3xl flex flex-col gap-4">
                   Hello.kaine@outlook.com
                   <span>+2349038432630</span>
                 </p>
               </div>
 
-              {/* Map */}
               <div className={VISUAL_BLOCK_CLASS} >
                 {mapboxToken ? (
                   <Map
                     mapboxAccessToken={mapboxToken}
                     mapStyle="mapbox://styles/mapbox/dark-v11"
                     initialViewState={{
-                      longitude: MAP_CONFIG.longitude,
-                      latitude: MAP_CONFIG.latitude,
-                      zoom: MAP_CONFIG.zoom,
+                      longitude: mapConfig.longitude,
+                      latitude: mapConfig.latitude,
+                      zoom: mapConfig.zoom,
                     }}
                     style={{ width: "100%", height: "100%" }}
                     attributionControl={false}
@@ -169,14 +186,14 @@ export function AddressSection() {
                     touchZoomRotate={false}
                   >
                     <Marker
-                      longitude={MAP_CONFIG.longitude}
-                      latitude={MAP_CONFIG.latitude}
+                      longitude={mapConfig.longitude}
+                      latitude={mapConfig.latitude}
                       anchor="bottom"
                     >
                       <div
                         style={{
-                          width: LOGO_SIZES.width,
-                          height: LOGO_SIZES.height,
+                          width: logoSize.width,
+                          height: logoSize.height,
                           backgroundImage: `url(${logoSrc})`,
                           backgroundSize: "contain",
                           backgroundRepeat: "no-repeat",
@@ -195,7 +212,6 @@ export function AddressSection() {
                 )}
               </div>
 
-              {/* Last image */}
               <div className={`${VISUAL_BLOCK_CLASS} relative`}>
                 <Image
                   src="/images/placeholder1.jpg"

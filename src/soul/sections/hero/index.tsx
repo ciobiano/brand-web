@@ -7,79 +7,80 @@ import { useInteractiveCanvas } from "@/hooks/useInteractiveCanvas";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/all";
+import { usePageAnimationReady } from "@/soul/primitives/page-transition";
 
 type HeroProps = {
 	title?: string;
-	subtitle?: string;
 	cta_text?: string;
-	cta_link?: string;
 };
 gsap.registerPlugin(SplitText);
 
 const Hero: React.FC<HeroProps> = ({
 	title = "Kainé",
 	cta_text = "Scroll",
-	cta_link = "#",
 }) => {
 	const titleRef = useRef<HTMLHeadingElement>(null);
 	const heroRef = useRef<HTMLDivElement>(null);
 
-	// Initialize interactive canvas with BLAZING FAST movement matching kainé.ch 53fps speed
+	const isPageReady = usePageAnimationReady();
+
 	useInteractiveCanvas(heroRef, {
-		intensity: 500, // EXTREME intensity for blistering speed
-		maxDistance: 800, // Full screen magnetic field
-		animationDuration: 0.4, // MEDIUM SPEED - 400ms response time
-		ease: "none", // Zero easing for instant snap
+		intensity: 500,
+		maxDistance: 800,
+		animationDuration: 0.4,
+		ease: "none",
 	});
 
 	useGSAP(
 		() => {
-			if (titleRef.current) {
-				const tl = gsap.timeline();
+			if (!isPageReady) return;
+			if (!titleRef.current || !heroRef.current) return;
 
-				const typeSplit = new SplitText(titleRef.current, {
-					type: "chars",
-					tagName: "span",
-					mask: "chars",
-				});
+			const tl = gsap.timeline();
 
-				tl.from(
-					typeSplit.chars,
-					{
-						autoAlpha: 0,
-						yPercent: 100,
-						duration: 0.5,
-						rotation: -30,
-						ease: "power4.out",
-						stagger: { each: 0.025 },
+			const typeSplit = new SplitText(titleRef.current, {
+				type: "chars",
+				tagName: "span",
+			});
+
+			tl.from(
+				typeSplit.chars,
+				{
+					autoAlpha: 0,
+					yPercent: 100,
+					duration: 0.5,
+					rotation: -30,
+					ease: "power4.out",
+					stagger: { each: 0.025 },
+				},
+				0.2
+			);
+
+			const cards = heroRef.current.querySelectorAll(".canvas-card");
+			tl.from(
+				cards,
+				{
+					duration: 0.5,
+					scale: 0.5,
+					opacity: 0,
+					ease: "back.out",
+					stagger: {
+						from: "random",
+						amount: 1,
 					},
-					0.75
-				);
+				},
+				0.1
+			);
 
-				tl.from(
-					".canvas-card",
-					{
-						duration: 0.5,
-						scale: 0.5,
-						opacity: 0,
-						ease: "back.out",
-						stagger: {
-							from: "random",
-							amount: 1,
-						},
-					},
-					0.5
-				);
-			}
+			return () => {
+				typeSplit.revert();
+			};
 		},
-		{ scope: heroRef }
+		{ dependencies: [isPageReady] }
 	);
 
 	return (
 		<main className="w-full  min-h-screen">
-			{/* Custom black dot cursor */}
-			<div className="custom-cursor"></div>
-
 			<div className="relative w-full h-svh  ">
 
 				<div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">

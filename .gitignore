@@ -34,3 +34,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Agent files
+.cursor/
+.agents/
+.codex/
+.opencode/
+.vscode/
+claude.md

@@ -13,6 +13,9 @@ interface UseInteractiveCanvasOptions {
 	ease?: string;
 }
 
+const FORCE_MULTIPLIER = 4;
+const CENTER_DIVISOR = 2;
+
 const DEFAULT_OPTIONS: Required<UseInteractiveCanvasOptions> = {
 	intensity: 300,
 	maxDistance: 800,
@@ -21,7 +24,7 @@ const DEFAULT_OPTIONS: Required<UseInteractiveCanvasOptions> = {
 };
 
 export const useInteractiveCanvas = (
-	containerRef: React.RefObject<HTMLElement>,
+	containerRef: React.RefObject<HTMLElement | null>,
 	options: UseInteractiveCanvasOptions = {}
 ) => {
 	const config = { ...DEFAULT_OPTIONS, ...options };
@@ -31,7 +34,6 @@ export const useInteractiveCanvas = (
 	});
 	const [isActive, setIsActive] = useState(false);
 
-	// Memoized movement calculation
 	const calculateMovement = useCallback(
 		(
 			mouseX: number,
@@ -39,13 +41,13 @@ export const useInteractiveCanvas = (
 			containerWidth: number,
 			containerHeight: number
 		) => {
-			const centerX = containerWidth / 2;
-			const centerY = containerHeight / 2;
+			const centerX = containerWidth / CENTER_DIVISOR;
+			const centerY = containerHeight / CENTER_DIVISOR;
 
 			const offsetX = mouseX - centerX;
 			const offsetY = mouseY - centerY;
 
-			const force = config.intensity * 4;
+			const force = config.intensity * FORCE_MULTIPLIER;
 
 			return {
 				x: -(offsetX / containerWidth) * force,
@@ -55,7 +57,6 @@ export const useInteractiveCanvas = (
 		[config.intensity]
 	);
 
-	// Memoized animation config
 	const animationConfig = useMemo(
 		() => ({
 			duration: config.animationDuration,
@@ -65,7 +66,6 @@ export const useInteractiveCanvas = (
 		[config.animationDuration, config.ease]
 	);
 
-	// Apply movement to all cards
 	useEffect(() => {
 		if (!isActive || !containerRef.current) return;
 
@@ -80,6 +80,7 @@ export const useInteractiveCanvas = (
 			containerRect.height
 		);
 
+		// overwrite: "auto" handles killing previous tweens automatically
 		cards.forEach((card) => {
 			gsap.to(card, {
 				x: movement.x,
@@ -95,7 +96,6 @@ export const useInteractiveCanvas = (
 		animationConfig,
 	]);
 
-	// Mouse event handlers
 	useEffect(() => {
 		const container = containerRef.current;
 		if (!container) return;

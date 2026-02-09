@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={`${inter.variable} `}>
-			<body className={`${inter.className} font-athletics `}>
+			<body className={`${inter.className} font-athletics  `}>
 				<Providers>
 					<CustomCursor />
 					<Navigation />

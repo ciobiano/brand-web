@@ -31,7 +31,6 @@ export default function DesktopNavMenu({ navItems, handleNavClick }: DesktopNavM
 									imageOnRight ? 'mr-40' : 'ml-40'
 								}`}
 							>
-								{/* Circular Image - Left */}
 								{!imageOnRight && (
 									<div className="relative w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
 										<Image
@@ -43,12 +42,10 @@ export default function DesktopNavMenu({ navItems, handleNavClick }: DesktopNavM
 									</div>
 								)}
 
-								{/* Text */}
 								<span className="text-6xl md:text-7xl lg:text-[7.5vw] font-light tracking-tight text-[#d6d6d6d4] group-hover:text-white transition-colors">
 									{item.name}
 								</span>
 
-								{/* Circular Image - Right */}
 								{imageOnRight && (
 									<div className="relative w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
 										<Image
@@ -61,7 +58,6 @@ export default function DesktopNavMenu({ navItems, handleNavClick }: DesktopNavM
 								)}
 							</Link>
 
-							{/* Full-width border */}
 							<div className="absolute bottom-0 left-0 right-0 h-px bg-white/10"></div>
 						</div>
 					);

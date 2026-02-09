@@ -1,93 +1,29 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { journalEntries, journalTags, JournalTag } from "@/data";
 import JournalEntryCard from "./_components/entry-card";
-import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { SplitText } from "gsap/all";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePageAnimationReady } from "@/soul/primitives/page-transition";
+import { useHeadingCharAnimation } from "@/hooks/useHeadingCharAnimation";
+import { usePageIntroAnimation } from "@/hooks/usePageIntroAnimation";
 import Button from "@/soul/primitives/Button";
 import Badge from "@/soul/primitives/Badge";
 import clsx from "clsx";
 
-gsap.registerPlugin(SplitText, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 type FilterTag = (typeof journalTags)[number];
 
 const isJournalTag = (tag: FilterTag): tag is JournalTag => tag !== "Show all";
 
-const animationSelectors = {
-	heroHeading: "[data-journal-hero-heading]",
-	heroCopy: "[data-journal-hero-copy]",
-	filters: "[data-journal-filters]",
-	cards: "[data-journal-cards] > *",
-} as const;
-
-const animationDefaults = { duration: 0.6, ease: "power3.out" } as const;
-
-function useJournalIntroAnimation(scope: RefObject<HTMLDivElement>) {
-	useGSAP(
-		() => {
-			if (!scope.current) return;
-
-			const context = gsap.context((self) => {
-				const headingEl = document.querySelector(
-					animationSelectors.heroHeading
-				);
-				let split: SplitText | null = null;
-
-				if (headingEl) {
-					split = new SplitText(headingEl as HTMLElement, {
-						type: "chars",
-						tagName: "span",
-					});
-					gsap.set(split.chars, { autoAlpha: 0, yPercent: 110 });
-				}
-
-				gsap.set(animationSelectors.filters, { autoAlpha: 0, y: 60 });
-				gsap.set(animationSelectors.cards, { autoAlpha: 0, y: 90 });
-				gsap.set(animationSelectors.heroCopy, { autoAlpha: 0, y: 50 });
-
-				const tl = gsap.timeline({ defaults: animationDefaults });
-
-				tl.to(animationSelectors.filters, { autoAlpha: 1, y: 0 })
-					.to(
-						animationSelectors.cards,
-						{ autoAlpha: 1, y: 0, stagger: 0.1 },
-						"-=0.3"
-					)
-					.to(animationSelectors.heroCopy, { autoAlpha: 1, y: 0 }, "-=0.25");
-
-				if (split) {
-					tl.to(
-						split.chars,
-						{
-							autoAlpha: 1,
-							yPercent: 0,
-							stagger: 0.04,
-							duration: 0.5,
-							ease: "power4.out",
-						},
-						"+=0.2"
-					);
-				}
-
-				self.add(() => {
-					split?.revert();
-				});
-			}, scope);
-
-			return () => context.revert();
-		},
-		{ dependencies: [scope] }
-	);
-}
-
 export default function JournalPage() {
 	const [activeTag, setActiveTag] = useState<FilterTag>("Show all");
 	const pageRef = useRef<HTMLDivElement>(null);
+	const headingRef = useRef<HTMLHeadingElement>(null);
+	const isPageReady = usePageAnimationReady();
 
 	const tagsToRender = useMemo(() => {
 		const available = new Set<JournalTag>();
@@ -107,7 +43,12 @@ export default function JournalPage() {
 
 	const hasEntries = filteredEntries.length > 0;
 
-	useJournalIntroAnimation(pageRef);
+	usePageIntroAnimation(pageRef, isPageReady, {
+		bodyText: "[data-body-text]",
+		filters: "[data-journal-filters]",
+		cards: "[data-journal-cards] > *",
+	});
+	useHeadingCharAnimation(headingRef, isPageReady, { delay: 0.1 });
 
 	useEffect(() => {
 		ScrollTrigger.refresh();
@@ -121,15 +62,17 @@ export default function JournalPage() {
 			>
 				<section className="grid gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
 					<h1
+						ref={headingRef}
 						data-journal-hero-heading
 						className="text-[clamp(4.5rem,16vw,14rem)] font-medium leading-[0.85] tracking-tight lg:col-span-2"
+						style={{ perspective: "1000px" }}
 					>
 						Journal
 					</h1>
 					<span aria-hidden className="hidden lg:block" />
 					<div className="flex flex-col gap-10  ">
 						<p
-							data-journal-hero-copy
+							data-body-text
 							className="text-base text-neutral-600 sm:text-lg lg:col-start-2 lg:mt-10 lg:max-w-2xl lg:text-2xl lg:justify-self-start"
 						>
 							Stories and field notes from the studio. Strategy sprints,

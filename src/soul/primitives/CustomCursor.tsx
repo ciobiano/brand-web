@@ -26,7 +26,6 @@ export default function CustomCursor() {
     const cursorInner = cursorInnerRef.current;
     if (!cursor || !cursorInner) return;
 
-    // High-performance mouse tracking with GSAP quickSetter
     const xSet = gsap.quickSetter(cursor, 'x', 'px');
     const ySet = gsap.quickSetter(cursor, 'y', 'px');
 
@@ -38,22 +37,18 @@ export default function CustomCursor() {
       mouseY = e.clientY;
     };
 
-    // Smooth follow animation using GSAP ticker for 60fps
     const tickerCallback = () => {
       xSet(mouseX);
       ySet(mouseY);
     };
     gsap.ticker.add(tickerCallback);
 
-    // Detect hoverable elements and change cursor state
     const updateCursorState = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
 
-      // Check for inverted cursor (dark backgrounds)
       const invertedSection = target.closest('[data-cursor-invert]');
       setIsInverted(!!invertedSection);
 
-      // Priority 1: Check for custom cursor data attribute
       const customCursor = target.closest('[data-cursor]');
       if (customCursor) {
         const cursorType = customCursor.getAttribute('data-cursor') as CursorState;
@@ -63,7 +58,6 @@ export default function CustomCursor() {
         return;
       }
 
-      // Priority 2: Auto-detect common interactive elements
       if (target.closest('a, button, [role="button"]')) {
         const isButton = target.closest('button, [role="button"]');
         setCursorState(isButton ? 'button' : 'link');
@@ -83,7 +77,6 @@ export default function CustomCursor() {
       }
     };
 
-    // Cursor visibility handlers
     const handleMouseLeave = () => {
       gsap.to(cursor, { opacity: 0, duration: 0.2 });
     };
@@ -92,16 +85,13 @@ export default function CustomCursor() {
       gsap.to(cursor, { opacity: 1, duration: 0.2 });
     };
 
-    // Attach event listeners
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseover', updateCursorState);
     document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Initial fade in
     gsap.to(cursor, { opacity: 1, duration: 0.3 });
 
-    // Cleanup
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', updateCursorState);
