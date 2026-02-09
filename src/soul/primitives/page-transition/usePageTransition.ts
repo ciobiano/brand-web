@@ -26,9 +26,8 @@ export function usePageTransition() {
 	const hasRunInitialEnterRef = useRef(false);
 	const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
-	const [wordCharacters, setWordCharacters] = useState<string[]>(
-		transitionWords[0].split("")
-	);
+	const [currentWord, setCurrentWord] = useState<string>(transitionWords[0]);
+	const [wordRevealKey, setWordRevealKey] = useState(0);
 
 	const { signalReady, reset } = usePageAnimationContext();
 
@@ -36,7 +35,8 @@ export function usePageTransition() {
 		const nextIndex = (wordIndexRef.current + 1) % transitionWords.length;
 		wordIndexRef.current = nextIndex;
 		const nextWord = transitionWords[nextIndex];
-		setWordCharacters(nextWord.split(""));
+		setCurrentWord(nextWord);
+		setWordRevealKey((key) => key + 1);
 	}, []);
 
 	const runTimeline = useCallback(
@@ -91,32 +91,6 @@ export function usePageTransition() {
 					duration: TRANSITION_DURATION.OVERLAY,
 					ease: TRANSITION_EASE.OVERLAY,
 				});
-
-				const charElements = layer.querySelectorAll("[data-word-char]");
-				if (charElements.length) {
-					timeline.fromTo(
-						charElements,
-						{ yPercent: 60, opacity: 0 },
-						{
-							yPercent: 0,
-							opacity: 1,
-							duration: TRANSITION_DURATION.CHAR_ANIMATION,
-							ease: TRANSITION_EASE.CHARS,
-							stagger: TRANSITION_STAGGER.CHARS,
-						},
-						TRANSITION_TIMING.CHAR_OVERLAP
-					);
-				} else if (textEl) {
-					timeline.to(
-						textEl,
-						{
-							opacity: 0,
-							duration: 0.2,
-							ease: "sine.inOut",
-						},
-						TRANSITION_TIMING.TEXT_FADE_OVERLAP
-					);
-				}
 			});
 
 			next();
@@ -228,7 +202,8 @@ export function usePageTransition() {
 	return {
 		firstLayerRef,
 		leaveTextRef,
-		wordCharacters, // Expose for declarative rendering
+		currentWord,
+		wordRevealKey,
 		transitionRouterProps: {
 			auto: true,
 			leave: handleLeave,

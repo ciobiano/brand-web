@@ -98,13 +98,13 @@ export default function AgencyHero() {
 	);
 
 	return (
-		<main ref={rootRef} className="flex flex-col gap-20 bg-kainé-white pt-24 sm:pt-24 pb-20">
+		<main ref={rootRef} className="flex flex-col gap-20 bg-kainé-white  pb-20">
 			<section className="px-6 lg:px-12 mb-32">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-					<div className="relative z-10">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 space-y-80 items-start">
+					<div className="relative z-10  ">
 						<h1
 							ref={heroTitleRef}
-							className="text-[clamp(5rem,18vw,14rem)]  font-medium leading-[0.8] tracking-tight text-kainé-black"
+							className="text-[clamp(5rem,18vw,14rem)]  font-medium  tracking-tight text-kainé-black"
 							style={{ perspective: "1000px" }}
 						>
 							Agency

@@ -58,14 +58,13 @@ export default function ProjectsPage() {
 		<main className="flex min-h-screen flex-col text-neutral-900">
 			<div
 				ref={pageRef}
-				className="flex flex-1 flex-col gap-10 px-4 pt-24 mb-80 sm:px-6 "
+				className="flex flex-1 flex-col gap-10 px-4  mb-80 sm:px-6 "
 			>
-				<section className="grid gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+				<section className="grid  lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
 					<h1
 						ref={headingRef}
 						data-projects-hero-heading
-						className="text-[clamp(4.5rem,16vw,14rem)] font-medium  leading-[0.85] tracking-tight lg:col-span-2"
-						style={{ perspective: "1000px" }}
+						className="text-[clamp(4.5rem,16vw,14rem)] font-medium  tracking-tight lg:col-span-2"
 					>
 						Projects
 					</h1>

@@ -922,11 +922,11 @@ export const logoSize: LogoSize = {
 };
 
 export const transitionWords: string[] = [
-	"Studio",
-	"Collective",
-	"Atelier",
+	"is a Studio",
+	"great Collective",
+	"collaborate",
 	"Works",
-	"Lab",
+	" the missing piece in your puzzle",
 ];
 
 export * from "./types";

@@ -47,6 +47,11 @@ export function useTextReveal(
   options?: {
     isReady?: boolean;
     animateOnScroll?: boolean;
+    /**
+     * When this value changes, the animation will re-run.
+     * Useful for re-triggering the reveal on route changes or transitions.
+     */
+    triggerKey?: number | string;
     delay?: number;
     stagger?: number;
     duration?: number;
@@ -57,6 +62,7 @@ export function useTextReveal(
   const {
     isReady = true,
     animateOnScroll = false,
+    triggerKey = 0,
     delay = 0,
     stagger = 0.15,
     duration = 0.9,
@@ -113,7 +119,16 @@ export function useTextReveal(
       };
     },
     {
-      dependencies: [isReady, animateOnScroll, delay, stagger, duration, ease, start],
+      dependencies: [
+        isReady,
+        animateOnScroll,
+        triggerKey,
+        delay,
+        stagger,
+        duration,
+        ease,
+        start,
+      ],
       scope: elementRef,
     }
   );
