@@ -21,7 +21,7 @@ const MAX_INIT_ATTEMPTS = 60; // 1 second at 60fps
 
 export function usePageTransition() {
 	const firstLayerRef = useRef<HTMLDivElement | null>(null);
-	const leaveTextRef = useRef<HTMLSpanElement | null>(null);
+	const leaveTextRef = useRef<HTMLDivElement | null>(null);
 	const wordIndexRef = useRef(0);
 	const hasRunInitialEnterRef = useRef(false);
 	const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -85,7 +85,6 @@ export function usePageTransition() {
 			}
 
 			await runTimeline((timeline) => {
-				timeline.set(layer, { y: "100%" });
 				timeline.to(layer, {
 					y: 0,
 					duration: TRANSITION_DURATION.OVERLAY,

@@ -52,8 +52,8 @@ export default function Card({ project }: CardProps) {
 						))}
 					</div>
 				</div>
-
-					className="absolute left-1/2 z-20"
+{/* 
+				<div className="absolute left-1/2 z-20"
 					style={{
 						top: "10%",
 						transform: "translate(-50%, -50%)",
@@ -67,7 +67,7 @@ export default function Card({ project }: CardProps) {
 							View case
 						</span>
 					</a>
-				</div> */}
+				</div>  */}
 
 				<div className="absolute inset-0 bg-black opacity-0 will-change-opacity pointer-events-none z-30" />
 			</div>
